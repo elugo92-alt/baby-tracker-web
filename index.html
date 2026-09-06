@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -12,19 +13,35 @@
         content="#ffffff">
 
     <title>Baby Tracker</title>
+
     <link rel="manifest" href="manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Baby Tracker">
+    <link rel="apple-touch-icon" href="icon-512.png">
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes">
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="default">
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="Baby Tracker">
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
             background: #f6f6f6;
             color: #111;
         }
@@ -32,7 +49,18 @@
         .app {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
+
+            padding-top:
+                max(20px, env(safe-area-inset-top));
+
+            padding-right:
+                max(20px, env(safe-area-inset-right));
+
+            padding-bottom:
+                max(20px, env(safe-area-inset-bottom));
+
+            padding-left:
+                max(20px, env(safe-area-inset-left));
         }
 
         h1 {
@@ -60,6 +88,7 @@
             min-height: 50px;
             font-size: 17px;
             border-radius: 10px;
+            font-family: inherit;
         }
 
         input,
@@ -75,6 +104,11 @@
             padding: 10px;
             margin-bottom: 10px;
             font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: scale(0.98);
         }
 
         .primary {
@@ -177,14 +211,23 @@
             gap: 8px;
         }
 
+        .field-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            margin: 4px 0 6px;
+        }
+
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,.45);
+            background: rgba(0, 0, 0, 0.45);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            z-index: 1000;
         }
 
         .modal.hidden {
@@ -197,11 +240,14 @@
             max-width: 420px;
             border-radius: 16px;
             padding: 18px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-card h2 {
             margin-top: 0;
         }
+
     </style>
 </head>
 
@@ -210,7 +256,10 @@
 <div class="app">
 
     <h1>Baby Tracker</h1>
-    <div class="subtitle">Shared baby log</div>
+
+    <div class="subtitle">
+        Shared baby log
+    </div>
 
     <div id="loginCard" class="card">
 
@@ -219,12 +268,14 @@
         <input
             id="email"
             type="email"
-            placeholder="Email">
+            placeholder="Email"
+            autocomplete="email">
 
         <input
             id="password"
             type="password"
-            placeholder="Password">
+            placeholder="Password"
+            autocomplete="current-password">
 
         <button
             id="signInButton"
@@ -239,6 +290,7 @@
 
     </div>
 
+
     <div
         id="tracker"
         class="hidden">
@@ -246,40 +298,86 @@
         <div class="counts">
 
             <div class="count">
-                <div class="emoji">💧</div>
-                <div id="peeCount" class="number">0</div>
-                <div>Pee</div>
+
+                <div class="emoji">
+                    💧
+                </div>
+
+                <div
+                    id="peeCount"
+                    class="number">
+                    0
+                </div>
+
+                <div>
+                    Pee
+                </div>
+
             </div>
 
-            <div class="count">
-                <div class="emoji">💩</div>
-                <div id="poopCount" class="number">0</div>
-                <div>Poop</div>
-            </div>
 
             <div class="count">
-                <div class="emoji">🍼</div>
-                <div id="feedCount" class="number">0</div>
-                <div>Feed</div>
+
+                <div class="emoji">
+                    💩
+                </div>
+
+                <div
+                    id="poopCount"
+                    class="number">
+                    0
+                </div>
+
+                <div>
+                    Poop
+                </div>
+
+            </div>
+
+
+            <div class="count">
+
+                <div class="emoji">
+                    🍼
+                </div>
+
+                <div
+                    id="feedCount"
+                    class="number">
+                    0
+                </div>
+
+                <div>
+                    Feed
+                </div>
+
             </div>
 
         </div>
 
+
         <div class="actions">
 
-            <button id="peeButton" class="secondary">
+            <button
+                id="peeButton"
+                class="secondary">
                 💧 Pee
             </button>
 
-            <button id="poopButton" class="secondary">
+            <button
+                id="poopButton"
+                class="secondary">
                 💩 Poop
             </button>
 
-            <button id="feedButton" class="secondary">
+            <button
+                id="feedButton"
+                class="secondary">
                 🍼 Feed
             </button>
 
         </div>
+
 
         <div class="card">
 
@@ -287,7 +385,9 @@
                 Today feed total: 0 mL
             </div>
 
-            <div id="cloudStatus" class="status">
+            <div
+                id="cloudStatus"
+                class="status">
                 Connected
             </div>
 
@@ -300,6 +400,7 @@
 
         </div>
 
+
         <div class="history-title">
             History
         </div>
@@ -310,7 +411,12 @@
 
 </div>
 
-<div id="feedModal" class="modal hidden">
+
+<!-- FEED MODAL -->
+
+<div
+    id="feedModal"
+    class="modal hidden">
 
     <div class="modal-card">
 
@@ -328,17 +434,40 @@
                 placeholder="Amount">
 
             <select id="feedUnit">
-                <option value="oz">oz</option>
-                <option value="ml">mL</option>
+
+                <option value="oz">
+                    oz
+                </option>
+
+                <option value="ml">
+                    mL
+                </option>
+
             </select>
 
         </div>
 
-        <button id="saveFeedButton" class="primary">
+
+        <label
+            class="field-label"
+            for="feedDateTime">
+            Date and time
+        </label>
+
+        <input
+            id="feedDateTime"
+            type="datetime-local">
+
+
+        <button
+            id="saveFeedButton"
+            class="primary">
             Save Feed
         </button>
 
-        <button id="cancelFeedButton" class="secondary">
+        <button
+            id="cancelFeedButton"
+            class="secondary">
             Cancel
         </button>
 
@@ -346,7 +475,12 @@
 
 </div>
 
-<div id="editSimpleModal" class="modal hidden">
+
+<!-- PEE / POOP EDIT MODAL -->
+
+<div
+    id="editSimpleModal"
+    class="modal hidden">
 
     <div class="modal-card">
 
@@ -354,15 +488,27 @@
             Edit
         </h2>
 
+
+        <label
+            class="field-label"
+            for="simpleDateTime">
+            Date and time
+        </label>
+
         <input
             id="simpleDateTime"
             type="datetime-local">
 
-        <button id="saveSimpleButton" class="primary">
+
+        <button
+            id="saveSimpleButton"
+            class="primary">
             Save Changes
         </button>
 
-        <button id="cancelSimpleButton" class="secondary">
+        <button
+            id="cancelSimpleButton"
+            class="secondary">
             Cancel
         </button>
 
@@ -370,11 +516,13 @@
 
 </div>
 
+
 <script type="module">
 
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
 
 import {
     getAuth,
@@ -382,6 +530,7 @@ import {
     signOut,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
 
 import {
     getDatabase,
@@ -391,43 +540,104 @@ import {
     onValue
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
+
 const firebaseConfig = {
-    apiKey: "AIzaSyC2Bx2QOJMk8Q28LSJmBDGjyLZHztDWA20",
-    authDomain: "lugo-baby-tracker.firebaseapp.com",
-    databaseURL: "https://lugo-baby-tracker-default-rtdb.firebaseio.com",
-    projectId: "lugo-baby-tracker",
-    storageBucket: "lugo-baby-tracker.firebasestorage.app",
-    messagingSenderId: "440667557935",
-    appId: "1:440667557935:web:d5e096f71fa5f200d576da"
+
+    apiKey:
+        "AIzaSyC2Bx2QOJMk8Q28LSJmBDGjyLZHztDWA20",
+
+    authDomain:
+        "lugo-baby-tracker.firebaseapp.com",
+
+    databaseURL:
+        "https://lugo-baby-tracker-default-rtdb.firebaseio.com",
+
+    projectId:
+        "lugo-baby-tracker",
+
+    storageBucket:
+        "lugo-baby-tracker.firebasestorage.app",
+
+    messagingSenderId:
+        "440667557935",
+
+    appId:
+        "1:440667557935:web:d5e096f71fa5f200d576da"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
 
-const loginCard = document.getElementById("loginCard");
-const tracker = document.getElementById("tracker");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const loginStatus = document.getElementById("loginStatus");
-const cloudStatus = document.getElementById("cloudStatus");
-const history = document.getElementById("history");
+const app =
+    initializeApp(firebaseConfig);
 
-const feedModal = document.getElementById("feedModal");
-const feedAmount = document.getElementById("feedAmount");
-const feedUnit = document.getElementById("feedUnit");
-const feedModalTitle = document.getElementById("feedModalTitle");
+const auth =
+    getAuth(app);
 
-const editSimpleModal = document.getElementById("editSimpleModal");
-const editSimpleTitle = document.getElementById("editSimpleTitle");
-const simpleDateTime = document.getElementById("simpleDateTime");
+const db =
+    getDatabase(app);
+
+
+const loginCard =
+    document.getElementById("loginCard");
+
+const tracker =
+    document.getElementById("tracker");
+
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
+const loginStatus =
+    document.getElementById("loginStatus");
+
+const cloudStatus =
+    document.getElementById("cloudStatus");
+
+const history =
+    document.getElementById("history");
+
+
+const feedModal =
+    document.getElementById("feedModal");
+
+const feedAmount =
+    document.getElementById("feedAmount");
+
+const feedUnit =
+    document.getElementById("feedUnit");
+
+const feedDateTime =
+    document.getElementById("feedDateTime");
+
+const feedModalTitle =
+    document.getElementById("feedModalTitle");
+
+
+const editSimpleModal =
+    document.getElementById("editSimpleModal");
+
+const editSimpleTitle =
+    document.getElementById("editSimpleTitle");
+
+const simpleDateTime =
+    document.getElementById("simpleDateTime");
+
 
 let currentUid = null;
+
 let currentEvents = {};
+
 let unsubscribeEvents = null;
 
 let editingFeedId = null;
+
 let editingSimpleId = null;
+
+
+
+/* SIGN IN */
 
 document
     .getElementById("signInButton")
@@ -452,50 +662,82 @@ document
 
                 loginStatus.textContent =
                     error.message;
+
             }
         }
     );
+
+
+
+/* SIGN OUT */
 
 document
     .getElementById("signOutButton")
     .addEventListener(
         "click",
         async () => {
+
             await signOut(auth);
+
         }
     );
+
+
+
+/* AUTH STATE */
 
 onAuthStateChanged(
     auth,
     user => {
 
         if (unsubscribeEvents) {
+
             unsubscribeEvents();
+
             unsubscribeEvents = null;
+
         }
 
         if (!user) {
 
             currentUid = null;
 
-            loginCard.classList.remove("hidden");
-            tracker.classList.add("hidden");
+            currentEvents = {};
+
+            loginCard.classList.remove(
+                "hidden"
+            );
+
+            tracker.classList.add(
+                "hidden"
+            );
+
             loginStatus.textContent = "";
 
             return;
+
         }
 
         currentUid = user.uid;
 
-        loginCard.classList.add("hidden");
-        tracker.classList.remove("hidden");
+        loginCard.classList.add(
+            "hidden"
+        );
+
+        tracker.classList.remove(
+            "hidden"
+        );
 
         cloudStatus.textContent =
-            "Connected as " + user.email;
+            "Connected as " +
+            user.email;
 
         watchEvents();
+
     }
 );
+
+
 
 function eventsRef() {
 
@@ -505,7 +747,10 @@ function eventsRef() {
         currentUid +
         "/events"
     );
+
 }
+
+
 
 function watchEvents() {
 
@@ -518,9 +763,13 @@ function watchEvents() {
                     snapshot.val() || {};
 
                 render();
+
             }
         );
+
 }
+
+
 
 function makeCloudId() {
 
@@ -529,19 +778,61 @@ function makeCloudId() {
         crypto.randomUUID
     ) {
 
-        return "web_" +
+        return (
+            "web_" +
             crypto
                 .randomUUID()
-                .replaceAll("-", "");
+                .replaceAll("-", "")
+        );
+
     }
 
-    return "web_" +
+    return (
+        "web_" +
         Date.now() +
         "_" +
         Math.floor(
             Math.random() * 1000000
-        );
+        )
+    );
+
 }
+
+
+
+/* DATE HELPERS */
+
+function dateToInputValue(timestamp) {
+
+    const date =
+        new Date(timestamp);
+
+    const offset =
+        date.getTimezoneOffset() *
+        60000;
+
+    return new Date(
+        timestamp - offset
+    )
+        .toISOString()
+        .slice(0, 16);
+
+}
+
+
+function inputValueToTimestamp(value) {
+
+    if (!value) {
+        return NaN;
+    }
+
+    return new Date(value).getTime();
+
+}
+
+
+
+/* PEE AND POOP */
 
 async function addSimple(type) {
 
@@ -549,10 +840,14 @@ async function addSimple(type) {
         return;
     }
 
-    const cloudId = makeCloudId();
-    const now = Date.now();
+    const cloudId =
+        makeCloudId();
+
+    const now =
+        Date.now();
 
     await set(
+
         ref(
             db,
             "users/" +
@@ -560,6 +855,7 @@ async function addSimple(type) {
             "/events/" +
             cloudId
         ),
+
         {
             cloudId: cloudId,
             type: type,
@@ -568,8 +864,11 @@ async function addSimple(type) {
             deleted: false,
             updatedAt: now
         }
+
     );
+
 }
+
 
 document
     .getElementById("peeButton")
@@ -578,12 +877,17 @@ document
         () => addSimple("pee")
     );
 
+
 document
     .getElementById("poopButton")
     .addEventListener(
         "click",
         () => addSimple("poop")
     );
+
+
+
+/* OPEN NEW FEED */
 
 document
     .getElementById("feedButton")
@@ -597,11 +901,24 @@ document
                 "Log Feeding";
 
             feedAmount.value = "";
+
             feedUnit.value = "oz";
 
-            feedModal.classList.remove("hidden");
+            feedDateTime.value =
+                dateToInputValue(
+                    Date.now()
+                );
+
+            feedModal.classList.remove(
+                "hidden"
+            );
+
         }
     );
+
+
+
+/* CANCEL FEED */
 
 document
     .getElementById("cancelFeedButton")
@@ -609,10 +926,18 @@ document
         "click",
         () => {
 
-            feedModal.classList.add("hidden");
+            feedModal.classList.add(
+                "hidden"
+            );
+
             editingFeedId = null;
+
         }
     );
+
+
+
+/* SAVE FEED */
 
 document
     .getElementById("saveFeedButton")
@@ -621,10 +946,18 @@ document
         async () => {
 
             const amount =
-                Number(feedAmount.value);
+                Number(
+                    feedAmount.value
+                );
 
             const unit =
                 feedUnit.value;
+
+            const timestamp =
+                inputValueToTimestamp(
+                    feedDateTime.value
+                );
+
 
             if (
                 !Number.isFinite(amount) ||
@@ -636,24 +969,37 @@ document
                 );
 
                 return;
+
             }
+
+
+            if (
+                !Number.isFinite(timestamp)
+            ) {
+
+                alert(
+                    "Choose a valid date and time."
+                );
+
+                return;
+
+            }
+
 
             const amountMl =
                 unit === "oz"
                     ? amount * 29.5735
                     : amount;
 
-            const now =
+
+            const updatedAt =
                 Date.now();
+
 
             if (editingFeedId) {
 
-                const old =
-                    currentEvents[
-                        editingFeedId
-                    ];
-
                 await update(
+
                     ref(
                         db,
                         "users/" +
@@ -661,14 +1007,27 @@ document
                         "/events/" +
                         editingFeedId
                     ),
+
                     {
-                        enteredAmount: amount,
-                        enteredUnit: unit,
-                        amountMl: amountMl,
-                        timestamp: old.timestamp,
-                        deleted: false,
-                        updatedAt: now
+                        enteredAmount:
+                            amount,
+
+                        enteredUnit:
+                            unit,
+
+                        amountMl:
+                            amountMl,
+
+                        timestamp:
+                            timestamp,
+
+                        deleted:
+                            false,
+
+                        updatedAt:
+                            updatedAt
                     }
+
                 );
 
             } else {
@@ -676,7 +1035,9 @@ document
                 const cloudId =
                     makeCloudId();
 
+
                 await set(
+
                     ref(
                         db,
                         "users/" +
@@ -684,84 +1045,136 @@ document
                         "/events/" +
                         cloudId
                     ),
+
                     {
-                        cloudId: cloudId,
-                        type: "feed",
-                        enteredAmount: amount,
-                        enteredUnit: unit,
-                        amountMl: amountMl,
-                        timestamp: now,
-                        source: "web",
-                        deleted: false,
-                        updatedAt: now
+                        cloudId:
+                            cloudId,
+
+                        type:
+                            "feed",
+
+                        enteredAmount:
+                            amount,
+
+                        enteredUnit:
+                            unit,
+
+                        amountMl:
+                            amountMl,
+
+                        timestamp:
+                            timestamp,
+
+                        source:
+                            "web",
+
+                        deleted:
+                            false,
+
+                        updatedAt:
+                            updatedAt
                     }
+
                 );
+
             }
 
+
             editingFeedId = null;
-            feedModal.classList.add("hidden");
+
+            feedModal.classList.add(
+                "hidden"
+            );
+
         }
     );
 
-function openFeedEdit(
-    cloudId
-) {
+
+
+/* EDIT FEED */
+
+function openFeedEdit(cloudId) {
 
     const event =
         currentEvents[cloudId];
+
+    if (!event) {
+        return;
+    }
+
 
     editingFeedId =
         cloudId;
 
+
     feedModalTitle.textContent =
         "Edit Feeding";
+
 
     feedAmount.value =
         event.enteredAmount ?? "";
 
+
     feedUnit.value =
         event.enteredUnit || "oz";
 
-    feedModal.classList.remove("hidden");
+
+    feedDateTime.value =
+        dateToInputValue(
+            event.timestamp
+        );
+
+
+    feedModal.classList.remove(
+        "hidden"
+    );
+
 }
 
-function dateToInputValue(
-    timestamp
-) {
 
-    const date =
-        new Date(timestamp);
 
-    const offset =
-        date.getTimezoneOffset() * 60000;
+/* EDIT PEE OR POOP */
 
-    return new Date(
-        timestamp - offset
-    )
-        .toISOString()
-        .slice(0, 16);
-}
-
-function openSimpleEdit(
-    cloudId
-) {
+function openSimpleEdit(cloudId) {
 
     const event =
         currentEvents[cloudId];
 
+    if (!event) {
+        return;
+    }
+
+
     editingSimpleId =
         cloudId;
 
+
+    const typeName =
+        event.type === "pee"
+            ? "Pee"
+            : "Poop";
+
+
     editSimpleTitle.textContent =
-        "Edit " + event.type;
+        "Edit " +
+        typeName;
+
 
     simpleDateTime.value =
         dateToInputValue(
             event.timestamp
         );
 
-    editSimpleModal.classList.remove("hidden");
+
+    editSimpleModal.classList.remove(
+        "hidden"
+    );
+
 }
+
+
+
+/* CANCEL SIMPLE EDIT */
 
 document
     .getElementById("cancelSimpleButton")
@@ -770,9 +1183,17 @@ document
         () => {
 
             editingSimpleId = null;
-            editSimpleModal.classList.add("hidden");
+
+            editSimpleModal.classList.add(
+                "hidden"
+            );
+
         }
     );
+
+
+
+/* SAVE SIMPLE EDIT */
 
 document
     .getElementById("saveSimpleButton")
@@ -784,21 +1205,28 @@ document
                 return;
             }
 
-            const timestamp =
-                new Date(
-                    simpleDateTime.value
-                ).getTime();
 
-            if (!Number.isFinite(timestamp)) {
+            const timestamp =
+                inputValueToTimestamp(
+                    simpleDateTime.value
+                );
+
+
+            if (
+                !Number.isFinite(timestamp)
+            ) {
 
                 alert(
                     "Choose a valid date and time."
                 );
 
                 return;
+
             }
 
+
             await update(
+
                 ref(
                     db,
                     "users/" +
@@ -806,25 +1234,40 @@ document
                     "/events/" +
                     editingSimpleId
                 ),
+
                 {
-                    timestamp: timestamp,
-                    updatedAt: Date.now()
+                    timestamp:
+                        timestamp,
+
+                    updatedAt:
+                        Date.now()
                 }
+
             );
 
+
             editingSimpleId = null;
-            editSimpleModal.classList.add("hidden");
+
+            editSimpleModal.classList.add(
+                "hidden"
+            );
+
         }
     );
 
-async function deleteEvent(
-    cloudId
-) {
+
+
+/* DELETE EVENT */
+
+async function deleteEvent(cloudId) {
 
     const event =
-        currentEvents[
-            cloudId
-        ];
+        currentEvents[cloudId];
+
+    if (!event) {
+        return;
+    }
+
 
     const description =
         event.type === "feed"
@@ -833,6 +1276,7 @@ async function deleteEvent(
               event.type +
               " entry";
 
+
     if (
         !confirm(
             "Delete " +
@@ -840,10 +1284,14 @@ async function deleteEvent(
             "?"
         )
     ) {
+
         return;
+
     }
 
+
     await update(
+
         ref(
             db,
             "users/" +
@@ -851,16 +1299,24 @@ async function deleteEvent(
             "/events/" +
             cloudId
         ),
+
         {
-            deleted: true,
-            updatedAt: Date.now()
+            deleted:
+                true,
+
+            updatedAt:
+                Date.now()
         }
+
     );
+
 }
 
-function isToday(
-    timestamp
-) {
+
+
+/* TODAY CHECK */
+
+function isToday(timestamp) {
 
     const d =
         new Date(timestamp);
@@ -868,12 +1324,29 @@ function isToday(
     const today =
         new Date();
 
+
     return (
-        d.getFullYear() === today.getFullYear() &&
-        d.getMonth() === today.getMonth() &&
-        d.getDate() === today.getDate()
+
+        d.getFullYear() ===
+        today.getFullYear()
+
+        &&
+
+        d.getMonth() ===
+        today.getMonth()
+
+        &&
+
+        d.getDate() ===
+        today.getDate()
+
     );
+
 }
+
+
+
+/* RENDER APP */
 
 function render() {
 
@@ -881,39 +1354,70 @@ function render() {
         Object.entries(
             currentEvents
         )
-            .filter(
-                ([id, event]) =>
-                    !event.deleted
-            )
-            .sort(
-                (a, b) =>
-                    b[1].timestamp -
-                    a[1].timestamp
-            );
+
+        .filter(
+            ([id, event]) =>
+                event &&
+                !event.deleted
+        )
+
+        .sort(
+            (a, b) =>
+                Number(
+                    b[1].timestamp || 0
+                ) -
+                Number(
+                    a[1].timestamp || 0
+                )
+        );
+
 
     let peeCount = 0;
+
     let poopCount = 0;
+
     let feedCount = 0;
+
     let totalMl = 0;
+
 
     for (
         const [id, event]
         of entries
     ) {
 
-        if (!isToday(event.timestamp)) {
+        if (
+            !isToday(
+                event.timestamp
+            )
+        ) {
+
             continue;
+
         }
 
-        if (event.type === "pee") {
+
+        if (
+            event.type === "pee"
+        ) {
+
             peeCount++;
+
         }
 
-        if (event.type === "poop") {
+
+        if (
+            event.type === "poop"
+        ) {
+
             poopCount++;
+
         }
 
-        if (event.type === "feed") {
+
+        if (
+            event.type === "feed"
+        ) {
 
             feedCount++;
 
@@ -921,38 +1425,62 @@ function render() {
                 Number(
                     event.amountMl || 0
                 );
+
         }
+
     }
 
+
     document
-        .getElementById("peeCount")
+        .getElementById(
+            "peeCount"
+        )
         .textContent =
         peeCount;
 
+
     document
-        .getElementById("poopCount")
+        .getElementById(
+            "poopCount"
+        )
         .textContent =
         poopCount;
 
+
     document
-        .getElementById("feedCount")
+        .getElementById(
+            "feedCount"
+        )
         .textContent =
         feedCount;
 
+
     document
-        .getElementById("todayFeedTotal")
+        .getElementById(
+            "todayFeedTotal"
+        )
         .textContent =
+
         "Today feed total: " +
+
         totalMl.toFixed(0) +
+
         " mL / " +
+
         (
-            totalMl / 29.5735
+            totalMl /
+            29.5735
         ).toFixed(2) +
+
         " oz";
+
 
     history.innerHTML = "";
 
-    if (entries.length === 0) {
+
+    if (
+        entries.length === 0
+    ) {
 
         const empty =
             document.createElement(
@@ -970,7 +1498,9 @@ function render() {
         );
 
         return;
+
     }
+
 
     for (
         const [cloudId, event]
@@ -982,123 +1512,202 @@ function render() {
                 "div"
             );
 
+
         card.className =
             "event";
 
+
         let name;
 
-        if (event.type === "pee") {
-            name = "💧 Pee";
-        } else if (event.type === "poop") {
-            name = "💩 Poop";
+
+        if (
+            event.type === "pee"
+        ) {
+
+            name =
+                "💧 Pee";
+
+        } else if (
+            event.type === "poop"
+        ) {
+
+            name =
+                "💩 Poop";
+
         } else {
-            name = "🍼 Feed";
+
+            name =
+                "🍼 Feed";
+
         }
+
 
         if (
             event.type === "feed" &&
             event.enteredAmount != null
         ) {
 
-            name +=
-                " • " +
+            const displayAmount =
                 Number(
                     event.enteredAmount
-                ).toFixed(
-                    Number(event.enteredAmount) % 1 === 0
+                );
+
+
+            name +=
+                " • " +
+
+                displayAmount.toFixed(
+                    displayAmount % 1 === 0
                         ? 0
                         : 1
                 ) +
+
                 " " +
+
                 (
-                    event.enteredUnit || "mL"
+                    event.enteredUnit ||
+                    "mL"
                 );
+
         }
+
 
         const title =
             document.createElement(
                 "div"
             );
 
+
         title.className =
             "event-name";
 
+
         title.textContent =
             name;
+
 
         const time =
             document.createElement(
                 "div"
             );
 
+
         time.className =
             "event-time";
+
 
         time.textContent =
             new Date(
                 event.timestamp
             ).toLocaleString();
 
-        card.appendChild(title);
-        card.appendChild(time);
+
+        card.appendChild(
+            title
+        );
+
+
+        card.appendChild(
+            time
+        );
+
 
         const buttons =
             document.createElement(
                 "div"
             );
 
+
         buttons.className =
             "event-buttons";
+
 
         const edit =
             document.createElement(
                 "button"
             );
 
+
         edit.className =
             "secondary";
 
+
         edit.textContent =
             "Edit";
+
 
         edit.addEventListener(
             "click",
             () => {
 
-                if (event.type === "feed") {
-                    openFeedEdit(cloudId);
+                if (
+                    event.type === "feed"
+                ) {
+
+                    openFeedEdit(
+                        cloudId
+                    );
+
                 } else {
-                    openSimpleEdit(cloudId);
+
+                    openSimpleEdit(
+                        cloudId
+                    );
+
                 }
+
             }
         );
+
 
         const remove =
             document.createElement(
                 "button"
             );
 
+
         remove.className =
             "danger";
+
 
         remove.textContent =
             "Delete";
 
+
         remove.addEventListener(
             "click",
-            () => deleteEvent(cloudId)
+            () =>
+                deleteEvent(
+                    cloudId
+                )
         );
 
-        buttons.appendChild(edit);
-        buttons.appendChild(remove);
 
-        card.appendChild(buttons);
+        buttons.appendChild(
+            edit
+        );
 
-        history.appendChild(card);
+
+        buttons.appendChild(
+            remove
+        );
+
+
+        card.appendChild(
+            buttons
+        );
+
+
+        history.appendChild(
+            card
+        );
+
     }
+
 }
 
 </script>
 
 </body>
-  </html>
+
+</html>
