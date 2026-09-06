@@ -157,16 +157,35 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
             margin-top: 16px;
+            margin-bottom: 16px;
         }
 
         .actions button {
             min-height: 68px;
+            margin-bottom: 0;
+        }
+
+        .feeding-status {
+            margin-top: 10px;
+            color: #555;
+            font-size: 15px;
+            line-height: 1.5;
         }
 
         .history-title {
             font-size: 24px;
             font-weight: 700;
             margin: 24px 0 12px;
+        }
+
+        .day-header {
+            background: #ededed;
+            color: #444;
+            font-size: 17px;
+            font-weight: 700;
+            padding: 12px 14px;
+            margin: 20px 0 10px;
+            border-radius: 10px;
         }
 
         .event {
@@ -376,6 +395,18 @@
                 🍼 Feed
             </button>
 
+            <button
+                id="mixedButton"
+                class="secondary">
+                💧💩 Mixed
+            </button>
+
+            <button
+                id="pumpButton"
+                class="secondary">
+                🍼 Pump
+            </button>
+
         </div>
 
 
@@ -383,6 +414,13 @@
 
             <div id="todayFeedTotal">
                 Today feed total: 0 mL
+            </div>
+
+            <div
+                id="feedingStatus"
+                class="feeding-status">
+                🍼 Last feed: --<br>
+                Next feed: --
             </div>
 
             <div
@@ -412,28 +450,28 @@
 </div>
 
 
-<!-- FEED MODAL -->
+<!-- AMOUNT MODAL FOR FEED OR PUMP -->
 
 <div
-    id="feedModal"
+    id="amountModal"
     class="modal hidden">
 
     <div class="modal-card">
 
-        <h2 id="feedModalTitle">
+        <h2 id="amountModalTitle">
             Log Feeding
         </h2>
 
         <div class="feed-row">
 
             <input
-                id="feedAmount"
+                id="amountInput"
                 type="number"
                 step="0.1"
                 inputmode="decimal"
                 placeholder="Amount">
 
-            <select id="feedUnit">
+            <select id="amountUnit">
 
                 <option value="oz">
                     oz
@@ -450,23 +488,23 @@
 
         <label
             class="field-label"
-            for="feedDateTime">
+            for="amountDateTime">
             Date and time
         </label>
 
         <input
-            id="feedDateTime"
+            id="amountDateTime"
             type="datetime-local">
 
 
         <button
-            id="saveFeedButton"
+            id="saveAmountButton"
             class="primary">
-            Save Feed
+            Save
         </button>
 
         <button
-            id="cancelFeedButton"
+            id="cancelAmountButton"
             class="secondary">
             Cancel
         </button>
@@ -476,7 +514,7 @@
 </div>
 
 
-<!-- PEE / POOP EDIT MODAL -->
+<!-- SIMPLE EDIT MODAL -->
 
 <div
     id="editSimpleModal"
@@ -598,21 +636,24 @@ const cloudStatus =
 const history =
     document.getElementById("history");
 
+const feedingStatus =
+    document.getElementById("feedingStatus");
 
-const feedModal =
-    document.getElementById("feedModal");
 
-const feedAmount =
-    document.getElementById("feedAmount");
+const amountModal =
+    document.getElementById("amountModal");
 
-const feedUnit =
-    document.getElementById("feedUnit");
+const amountModalTitle =
+    document.getElementById("amountModalTitle");
 
-const feedDateTime =
-    document.getElementById("feedDateTime");
+const amountInput =
+    document.getElementById("amountInput");
 
-const feedModalTitle =
-    document.getElementById("feedModalTitle");
+const amountUnit =
+    document.getElementById("amountUnit");
+
+const amountDateTime =
+    document.getElementById("amountDateTime");
 
 
 const editSimpleModal =
@@ -631,7 +672,9 @@ let currentEvents = {};
 
 let unsubscribeEvents = null;
 
-let editingFeedId = null;
+let editingAmountId = null;
+
+let editingAmountType = null;
 
 let editingSimpleId = null;
 
@@ -664,6 +707,7 @@ document
                     error.message;
 
             }
+
         }
     );
 
@@ -820,6 +864,7 @@ function dateToInputValue(timestamp) {
 }
 
 
+
 function inputValueToTimestamp(value) {
 
     if (!value) {
@@ -832,7 +877,62 @@ function inputValueToTimestamp(value) {
 
 
 
-/* PEE AND POOP */
+function dateKey(timestamp) {
+
+    const d =
+        new Date(timestamp);
+
+    return (
+        d.getFullYear() +
+        "-" +
+        String(
+            d.getMonth() + 1
+        ).padStart(2, "0") +
+        "-" +
+        String(
+            d.getDate()
+        ).padStart(2, "0")
+    );
+
+}
+
+
+
+function dateHeaderText(timestamp) {
+
+    return new Date(
+        timestamp
+    ).toLocaleDateString(
+        undefined,
+        {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+
+function timeOnly(timestamp) {
+
+    return new Date(
+        timestamp
+    ).toLocaleTimeString(
+        undefined,
+        {
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    );
+
+}
+
+
+
+/* SIMPLE EVENTS */
 
 async function addSimple(type) {
 
@@ -870,6 +970,7 @@ async function addSimple(type) {
 }
 
 
+
 document
     .getElementById("peeButton")
     .addEventListener(
@@ -886,8 +987,16 @@ document
     );
 
 
+document
+    .getElementById("mixedButton")
+    .addEventListener(
+        "click",
+        () => addSimple("mixed")
+    );
 
-/* OPEN NEW FEED */
+
+
+/* OPEN FEED */
 
 document
     .getElementById("feedButton")
@@ -895,22 +1004,8 @@ document
         "click",
         () => {
 
-            editingFeedId = null;
-
-            feedModalTitle.textContent =
-                "Log Feeding";
-
-            feedAmount.value = "";
-
-            feedUnit.value = "oz";
-
-            feedDateTime.value =
-                dateToInputValue(
-                    Date.now()
-                );
-
-            feedModal.classList.remove(
-                "hidden"
+            openNewAmountEvent(
+                "feed"
             );
 
         }
@@ -918,44 +1013,95 @@ document
 
 
 
-/* CANCEL FEED */
+/* OPEN PUMP */
 
 document
-    .getElementById("cancelFeedButton")
+    .getElementById("pumpButton")
     .addEventListener(
         "click",
         () => {
 
-            feedModal.classList.add(
-                "hidden"
+            openNewAmountEvent(
+                "pump"
             );
-
-            editingFeedId = null;
 
         }
     );
 
 
 
-/* SAVE FEED */
+function openNewAmountEvent(type) {
+
+    editingAmountId =
+        null;
+
+    editingAmountType =
+        type;
+
+    amountModalTitle.textContent =
+        type === "pump"
+            ? "Log Pump"
+            : "Log Feeding";
+
+    amountInput.value =
+        "";
+
+    amountUnit.value =
+        "oz";
+
+    amountDateTime.value =
+        dateToInputValue(
+            Date.now()
+        );
+
+    amountModal.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+
+/* CANCEL AMOUNT MODAL */
 
 document
-    .getElementById("saveFeedButton")
+    .getElementById("cancelAmountButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            amountModal.classList.add(
+                "hidden"
+            );
+
+            editingAmountId = null;
+
+            editingAmountType = null;
+
+        }
+    );
+
+
+
+/* SAVE FEED OR PUMP */
+
+document
+    .getElementById("saveAmountButton")
     .addEventListener(
         "click",
         async () => {
 
             const amount =
                 Number(
-                    feedAmount.value
+                    amountInput.value
                 );
 
             const unit =
-                feedUnit.value;
+                amountUnit.value;
 
             const timestamp =
                 inputValueToTimestamp(
-                    feedDateTime.value
+                    amountDateTime.value
                 );
 
 
@@ -965,7 +1111,7 @@ document
             ) {
 
                 alert(
-                    "Enter a feeding amount greater than 0."
+                    "Enter an amount greater than 0."
                 );
 
                 return;
@@ -996,7 +1142,7 @@ document
                 Date.now();
 
 
-            if (editingFeedId) {
+            if (editingAmountId) {
 
                 await update(
 
@@ -1005,7 +1151,7 @@ document
                         "users/" +
                         currentUid +
                         "/events/" +
-                        editingFeedId
+                        editingAmountId
                     ),
 
                     {
@@ -1051,7 +1197,7 @@ document
                             cloudId,
 
                         type:
-                            "feed",
+                            editingAmountType,
 
                         enteredAmount:
                             amount,
@@ -1080,9 +1226,13 @@ document
             }
 
 
-            editingFeedId = null;
+            editingAmountId =
+                null;
 
-            feedModal.classList.add(
+            editingAmountType =
+                null;
+
+            amountModal.classList.add(
                 "hidden"
             );
 
@@ -1091,9 +1241,9 @@ document
 
 
 
-/* EDIT FEED */
+/* EDIT FEED OR PUMP */
 
-function openFeedEdit(cloudId) {
+function openAmountEdit(cloudId) {
 
     const event =
         currentEvents[cloudId];
@@ -1103,29 +1253,42 @@ function openFeedEdit(cloudId) {
     }
 
 
-    editingFeedId =
+    editingAmountId =
         cloudId;
 
-
-    feedModalTitle.textContent =
-        "Edit Feeding";
-
-
-    feedAmount.value =
-        event.enteredAmount ?? "";
+    editingAmountType =
+        event.type;
 
 
-    feedUnit.value =
-        event.enteredUnit || "oz";
+    amountModalTitle.textContent =
+        event.type === "pump"
+            ? "Edit Pump"
+            : "Edit Feeding";
 
 
-    feedDateTime.value =
+    amountInput.value =
+        event.enteredAmount ??
+        (
+            event.amountMl != null
+                ? Number(
+                    event.amountMl
+                ).toFixed(0)
+                : ""
+        );
+
+
+    amountUnit.value =
+        event.enteredUnit ||
+        "ml";
+
+
+    amountDateTime.value =
         dateToInputValue(
             event.timestamp
         );
 
 
-    feedModal.classList.remove(
+    amountModal.classList.remove(
         "hidden"
     );
 
@@ -1133,7 +1296,7 @@ function openFeedEdit(cloudId) {
 
 
 
-/* EDIT PEE OR POOP */
+/* EDIT SIMPLE */
 
 function openSimpleEdit(cloudId) {
 
@@ -1149,10 +1312,32 @@ function openSimpleEdit(cloudId) {
         cloudId;
 
 
-    const typeName =
+    let typeName =
+        "Entry";
+
+
+    if (
         event.type === "pee"
-            ? "Pee"
-            : "Poop";
+    ) {
+
+        typeName =
+            "Pee";
+
+    } else if (
+        event.type === "poop"
+    ) {
+
+        typeName =
+            "Poop";
+
+    } else if (
+        event.type === "mixed"
+    ) {
+
+        typeName =
+            "Mixed";
+
+    }
 
 
     editSimpleTitle.textContent =
@@ -1182,7 +1367,8 @@ document
         "click",
         () => {
 
-            editingSimpleId = null;
+            editingSimpleId =
+                null;
 
             editSimpleModal.classList.add(
                 "hidden"
@@ -1246,7 +1432,8 @@ document
             );
 
 
-            editingSimpleId = null;
+            editingSimpleId =
+                null;
 
             editSimpleModal.classList.add(
                 "hidden"
@@ -1269,19 +1456,9 @@ async function deleteEvent(cloudId) {
     }
 
 
-    const description =
-        event.type === "feed"
-            ? "this feeding"
-            : "this " +
-              event.type +
-              " entry";
-
-
     if (
         !confirm(
-            "Delete " +
-            description +
-            "?"
+            "Delete this entry?"
         )
     ) {
 
@@ -1346,6 +1523,133 @@ function isToday(timestamp) {
 
 
 
+/* FEEDING STATUS */
+
+function updateFeedingStatus() {
+
+    const feeds =
+        Object.values(
+            currentEvents
+        )
+
+        .filter(
+            event =>
+                event &&
+                !event.deleted &&
+                event.type === "feed" &&
+                Number.isFinite(
+                    Number(
+                        event.timestamp
+                    )
+                )
+        )
+
+        .sort(
+            (a, b) =>
+                Number(
+                    b.timestamp
+                ) -
+                Number(
+                    a.timestamp
+                )
+        );
+
+
+    if (
+        feeds.length === 0
+    ) {
+
+        feedingStatus.innerHTML =
+            "🍼 Last feed: --<br>Next feed: --";
+
+        return;
+
+    }
+
+
+    const latestFeed =
+        Number(
+            feeds[0].timestamp
+        );
+
+
+    const nextFeed =
+        latestFeed +
+        (
+            3 *
+            60 *
+            60 *
+            1000
+        );
+
+
+    const remaining =
+        nextFeed -
+        Date.now();
+
+
+    let countdown;
+
+
+    if (
+        remaining <= 0
+    ) {
+
+        countdown =
+            "Due now";
+
+    } else {
+
+        const totalMinutes =
+            Math.floor(
+                remaining /
+                60000
+            );
+
+
+        const hours =
+            Math.floor(
+                totalMinutes /
+                60
+            );
+
+
+        const minutes =
+            totalMinutes %
+            60;
+
+
+        countdown =
+            hours > 0
+                ? hours +
+                  " hr " +
+                  minutes +
+                  " min"
+                : minutes +
+                  " min";
+
+    }
+
+
+    feedingStatus.innerHTML =
+
+        "🍼 Last feed: " +
+        timeOnly(
+            latestFeed
+        ) +
+
+        "<br>Next feed: " +
+        timeOnly(
+            nextFeed
+        ) +
+
+        " • " +
+        countdown;
+
+}
+
+
+
 /* RENDER APP */
 
 function render() {
@@ -1372,13 +1676,17 @@ function render() {
         );
 
 
-    let peeCount = 0;
+    let peeCount =
+        0;
 
-    let poopCount = 0;
+    let poopCount =
+        0;
 
-    let feedCount = 0;
+    let feedCount =
+        0;
 
-    let totalMl = 0;
+    let totalMl =
+        0;
 
 
     for (
@@ -1409,6 +1717,17 @@ function render() {
         if (
             event.type === "poop"
         ) {
+
+            poopCount++;
+
+        }
+
+
+        if (
+            event.type === "mixed"
+        ) {
+
+            peeCount++;
 
             poopCount++;
 
@@ -1475,7 +1794,11 @@ function render() {
         " oz";
 
 
-    history.innerHTML = "";
+    updateFeedingStatus();
+
+
+    history.innerHTML =
+        "";
 
 
     if (
@@ -1502,10 +1825,52 @@ function render() {
     }
 
 
+    let previousDateKey =
+        null;
+
+
     for (
         const [cloudId, event]
         of entries
     ) {
+
+        const thisDateKey =
+            dateKey(
+                event.timestamp
+            );
+
+
+        if (
+            thisDateKey !==
+            previousDateKey
+        ) {
+
+            const header =
+                document.createElement(
+                    "div"
+                );
+
+
+            header.className =
+                "day-header";
+
+
+            header.textContent =
+                dateHeaderText(
+                    event.timestamp
+                );
+
+
+            history.appendChild(
+                header
+            );
+
+
+            previousDateKey =
+                thisDateKey;
+
+        }
+
 
         const card =
             document.createElement(
@@ -1517,7 +1882,8 @@ function render() {
             "event";
 
 
-        let name;
+        let name =
+            "Entry";
 
 
         if (
@@ -1534,7 +1900,23 @@ function render() {
             name =
                 "💩 Poop";
 
-        } else {
+        } else if (
+            event.type === "mixed"
+        ) {
+
+            name =
+                "💧💩 Mixed";
+
+        } else if (
+            event.type === "pump"
+        ) {
+
+            name =
+                "🍼 Pump";
+
+        } else if (
+            event.type === "feed"
+        ) {
 
             name =
                 "🍼 Feed";
@@ -1543,7 +1925,10 @@ function render() {
 
 
         if (
-            event.type === "feed" &&
+            (
+                event.type === "feed" ||
+                event.type === "pump"
+            ) &&
             event.enteredAmount != null
         ) {
 
@@ -1568,6 +1953,23 @@ function render() {
                     event.enteredUnit ||
                     "mL"
                 );
+
+        } else if (
+            (
+                event.type === "feed" ||
+                event.type === "pump"
+            ) &&
+            event.amountMl != null
+        ) {
+
+            name +=
+                " • " +
+
+                Number(
+                    event.amountMl
+                ).toFixed(0) +
+
+                " mL";
 
         }
 
@@ -1597,9 +1999,9 @@ function render() {
 
 
         time.textContent =
-            new Date(
+            timeOnly(
                 event.timestamp
-            ).toLocaleString();
+            );
 
 
         card.appendChild(
@@ -1641,10 +2043,11 @@ function render() {
             () => {
 
                 if (
-                    event.type === "feed"
+                    event.type === "feed" ||
+                    event.type === "pump"
                 ) {
 
-                    openFeedEdit(
+                    openAmountEdit(
                         cloudId
                     );
 
@@ -1706,8 +2109,25 @@ function render() {
 
 }
 
+
+
+/* KEEP COUNTDOWN CURRENT */
+
+setInterval(
+    () => {
+
+        if (currentUid) {
+
+            updateFeedingStatus();
+
+        }
+
+    },
+    60000
+);
+
 </script>
 
 </body>
 
-</html>
+    </html>
