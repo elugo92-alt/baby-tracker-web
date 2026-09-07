@@ -670,6 +670,206 @@ button:active {
 }
 
 
+
+/* CALENDAR / REPORTS */
+
+.report-modal {
+    align-items: stretch;
+    padding: 0;
+}
+
+.report-card {
+    width: 100%;
+    max-width: 620px;
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
+    overflow-y: auto;
+    padding:
+        max(20px, env(safe-area-inset-top))
+        18px
+        max(28px, env(safe-area-inset-bottom));
+}
+
+.report-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.report-topbar h2 {
+    margin: 0;
+}
+
+.report-close {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--soft);
+    font-size: 20px;
+}
+
+.report-date-nav {
+    display: grid;
+    grid-template-columns: 48px 1fr 48px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.report-date-nav button {
+    min-height: 48px;
+    border-radius: 15px;
+    background: var(--soft);
+    font-size: 20px;
+}
+
+.report-date-nav input {
+    margin: 0;
+    text-align: center;
+    font-weight: 700;
+}
+
+.report-date-heading {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    font-weight: 700;
+    margin: 6px 2px 12px;
+}
+
+.report-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.report-stat {
+    background: rgba(255,255,255,.78);
+    border: 1px solid rgba(255,255,255,.9);
+    border-radius: 20px;
+    padding: 14px;
+    box-shadow:
+        0 6px 18px
+        rgba(74,56,42,.05);
+}
+
+.report-stat-wide {
+    grid-column: 1 / -1;
+}
+
+.report-stat-label {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.report-stat-value {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.report-stat-sub {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.timeline-title {
+    font-family: Georgia, serif;
+    font-size: 27px;
+    font-weight: 700;
+    margin: 24px 2px 10px;
+}
+
+.report-timeline {
+    background: rgba(255,255,255,.68);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.report-timeline-body {
+    position: relative;
+    height: 1536px;
+    min-height: 1536px;
+}
+
+.timeline-hour {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid rgba(117,111,105,.15);
+}
+
+.timeline-hour-label {
+    position: absolute;
+    left: 12px;
+    top: -10px;
+    width: 45px;
+    color: #8b857f;
+    font-size: 12px;
+    background: rgba(255,255,255,.72);
+}
+
+.timeline-event {
+    position: absolute;
+    left: 66px;
+    right: 10px;
+    min-height: 28px;
+    border-radius: 9px;
+    padding: 5px 9px;
+    font-size: 12px;
+    font-weight: 750;
+    box-shadow:
+        0 3px 8px
+        rgba(58,45,34,.08);
+    overflow: hidden;
+    line-height: 1.25;
+}
+
+.timeline-event.feed {
+    background: #dfead8;
+}
+
+.timeline-event.pump {
+    background: #f3ddd4;
+}
+
+.timeline-event.nursing {
+    background: #eaddec;
+}
+
+.timeline-event.pee {
+    background: #dcebf5;
+}
+
+.timeline-event.poop {
+    background: #f0dfcf;
+}
+
+.timeline-event.mixed {
+    background: #e6e0f0;
+}
+
+.timeline-event-time {
+    opacity: .72;
+    font-weight: 600;
+}
+
+.report-empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 18px;
+}
+
+
 /* SMALL PHONES */
 
 @media (max-width: 430px) {
@@ -1035,6 +1235,13 @@ button:active {
             Connected
         </div>
 
+
+        <button
+            id="calendarButton"
+            class="secondary">
+            📅 Calendar / Reports
+        </button>
+
         <button
             id="importButton"
             class="secondary">
@@ -1268,6 +1475,81 @@ button:active {
 
 
 
+
+<div
+    id="reportModal"
+    class="modal report-modal hidden">
+
+    <div class="modal-card report-card">
+
+        <div class="report-topbar">
+
+            <h2>
+                Calendar
+            </h2>
+
+            <button
+                id="closeReportButton"
+                class="report-close"
+                type="button">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="report-date-nav">
+
+            <button
+                id="previousReportDay"
+                type="button">
+                ‹
+            </button>
+
+            <input
+                id="reportDate"
+                type="date">
+
+            <button
+                id="nextReportDay"
+                type="button">
+                ›
+            </button>
+
+        </div>
+
+
+        <div
+            id="reportDateHeading"
+            class="report-date-heading">
+        </div>
+
+
+        <div
+            id="reportSummary"
+            class="report-summary">
+        </div>
+
+
+        <div class="timeline-title">
+            24 Hour Timeline
+        </div>
+
+
+        <div class="report-timeline">
+
+            <div
+                id="reportTimeline"
+                class="report-timeline-body">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <div
     id="editSimpleModal"
     class="modal hidden">
@@ -1389,6 +1671,23 @@ document.getElementById("importStatus")
 
 const morePanel =
 document.getElementById("morePanel")
+
+
+const reportModal =
+document.getElementById("reportModal")
+
+const reportDate =
+document.getElementById("reportDate")
+
+const reportDateHeading =
+document.getElementById("reportDateHeading")
+
+const reportSummary =
+document.getElementById("reportSummary")
+
+const reportTimeline =
+document.getElementById("reportTimeline")
+
 
 
 
@@ -1522,6 +1821,69 @@ document
     : '<span class="action-icon">⚙</span> More'
 
 })
+
+
+
+document
+.getElementById("calendarButton")
+.addEventListener(
+"click",
+() => {
+
+    reportDate.value =
+    localDateValue(
+        Date.now()
+    )
+
+    renderReport()
+
+    reportModal
+    .classList
+    .remove("hidden")
+
+}
+)
+
+
+
+document
+.getElementById("closeReportButton")
+.addEventListener(
+"click",
+() => {
+
+    reportModal
+    .classList
+    .add("hidden")
+
+}
+)
+
+
+
+reportDate
+.addEventListener(
+"change",
+renderReport
+)
+
+
+
+document
+.getElementById("previousReportDay")
+.addEventListener(
+"click",
+() => changeReportDay(-1)
+)
+
+
+
+document
+.getElementById("nextReportDay")
+.addEventListener(
+"click",
+() => changeReportDay(1)
+)
 
 
 
@@ -1810,6 +2172,16 @@ function watchEvents() {
             snapshot.val() || {}
 
             render()
+
+            if(
+                !reportModal
+                .classList
+                .contains("hidden")
+            ) {
+
+                renderReport()
+
+            }
 
         }
     )
@@ -3081,6 +3453,913 @@ async function deleteEvent(cloudId) {
         }
 
     )
+
+}
+
+
+
+
+/* CALENDAR / REPORTS */
+
+function localDateValue(timestamp) {
+
+    const d =
+    new Date(timestamp)
+
+    return (
+        d.getFullYear() +
+        "-" +
+        String(
+            d.getMonth() + 1
+        ).padStart(2,"0") +
+        "-" +
+        String(
+            d.getDate()
+        ).padStart(2,"0")
+    )
+
+}
+
+
+
+function selectedReportDate() {
+
+    const value =
+    reportDate.value
+
+
+    if(!value)
+        return new Date()
+
+
+    const parts =
+    value
+    .split("-")
+    .map(Number)
+
+
+    return new Date(
+        parts[0],
+        parts[1] - 1,
+        parts[2],
+        0,
+        0,
+        0,
+        0
+    )
+
+}
+
+
+
+function changeReportDay(amount) {
+
+    const d =
+    selectedReportDate()
+
+
+    d.setDate(
+        d.getDate() +
+        amount
+    )
+
+
+    reportDate.value =
+    localDateValue(
+        d.getTime()
+    )
+
+
+    renderReport()
+
+}
+
+
+
+function reportEventAmount(event) {
+
+    if(
+        event.enteredAmount != null
+    ) {
+
+        return (
+            Number(
+                event.enteredAmount
+            ).toFixed(
+                Number(
+                    event.enteredAmount
+                ) % 1 === 0
+                ? 0
+                : 1
+            )
+            +
+            " " +
+            (
+                event.enteredUnit ||
+                "mL"
+            )
+        )
+
+    }
+
+
+    if(
+        event.amountMl != null
+    ) {
+
+        return (
+            Number(
+                event.amountMl
+            ).toFixed(0)
+            +
+            " mL"
+        )
+
+    }
+
+
+    return ""
+
+}
+
+
+
+function secondsToReadable(seconds) {
+
+    const total =
+    Math.max(
+        0,
+        Number(seconds || 0)
+    )
+
+
+    const mins =
+    Math.round(
+        total /
+        60
+    )
+
+
+    if(mins < 60) {
+
+        return mins +
+        " min"
+
+    }
+
+
+    const hours =
+    Math.floor(
+        mins /
+        60
+    )
+
+
+    const remainder =
+    mins %
+    60
+
+
+    return (
+        hours +
+        " hr" +
+        (
+            hours === 1
+            ? ""
+            : "s"
+        )
+        +
+        (
+            remainder
+            ? " " +
+              remainder +
+              " min"
+            : ""
+        )
+    )
+
+}
+
+
+
+function reportTimelineLabel(event) {
+
+    if(event.type === "feed") {
+
+        const amount =
+        reportEventAmount(event)
+
+        return (
+            "Bottle" +
+            (
+                amount
+                ? " • " + amount
+                : ""
+            )
+        )
+
+    }
+
+
+    if(event.type === "pump") {
+
+        const amount =
+        reportEventAmount(event)
+
+        return (
+            "Pump" +
+            (
+                amount
+                ? " • " + amount
+                : ""
+            )
+        )
+
+    }
+
+
+    if(event.type === "nursing") {
+
+        const duration =
+        Number(
+            event.durationSeconds ||
+            (
+                Number(
+                    event.leftSeconds ||
+                    0
+                )
+                +
+                Number(
+                    event.rightSeconds ||
+                    0
+                )
+            )
+        )
+
+
+        return (
+            "Nursing • " +
+            secondsToReadable(
+                duration
+            )
+        )
+
+    }
+
+
+    if(event.type === "pee")
+        return "Pee"
+
+    if(event.type === "poop")
+        return "Poop"
+
+    if(event.type === "mixed")
+        return "Mixed"
+
+
+    return "Entry"
+
+}
+
+
+
+function renderReport() {
+
+    if(!reportDate.value) {
+
+        reportDate.value =
+        localDateValue(
+            Date.now()
+        )
+
+    }
+
+
+    const selected =
+    selectedReportDate()
+
+
+    const start =
+    selected.getTime()
+
+
+    const end =
+    new Date(
+        selected.getFullYear(),
+        selected.getMonth(),
+        selected.getDate() + 1
+    )
+    .getTime()
+
+
+    const entries =
+    Object.values(
+        currentEvents
+    )
+
+    .filter(
+        event =>
+        event &&
+        !event.deleted &&
+        Number(
+            event.timestamp
+        ) >= start &&
+        Number(
+            event.timestamp
+        ) < end
+    )
+
+    .sort(
+        (a,b) =>
+        Number(
+            a.timestamp
+        ) -
+        Number(
+            b.timestamp
+        )
+    )
+
+
+    reportDateHeading.textContent =
+    selected
+    .toLocaleDateString(
+        undefined,
+        {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        }
+    )
+
+
+    let bottleVolumeMl =
+    0
+
+    let bottleSessions =
+    0
+
+    let pumpVolumeMl =
+    0
+
+    let pumpSessions =
+    0
+
+    let nursingSessions =
+    0
+
+    let nursingSeconds =
+    0
+
+    let peeCount =
+    0
+
+    let poopCount =
+    0
+
+    let mixedCount =
+    0
+
+
+    for(const event of entries) {
+
+        if(event.type === "feed") {
+
+            bottleSessions++
+
+            bottleVolumeMl +=
+            Number(
+                event.amountMl ||
+                0
+            )
+
+        }
+
+
+        if(event.type === "pump") {
+
+            pumpSessions++
+
+            pumpVolumeMl +=
+            Number(
+                event.amountMl ||
+                0
+            )
+
+        }
+
+
+        if(event.type === "nursing") {
+
+            nursingSessions++
+
+            nursingSeconds +=
+            Number(
+                event.durationSeconds ||
+                (
+                    Number(
+                        event.leftSeconds ||
+                        0
+                    )
+                    +
+                    Number(
+                        event.rightSeconds ||
+                        0
+                    )
+                )
+            )
+
+        }
+
+
+        if(event.type === "pee")
+            peeCount++
+
+
+        if(event.type === "poop")
+            poopCount++
+
+
+        if(event.type === "mixed") {
+
+            mixedCount++
+
+            peeCount++
+
+            poopCount++
+
+        }
+
+    }
+
+
+    const bottleOz =
+    bottleVolumeMl /
+    29.5735
+
+
+    const pumpOz =
+    pumpVolumeMl /
+    29.5735
+
+
+    reportSummary.innerHTML =
+    ""
+
+
+    const stats = [
+        {
+            label:
+            "Bottle volume",
+
+            value:
+            bottleOz.toFixed(1) +
+            " oz",
+
+            sub:
+            Math.round(
+                bottleVolumeMl
+            ) +
+            " mL"
+        },
+
+        {
+            label:
+            "Bottle sessions",
+
+            value:
+            bottleSessions,
+
+            sub:
+            bottleSessions === 1
+            ? "feeding"
+            : "feedings"
+        },
+
+        {
+            label:
+            "Pump volume",
+
+            value:
+            pumpOz.toFixed(1) +
+            " oz",
+
+            sub:
+            Math.round(
+                pumpVolumeMl
+            ) +
+            " mL"
+        },
+
+        {
+            label:
+            "Pump sessions",
+
+            value:
+            pumpSessions,
+
+            sub:
+            pumpSessions === 1
+            ? "session"
+            : "sessions"
+        },
+
+        {
+            label:
+            "Nursing",
+
+            value:
+            nursingSessions,
+
+            sub:
+            secondsToReadable(
+                nursingSeconds
+            ) +
+            " total"
+        },
+
+        {
+            label:
+            "Diapers",
+
+            value:
+            (
+                peeCount +
+                poopCount -
+                mixedCount
+            ),
+
+            sub:
+            "Pee " +
+            peeCount +
+            " • Poop " +
+            poopCount +
+            (
+                mixedCount
+                ? " • Mixed " +
+                  mixedCount
+                : ""
+            )
+        }
+    ]
+
+
+    for(
+        const stat
+        of stats
+    ) {
+
+        const card =
+        document.createElement(
+            "div"
+        )
+
+        card.className =
+        "report-stat"
+
+
+        const label =
+        document.createElement(
+            "div"
+        )
+
+        label.className =
+        "report-stat-label"
+
+        label.textContent =
+        stat.label
+
+
+        const value =
+        document.createElement(
+            "div"
+        )
+
+        value.className =
+        "report-stat-value"
+
+        value.textContent =
+        stat.value
+
+
+        const sub =
+        document.createElement(
+            "div"
+        )
+
+        sub.className =
+        "report-stat-sub"
+
+        sub.textContent =
+        stat.sub
+
+
+        card.appendChild(
+            label
+        )
+
+        card.appendChild(
+            value
+        )
+
+        card.appendChild(
+            sub
+        )
+
+
+        reportSummary.appendChild(
+            card
+        )
+
+    }
+
+
+    reportTimeline.innerHTML =
+    ""
+
+
+    const hourHeight =
+    64
+
+
+    for(
+        let hour = 0;
+        hour < 24;
+        hour++
+    ) {
+
+        const line =
+        document.createElement(
+            "div"
+        )
+
+        line.className =
+        "timeline-hour"
+
+        line.style.top =
+        (
+            hour *
+            hourHeight
+        ) +
+        "px"
+
+
+        const label =
+        document.createElement(
+            "div"
+        )
+
+        label.className =
+        "timeline-hour-label"
+
+
+        const hourDate =
+        new Date(
+            selected.getFullYear(),
+            selected.getMonth(),
+            selected.getDate(),
+            hour,
+            0,
+            0,
+            0
+        )
+
+
+        label.textContent =
+        hourDate
+        .toLocaleTimeString(
+            undefined,
+            {
+                hour: "numeric"
+            }
+        )
+
+
+        line.appendChild(
+            label
+        )
+
+
+        reportTimeline.appendChild(
+            line
+        )
+
+    }
+
+
+    if(entries.length === 0) {
+
+        const empty =
+        document.createElement(
+            "div"
+        )
+
+        empty.className =
+        "report-empty"
+
+        empty.textContent =
+        "No entries for this day."
+
+        empty.style.position =
+        "absolute"
+
+        empty.style.top =
+        "24px"
+
+        empty.style.left =
+        "60px"
+
+        empty.style.right =
+        "10px"
+
+
+        reportTimeline.appendChild(
+            empty
+        )
+
+        return
+
+    }
+
+
+    const laneTops = [
+        -100,
+        -100,
+        -100
+    ]
+
+
+    for(
+        const event
+        of entries
+    ) {
+
+        const d =
+        new Date(
+            Number(
+                event.timestamp
+            )
+        )
+
+
+        const minutes =
+        d.getHours() *
+        60 +
+        d.getMinutes() +
+        d.getSeconds() /
+        60
+
+
+        const top =
+        minutes *
+        (
+            hourHeight /
+            60
+        )
+
+
+        let durationMinutes =
+        0
+
+
+        if(
+            event.type ===
+            "nursing"
+        ) {
+
+            durationMinutes =
+            Number(
+                event.durationSeconds ||
+                0
+            ) /
+            60
+
+        }
+
+
+        const height =
+        Math.max(
+            28,
+            Math.min(
+                120,
+                durationMinutes *
+                (
+                    hourHeight /
+                    60
+                )
+            )
+        )
+
+
+        let lane =
+        0
+
+
+        for(
+            let i = 0;
+            i < laneTops.length;
+            i++
+        ) {
+
+            if(
+                top -
+                laneTops[i] >
+                32
+            ) {
+
+                lane =
+                i
+
+                break
+
+            }
+        }
+
+
+        laneTops[lane] =
+        top
+
+
+        const block =
+        document.createElement(
+            "div"
+        )
+
+        block.className =
+        "timeline-event " +
+        event.type
+
+
+        block.style.top =
+        top +
+        "px"
+
+
+        block.style.height =
+        height +
+        "px"
+
+
+        block.style.left =
+        (
+            66 +
+            lane *
+            13
+        ) +
+        "px"
+
+
+        block.style.right =
+        (
+            10 +
+            (
+                2 -
+                lane
+            ) *
+            5
+        ) +
+        "px"
+
+
+        const title =
+        document.createElement(
+            "div"
+        )
+
+        title.textContent =
+        reportTimelineLabel(
+            event
+        )
+
+
+        const time =
+        document.createElement(
+            "div"
+        )
+
+        time.className =
+        "timeline-event-time"
+
+        time.textContent =
+        timeOnly(
+            event.timestamp
+        )
+
+
+        block.appendChild(
+            title
+        )
+
+        block.appendChild(
+            time
+        )
+
+
+        reportTimeline.appendChild(
+            block
+        )
+
+    }
 
 }
 
