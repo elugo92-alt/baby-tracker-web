@@ -47,6 +47,7 @@
 
 body {
     margin: 0;
+
     background:
         radial-gradient(
             circle at top right,
@@ -88,19 +89,25 @@ h1 {
 
     font-size: 48px;
     line-height: 1;
+
     margin: 14px 0 4px;
+
     letter-spacing: -1.5px;
 }
 
 .tagline {
     color: #7e746d;
+
     font-family: Georgia, serif;
+
     font-style: italic;
+
     font-size: 18px;
 }
 
 .decor {
     position: absolute;
+
     right: 4px;
     top: -2px;
 
@@ -147,6 +154,28 @@ h1 {
         serif;
 }
 
+.login-divider {
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    margin: 12px 0;
+}
+
+#createAccountButton {
+    width: 100%;
+
+    min-height: 52px;
+
+    border-radius: 16px;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
 input,
 select,
 button {
@@ -156,6 +185,7 @@ button {
 input,
 select {
     width: 100%;
+
     min-height: 52px;
 
     border:
@@ -166,7 +196,8 @@ select {
 
     padding: 11px 13px;
 
-    background: rgba(255,255,255,.9);
+    background:
+        rgba(255,255,255,.9);
 
     font-size: 16px;
 
@@ -188,6 +219,7 @@ button:active {
 
 .primary {
     width: 100%;
+
     min-height: 52px;
 
     border-radius: 16px;
@@ -197,22 +229,27 @@ button:active {
     color: white;
 
     font-size: 16px;
+
     font-weight: 700;
 }
 
 .secondary {
     background: var(--soft);
+
     color: var(--text);
 }
 
 .danger {
     background: #faece8;
+
     color: var(--danger);
 }
 
 .status {
     color: var(--muted);
+
     font-size: 14px;
+
     margin-top: 8px;
 }
 
@@ -221,11 +258,13 @@ button:active {
 
 .today-card {
     padding: 22px 18px;
+
     margin-bottom: 18px;
 }
 
 .today-layout {
     display: grid;
+
     grid-template-columns:
         1.15fr 2fr;
 
@@ -252,11 +291,13 @@ button:active {
 
 .today-date {
     color: var(--muted);
+
     margin-top: 5px;
 }
 
 .counts {
     display: grid;
+
     grid-template-columns:
         repeat(3, 1fr);
 
@@ -280,7 +321,9 @@ button:active {
         7px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 24px;
@@ -300,13 +343,17 @@ button:active {
 
 .count-number {
     font-size: 26px;
+
     line-height: 1;
+
     font-weight: 800;
 }
 
 .count-label {
     color: var(--muted);
+
     margin-top: 4px;
+
     font-size: 14px;
 }
 
@@ -322,6 +369,7 @@ button:active {
         );
 
     padding: 18px 20px;
+
     margin-bottom: 18px;
 
     display: grid;
@@ -336,6 +384,7 @@ button:active {
     min-height: 70px;
 
     display: flex;
+
     align-items: center;
 
     gap: 12px;
@@ -359,10 +408,13 @@ button:active {
 
     border-radius: 50%;
 
-    background: rgba(255,255,255,.7);
+    background:
+        rgba(255,255,255,.7);
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 26px;
@@ -372,18 +424,23 @@ button:active {
 
 .feed-small-label {
     font-size: 14px;
+
     color: #5c5752;
 }
 
 .feed-time {
     font-weight: 800;
+
     font-size: 20px;
+
     margin-top: 2px;
 }
 
 .feed-sub {
     color: var(--muted);
+
     font-size: 13px;
+
     margin-top: 2px;
 }
 
@@ -407,12 +464,15 @@ button:active {
     border-radius: 24px;
 
     font-size: 16px;
+
     font-weight: 700;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 10px;
@@ -460,6 +520,7 @@ button:active {
 
 .action-full {
     grid-column: span 6;
+
     min-height: 64px;
 
     flex-direction: row;
@@ -470,6 +531,7 @@ button:active {
 
 .more-panel {
     padding: 18px;
+
     margin: -6px 0 20px;
 }
 
@@ -496,6 +558,7 @@ button:active {
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
     margin:
@@ -515,6 +578,7 @@ button:active {
 
 .history-decoration {
     font-size: 23px;
+
     color: #80776f;
 }
 
@@ -546,6 +610,7 @@ button:active {
         serif;
 
     font-size: 21px;
+
     font-weight: 700;
 
     background:
@@ -567,8 +632,7 @@ button:active {
 }
 
 .event {
-    margin:
-        12px;
+    margin: 12px;
 
     padding: 14px;
 
@@ -598,7 +662,9 @@ button:active {
     border-radius: 50%;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 23px;
@@ -610,12 +676,15 @@ button:active {
 
 .event-name {
     font-weight: 750;
+
     font-size: 17px;
 }
 
 .event-time {
     color: var(--muted);
+
     font-size: 14px;
+
     margin-top: 3px;
 }
 
@@ -627,6 +696,7 @@ button:active {
 
 .event-buttons button {
     min-width: 72px;
+
     min-height: 42px;
 
     border-radius: 13px;
@@ -636,6 +706,7 @@ button:active {
 
 .empty-history {
     padding: 22px;
+
     color: var(--muted);
 }
 
@@ -659,6 +730,7 @@ button:active {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     padding: 20px;
@@ -668,6 +740,7 @@ button:active {
 
 .modal-card {
     width: 100%;
+
     max-width: 420px;
 
     padding: 22px;
@@ -693,17 +766,22 @@ button:active {
 
 .feed-row {
     display: grid;
+
     grid-template-columns:
         2fr 1fr;
+
     gap: 8px;
 }
 
 .field-label {
     display: block;
+
     margin: 4px 0 6px;
 
     font-size: 13px;
+
     color: var(--muted);
+
     font-weight: 700;
 }
 
@@ -756,7 +834,9 @@ button:active {
 </style>
 </head>
 
+
 <body>
+
 
 <div class="app">
 
@@ -802,6 +882,16 @@ button:active {
         id="signInButton"
         class="primary">
         Sign In
+    </button>
+
+    <div class="login-divider">
+        New to Baby Tracker?
+    </div>
+
+    <button
+        id="createAccountButton"
+        class="secondary">
+        Create Account
     </button>
 
     <div
@@ -1205,6 +1295,7 @@ import {
 import {
     getAuth,
     signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
     signOut,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
@@ -1378,30 +1469,190 @@ document
 "click",
 async () => {
 
+    const email =
+    document
+    .getElementById("email")
+    .value
+    .trim()
+
+    const password =
+    document
+    .getElementById("password")
+    .value
+
+
+    if(!email) {
+
+        loginStatus.textContent =
+        "Enter your email address."
+
+        return
+
+    }
+
+
+    if(!password) {
+
+        loginStatus.textContent =
+        "Enter your password."
+
+        return
+
+    }
+
+
     loginStatus.textContent =
     "Signing in..."
+
 
     try {
 
         await signInWithEmailAndPassword(
-
             auth,
-
-            document
-            .getElementById("email")
-            .value
-            .trim(),
-
-            document
-            .getElementById("password")
-            .value
-
+            email,
+            password
         )
+
+
+        document
+        .getElementById("password")
+        .value =
+        ""
+
 
     } catch(error) {
 
+        if(
+            error.code ===
+            "auth/invalid-credential"
+        ) {
+
+            loginStatus.textContent =
+            "Incorrect email or password."
+
+        } else if(
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            loginStatus.textContent =
+            "Enter a valid email address."
+
+        } else {
+
+            loginStatus.textContent =
+            error.message
+
+        }
+
+    }
+
+})
+
+
+
+document
+.getElementById("createAccountButton")
+.addEventListener(
+"click",
+async () => {
+
+    const email =
+    document
+    .getElementById("email")
+    .value
+    .trim()
+
+    const password =
+    document
+    .getElementById("password")
+    .value
+
+
+    if(!email) {
+
         loginStatus.textContent =
-        error.message
+        "Enter an email address first."
+
+        return
+
+    }
+
+
+    if(password.length < 6) {
+
+        loginStatus.textContent =
+        "Password must be at least 6 characters."
+
+        return
+
+    }
+
+
+    const confirmed =
+    confirm(
+        "Create a new Baby Tracker account for " +
+        email +
+        "?\n\n" +
+        "This account will have its own separate baby history."
+    )
+
+
+    if(!confirmed)
+        return
+
+
+    loginStatus.textContent =
+    "Creating account..."
+
+
+    try {
+
+        await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        )
+
+
+        document
+        .getElementById("password")
+        .value =
+        ""
+
+
+    } catch(error) {
+
+        if(
+            error.code ===
+            "auth/email-already-in-use"
+        ) {
+
+            loginStatus.textContent =
+            "That email already has a Baby Tracker account. Tap Sign In instead."
+
+        } else if(
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            loginStatus.textContent =
+            "Enter a valid email address."
+
+        } else if(
+            error.code ===
+            "auth/weak-password"
+        ) {
+
+            loginStatus.textContent =
+            "Choose a stronger password."
+
+        } else {
+
+            loginStatus.textContent =
+            error.message
+
+        }
 
     }
 
@@ -1445,6 +1696,9 @@ user => {
         .classList
         .add("hidden")
 
+        loginStatus.textContent =
+        ""
+
         return
 
     }
@@ -1453,17 +1707,21 @@ user => {
     currentUid =
     user.uid
 
+
     loginCard
     .classList
     .add("hidden")
+
 
     tracker
     .classList
     .remove("hidden")
 
+
     cloudStatus.textContent =
     "Connected as " +
     user.email
+
 
     watchEvents()
 
@@ -1523,6 +1781,7 @@ function makeCloudId() {
 
     }
 
+
     return (
         "web_" +
         Date.now() +
@@ -1542,9 +1801,11 @@ function dateToInputValue(timestamp) {
     const date =
     new Date(timestamp)
 
+
     const offset =
     date.getTimezoneOffset() *
     60000
+
 
     return new Date(
         timestamp - offset
@@ -1569,6 +1830,7 @@ function dateKey(timestamp) {
 
     const d =
     new Date(timestamp)
+
 
     return (
         d.getFullYear() +
@@ -1623,11 +1885,14 @@ async function addSimple(type) {
     if(!currentUid)
         return
 
+
     const cloudId =
     makeCloudId()
 
+
     const now =
     Date.now()
+
 
     await set(
 
@@ -1704,24 +1969,30 @@ function openNewAmountEvent(type) {
     editingAmountId =
     null
 
+
     editingAmountType =
     type
+
 
     amountModalTitle.textContent =
     type === "pump"
     ? "Log Pump"
     : "Log Feeding"
 
+
     amountInput.value =
     ""
 
+
     amountUnit.value =
     "oz"
+
 
     amountDateTime.value =
     dateToInputValue(
         Date.now()
     )
+
 
     amountModal
     .classList
@@ -1741,8 +2012,10 @@ document
     .classList
     .add("hidden")
 
+
     editingAmountId =
     null
+
 
     editingAmountType =
     null
@@ -1762,8 +2035,10 @@ async () => {
         amountInput.value
     )
 
+
     const unit =
     amountUnit.value
+
 
     const timestamp =
     inputValueToTimestamp(
@@ -1829,6 +2104,7 @@ async () => {
         const cloudId =
         makeCloudId()
 
+
         await set(
 
             ref(
@@ -1873,8 +2149,10 @@ async () => {
     editingAmountId =
     null
 
+
     editingAmountType =
     null
+
 
     amountModal
     .classList
@@ -1889,12 +2167,14 @@ function openAmountEdit(cloudId) {
     const event =
     currentEvents[cloudId]
 
+
     if(!event)
         return
 
 
     editingAmountId =
     cloudId
+
 
     editingAmountType =
     event.type
@@ -1936,6 +2216,7 @@ function openSimpleEdit(cloudId) {
     const event =
     currentEvents[cloudId]
 
+
     if(!event)
         return
 
@@ -1951,8 +2232,10 @@ function openSimpleEdit(cloudId) {
     if(event.type === "pee")
         name = "Pee"
 
+
     if(event.type === "poop")
         name = "Poop"
+
 
     if(event.type === "mixed")
         name = "Mixed"
@@ -1986,6 +2269,7 @@ document
     editingSimpleId =
     null
 
+
     editSimpleModal
     .classList
     .add("hidden")
@@ -2003,10 +2287,12 @@ async () => {
     if(!editingSimpleId)
         return
 
+
     const timestamp =
     inputValueToTimestamp(
         simpleDateTime.value
     )
+
 
     await update(
 
@@ -2020,14 +2306,17 @@ async () => {
 
         {
             timestamp,
+
             updatedAt:
             Date.now()
         }
 
     )
 
+
     editingSimpleId =
     null
+
 
     editSimpleModal
     .classList
@@ -2045,6 +2334,7 @@ async function deleteEvent(cloudId) {
         )
     )
         return
+
 
     await update(
 
@@ -2081,6 +2371,7 @@ document
     importFile.value =
     ""
 
+
     importFile.click()
 
 })
@@ -2095,6 +2386,7 @@ async event => {
     const file =
     event.target.files[0]
 
+
     if(!file)
         return
 
@@ -2107,6 +2399,7 @@ async event => {
 
         const text =
         await file.text()
+
 
         const data =
         JSON.parse(text)
@@ -2144,11 +2437,14 @@ async event => {
         let newCount =
         0
 
+
         let duplicateCount =
         0
 
+
         let invalidCount =
         0
+
 
         const updates =
         {}
@@ -2309,8 +2605,10 @@ function isToday(timestamp) {
     const d =
     new Date(timestamp)
 
+
     const today =
     new Date()
+
 
     return (
         d.getFullYear() ===
@@ -2363,11 +2661,13 @@ function updateFeedingStatus() {
         "lastFeedTime"
     )
 
+
     const nextFeedTime =
     document
     .getElementById(
         "nextFeedTime"
     )
+
 
     const countdown =
     document
@@ -2383,11 +2683,14 @@ function updateFeedingStatus() {
         lastFeedTime.textContent =
         "--"
 
+
         nextFeedTime.textContent =
         "--"
 
+
         countdown.textContent =
         "--"
+
 
         return
 
@@ -2418,6 +2721,7 @@ function updateFeedingStatus() {
     lastFeedTime.textContent =
     timeOnly(latest)
 
+
     nextFeedTime.textContent =
     timeOnly(next)
 
@@ -2435,14 +2739,17 @@ function updateFeedingStatus() {
             60000
         )
 
+
         const h =
         Math.floor(
             mins /
             60
         )
 
+
         const m =
         mins % 60
+
 
         countdown.textContent =
         h > 0
@@ -2466,17 +2773,22 @@ function eventIconClass(type) {
     if(type === "pee")
         return "icon-pee"
 
+
     if(type === "poop")
         return "icon-poop"
+
 
     if(type === "mixed")
         return "icon-pee"
 
+
     if(type === "feed")
         return "icon-feed"
 
+
     if(type === "pump")
         return "icon-feed"
+
 
     return ""
 
@@ -2489,17 +2801,22 @@ function eventIcon(type) {
     if(type === "pee")
         return "💧"
 
+
     if(type === "poop")
         return "💩"
+
 
     if(type === "mixed")
         return "💧💩"
 
+
     if(type === "feed")
         return "🍼"
 
+
     if(type === "pump")
         return "🍼"
+
 
     return "•"
 
@@ -2516,14 +2833,18 @@ function eventName(event) {
     if(event.type === "pee")
         name = "Pee"
 
+
     if(event.type === "poop")
         name = "Poop"
+
 
     if(event.type === "mixed")
         name = "Mixed"
 
+
     if(event.type === "feed")
         name = "Feed"
+
 
     if(event.type === "pump")
         name = "Pump"
@@ -2551,6 +2872,7 @@ function eventName(event) {
         )
 
     }
+
 
     return name
 
@@ -2585,11 +2907,14 @@ function render() {
     let pee =
     0
 
+
     let poop =
     0
 
+
     let feed =
     0
+
 
     let totalMl =
     0
@@ -2611,8 +2936,10 @@ function render() {
         if(event.type === "pee")
             pee++
 
+
         if(event.type === "poop")
             poop++
+
 
         if(event.type === "mixed") {
 
@@ -2621,6 +2948,7 @@ function render() {
             poop++
 
         }
+
 
         if(event.type === "feed") {
 
@@ -2689,15 +3017,19 @@ function render() {
             "div"
         )
 
+
         empty.className =
         "card empty-history"
+
 
         empty.textContent =
         "No entries yet."
 
+
         history.appendChild(
             empty
         )
+
 
         return
 
@@ -2718,8 +3050,10 @@ function render() {
             item[1].timestamp
         )
 
+
         if(!days[day])
             days[day] = []
+
 
         days[day].push(item)
 
@@ -2740,6 +3074,7 @@ function render() {
             "div"
         )
 
+
         dayCard.className =
         "day-card"
 
@@ -2749,6 +3084,7 @@ function render() {
             "div"
         )
 
+
         header.className =
         "day-header"
 
@@ -2757,6 +3093,7 @@ function render() {
         document.createElement(
             "span"
         )
+
 
         headerDate.textContent =
         dateHeaderText(
@@ -2770,8 +3107,10 @@ function render() {
             "span"
         )
 
+
         count.className =
         "day-count"
+
 
         count.textContent =
         dayItems.length +
@@ -2786,9 +3125,11 @@ function render() {
             headerDate
         )
 
+
         header.appendChild(
             count
         )
+
 
         dayCard.appendChild(
             header
@@ -2808,6 +3149,7 @@ function render() {
                 "div"
             )
 
+
             card.className =
             "event"
 
@@ -2817,11 +3159,13 @@ function render() {
                 "div"
             )
 
+
             icon.className =
             "event-icon " +
             eventIconClass(
                 event.type
             )
+
 
             icon.textContent =
             eventIcon(
@@ -2834,6 +3178,7 @@ function render() {
                 "div"
             )
 
+
             main.className =
             "event-main"
 
@@ -2843,8 +3188,10 @@ function render() {
                 "div"
             )
 
+
             title.className =
             "event-name"
+
 
             title.textContent =
             eventName(event)
@@ -2855,8 +3202,10 @@ function render() {
                 "div"
             )
 
+
             time.className =
             "event-time"
+
 
             time.textContent =
             timeOnly(
@@ -2868,6 +3217,7 @@ function render() {
                 title
             )
 
+
             main.appendChild(
                 time
             )
@@ -2878,6 +3228,7 @@ function render() {
                 "div"
             )
 
+
             buttons.className =
             "event-buttons"
 
@@ -2887,11 +3238,14 @@ function render() {
                 "button"
             )
 
+
             edit.className =
             "secondary"
 
+
             edit.textContent =
             "Edit"
+
 
             edit.onclick =
             () => {
@@ -2926,11 +3280,14 @@ function render() {
                 "button"
             )
 
+
             remove.className =
             "danger"
 
+
             remove.textContent =
             "Delete"
+
 
             remove.onclick =
             () =>
@@ -2943,6 +3300,7 @@ function render() {
                 edit
             )
 
+
             buttons.appendChild(
                 remove
             )
@@ -2952,13 +3310,16 @@ function render() {
                 icon
             )
 
+
             card.appendChild(
                 main
             )
 
+
             card.appendChild(
                 buttons
             )
+
 
             dayCard.appendChild(
                 card
@@ -2990,5 +3351,4 @@ setInterval(
 </script>
 
 </body>
-
     </html>
