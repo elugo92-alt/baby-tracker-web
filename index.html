@@ -32,6 +32,7 @@
     --green: #e9efe4;
     --lavender: #eeeaf4;
     --pink: #f6e9e3;
+    --nursing: #f3e9ef;
 
     --soft: #efebe6;
     --danger: #9b3a2e;
@@ -47,7 +48,6 @@
 
 body {
     margin: 0;
-
     background:
         radial-gradient(
             circle at top right,
@@ -89,53 +89,33 @@ h1 {
 
     font-size: 48px;
     line-height: 1;
-
     margin: 14px 0 4px;
-
     letter-spacing: -1.5px;
 }
 
 .tagline {
     color: #7e746d;
-
     font-family: Georgia, serif;
-
     font-style: italic;
-
     font-size: 18px;
 }
 
 .decor {
     position: absolute;
-
     right: 4px;
     top: -2px;
-
     font-size: 46px;
-
     opacity: .72;
-
-    transform:
-        rotate(-8deg);
+    transform: rotate(-8deg);
 }
 
 .card {
     background: var(--card);
-
-    border:
-        1px solid
-        rgba(255,255,255,.75);
-
+    border: 1px solid rgba(255,255,255,.75);
     border-radius: 28px;
-
-    box-shadow:
-        var(--shadow);
-
-    backdrop-filter:
-        blur(12px);
-
-    -webkit-backdrop-filter:
-        blur(12px);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .hidden {
@@ -148,31 +128,21 @@ h1 {
 
 #loginCard h2 {
     margin-top: 0;
-
-    font-family:
-        Georgia,
-        serif;
+    font-family: Georgia, serif;
 }
 
 .login-divider {
     text-align: center;
-
     color: var(--muted);
-
     font-size: 13px;
-
     margin: 12px 0;
 }
 
 #createAccountButton {
     width: 100%;
-
     min-height: 52px;
-
     border-radius: 16px;
-
     font-size: 16px;
-
     font-weight: 700;
 }
 
@@ -185,32 +155,19 @@ button {
 input,
 select {
     width: 100%;
-
     min-height: 52px;
-
-    border:
-        1px solid
-        #ded8d1;
-
+    border: 1px solid #ded8d1;
     border-radius: 15px;
-
     padding: 11px 13px;
-
-    background:
-        rgba(255,255,255,.9);
-
+    background: rgba(255,255,255,.9);
     font-size: 16px;
-
     margin-bottom: 10px;
 }
 
 button {
     border: 0;
-
     cursor: pointer;
-
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 
 button:active {
@@ -219,37 +176,27 @@ button:active {
 
 .primary {
     width: 100%;
-
     min-height: 52px;
-
     border-radius: 16px;
-
     background: #272522;
-
     color: white;
-
     font-size: 16px;
-
     font-weight: 700;
 }
 
 .secondary {
     background: var(--soft);
-
     color: var(--text);
 }
 
 .danger {
     background: #faece8;
-
     color: var(--danger);
 }
 
 .status {
     color: var(--muted);
-
     font-size: 14px;
-
     margin-top: 8px;
 }
 
@@ -258,51 +205,35 @@ button:active {
 
 .today-card {
     padding: 22px 18px;
-
     margin-bottom: 18px;
 }
 
 .today-layout {
     display: grid;
-
-    grid-template-columns:
-        1.15fr 2fr;
-
+    grid-template-columns: 1.15fr 2fr;
     align-items: center;
 }
 
 .today-label {
     padding-right: 18px;
-
-    border-right:
-        1px solid
-        #ded8d2;
+    border-right: 1px solid #ded8d2;
 }
 
 .today-label-title {
-    font-family:
-        Georgia,
-        serif;
-
+    font-family: Georgia, serif;
     font-weight: 700;
-
     font-size: 29px;
 }
 
 .today-date {
     color: var(--muted);
-
     margin-top: 5px;
 }
 
 .counts {
     display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
     gap: 5px;
-
     padding-left: 14px;
 }
 
@@ -313,19 +244,11 @@ button:active {
 .icon-circle {
     width: 54px;
     height: 54px;
-
     border-radius: 50%;
-
-    margin:
-        0 auto
-        7px;
-
+    margin: 0 auto 7px;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-size: 24px;
 }
 
@@ -341,19 +264,19 @@ button:active {
     background: var(--green);
 }
 
+.icon-nurse {
+    background: var(--nursing);
+}
+
 .count-number {
     font-size: 26px;
-
     line-height: 1;
-
     font-weight: 800;
 }
 
 .count-label {
     color: var(--muted);
-
     margin-top: 4px;
-
     font-size: 14px;
 }
 
@@ -369,24 +292,16 @@ button:active {
         );
 
     padding: 18px 20px;
-
     margin-bottom: 18px;
-
     display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
+    grid-template-columns: 1fr 1fr;
     gap: 0;
 }
 
 .feed-section {
     min-height: 70px;
-
     display: flex;
-
     align-items: center;
-
     gap: 12px;
 }
 
@@ -405,42 +320,29 @@ button:active {
 .feed-big-icon {
     width: 52px;
     height: 52px;
-
     border-radius: 50%;
-
-    background:
-        rgba(255,255,255,.7);
-
+    background: rgba(255,255,255,.7);
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-size: 26px;
-
     flex: 0 0 auto;
 }
 
 .feed-small-label {
     font-size: 14px;
-
     color: #5c5752;
 }
 
 .feed-time {
     font-weight: 800;
-
     font-size: 20px;
-
     margin-top: 2px;
 }
 
 .feed-sub {
     color: var(--muted);
-
     font-size: 13px;
-
     margin-top: 2px;
 }
 
@@ -449,34 +351,21 @@ button:active {
 
 .actions {
     display: grid;
-
-    grid-template-columns:
-        repeat(6, 1fr);
-
+    grid-template-columns: repeat(6, 1fr);
     gap: 12px;
-
     margin-bottom: 20px;
 }
 
 .action-btn {
     min-height: 118px;
-
     border-radius: 24px;
-
     font-size: 16px;
-
     font-weight: 700;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 10px;
-
     box-shadow:
         0 7px 18px
         rgba(85,66,49,.05);
@@ -506,6 +395,10 @@ button:active {
     background: var(--pink);
 }
 
+#nurseButton {
+    background: var(--nursing);
+}
+
 #moreButton {
     background: var(--soft);
 }
@@ -514,15 +407,13 @@ button:active {
     grid-column: span 2;
 }
 
-.action-wide {
-    grid-column: span 3;
+.action-third {
+    grid-column: span 2;
 }
 
 .action-full {
     grid-column: span 6;
-
     min-height: 64px;
-
     flex-direction: row;
 }
 
@@ -531,19 +422,14 @@ button:active {
 
 .more-panel {
     padding: 18px;
-
     margin: -6px 0 20px;
 }
 
 .more-panel button {
     width: 100%;
-
     min-height: 50px;
-
     border-radius: 14px;
-
     font-weight: 700;
-
     margin-top: 8px;
 }
 
@@ -556,65 +442,39 @@ button:active {
 
 .history-header {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
-    margin:
-        30px 2px
-        12px;
+    margin: 30px 2px 12px;
 }
 
 .history-title {
-    font-family:
-        Georgia,
-        serif;
-
+    font-family: Georgia, serif;
     font-size: 38px;
-
     font-weight: 700;
 }
 
 .history-decoration {
     font-size: 23px;
-
     color: #80776f;
 }
 
 .day-card {
     border-radius: 25px;
-
-    background:
-        rgba(255,255,255,.66);
-
-    box-shadow:
-        var(--shadow);
-
+    background: rgba(255,255,255,.66);
+    box-shadow: var(--shadow);
     overflow: hidden;
-
     margin-bottom: 18px;
 }
 
 .day-header {
     padding: 16px 18px;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
-    font-family:
-        Georgia,
-        serif;
-
+    font-family: Georgia, serif;
     font-size: 21px;
-
     font-weight: 700;
-
-    background:
-        rgba(239,235,230,.72);
+    background: rgba(239,235,230,.72);
 }
 
 .day-count {
@@ -625,31 +485,19 @@ button:active {
         sans-serif;
 
     font-weight: 500;
-
     color: var(--muted);
-
     font-size: 13px;
 }
 
 .event {
     margin: 12px;
-
     padding: 14px;
-
-    background:
-        rgba(255,255,255,.9);
-
+    background: rgba(255,255,255,.9);
     border-radius: 20px;
-
     display: grid;
-
-    grid-template-columns:
-        auto 1fr auto;
-
+    grid-template-columns: auto 1fr auto;
     gap: 13px;
-
     align-items: center;
-
     box-shadow:
         0 5px 16px
         rgba(58,45,34,.04);
@@ -658,15 +506,10 @@ button:active {
 .event-icon {
     width: 48px;
     height: 48px;
-
     border-radius: 50%;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-size: 23px;
 }
 
@@ -676,37 +519,29 @@ button:active {
 
 .event-name {
     font-weight: 750;
-
     font-size: 17px;
 }
 
 .event-time {
     color: var(--muted);
-
     font-size: 14px;
-
     margin-top: 3px;
 }
 
 .event-buttons {
     display: flex;
-
     gap: 6px;
 }
 
 .event-buttons button {
     min-width: 72px;
-
     min-height: 42px;
-
     border-radius: 13px;
-
     font-size: 14px;
 }
 
 .empty-history {
     padding: 22px;
-
     color: var(--muted);
 }
 
@@ -715,40 +550,23 @@ button:active {
 
 .modal {
     position: fixed;
-
     inset: 0;
-
-    background:
-        rgba(50,42,36,.38);
-
-    backdrop-filter:
-        blur(10px);
-
-    -webkit-backdrop-filter:
-        blur(10px);
-
+    background: rgba(50,42,36,.38);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 20px;
-
     z-index: 100;
 }
 
 .modal-card {
     width: 100%;
-
     max-width: 420px;
-
     padding: 22px;
-
     background: #fbf8f4;
-
     border-radius: 27px;
-
     box-shadow:
         0 20px 60px
         rgba(51,42,34,.2);
@@ -756,37 +574,99 @@ button:active {
 
 .modal-card h2 {
     margin: 0 0 16px;
-
-    font-family:
-        Georgia,
-        serif;
-
+    font-family: Georgia, serif;
     font-size: 29px;
 }
 
 .feed-row {
     display: grid;
-
-    grid-template-columns:
-        2fr 1fr;
-
+    grid-template-columns: 2fr 1fr;
     gap: 8px;
 }
 
 .field-label {
     display: block;
-
     margin: 4px 0 6px;
-
     font-size: 13px;
-
     color: var(--muted);
-
     font-weight: 700;
 }
 
 .modal-card button {
     margin-top: 8px;
+}
+
+
+/* NURSING TIMER */
+
+.nursing-total {
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.nursing-total-label {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.nursing-total-time {
+    font-family: Georgia, serif;
+    font-size: 38px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.nursing-sides {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.nursing-side {
+    background: rgba(255,255,255,.72);
+    border: 1px solid #e6ddd7;
+    border-radius: 20px;
+    padding: 14px;
+    text-align: center;
+}
+
+.nursing-side-title {
+    font-family: Georgia, serif;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.nursing-time {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 8px 0;
+}
+
+.nursing-side button {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 14px;
+    font-weight: 700;
+    background: var(--nursing);
+}
+
+.nursing-manual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.nursing-manual input {
+    margin-bottom: 0;
+}
+
+.nursing-help {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 8px 0 14px;
+    line-height: 1.35;
 }
 
 
@@ -834,9 +714,7 @@ button:active {
 </style>
 </head>
 
-
 <body>
-
 
 <div class="app">
 
@@ -1095,7 +973,7 @@ button:active {
 
         <button
             id="mixedButton"
-            class="action-btn action-wide">
+            class="action-btn action-third">
 
             <span class="action-icon">
                 💧💩
@@ -1108,13 +986,26 @@ button:active {
 
         <button
             id="pumpButton"
-            class="action-btn action-wide">
+            class="action-btn action-third">
 
             <span class="action-icon">
                 🍼
             </span>
 
             Pump
+
+        </button>
+
+
+        <button
+            id="nurseButton"
+            class="action-btn action-third">
+
+            <span class="action-icon">
+                🤱
+            </span>
+
+            Nurse
 
         </button>
 
@@ -1240,6 +1131,133 @@ button:active {
 
         <button
             id="cancelAmountButton"
+            class="secondary">
+            Cancel
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<div
+    id="nursingModal"
+    class="modal hidden">
+
+    <div class="modal-card">
+
+        <h2 id="nursingModalTitle">
+            Log Nursing
+        </h2>
+
+        <div class="nursing-total">
+
+            <div class="nursing-total-label">
+                Total nursing time
+            </div>
+
+            <div
+                id="nursingTotalTime"
+                class="nursing-total-time">
+                00:00
+            </div>
+
+        </div>
+
+
+        <div class="nursing-sides">
+
+            <div class="nursing-side">
+
+                <div class="nursing-side-title">
+                    Left
+                </div>
+
+                <div
+                    id="leftNursingTime"
+                    class="nursing-time">
+                    00:00
+                </div>
+
+                <button
+                    id="leftNursingButton"
+                    type="button">
+                    Start Left
+                </button>
+
+            </div>
+
+
+            <div class="nursing-side">
+
+                <div class="nursing-side-title">
+                    Right
+                </div>
+
+                <div
+                    id="rightNursingTime"
+                    class="nursing-time">
+                    00:00
+                </div>
+
+                <button
+                    id="rightNursingButton"
+                    type="button">
+                    Start Right
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <label class="field-label">
+            Or enter minutes manually
+        </label>
+
+        <div class="nursing-manual">
+
+            <input
+                id="leftMinutesInput"
+                type="number"
+                min="0"
+                step="0.1"
+                inputmode="decimal"
+                placeholder="Left min">
+
+            <input
+                id="rightMinutesInput"
+                type="number"
+                min="0"
+                step="0.1"
+                inputmode="decimal"
+                placeholder="Right min">
+
+        </div>
+
+        <div class="nursing-help">
+            You can switch sides anytime. Starting one side automatically pauses the other.
+        </div>
+
+
+        <label class="field-label">
+            Date and time
+        </label>
+
+        <input
+            id="nursingDateTime"
+            type="datetime-local">
+
+
+        <button
+            id="saveNursingButton"
+            class="primary">
+            Save Nursing Session
+        </button>
+
+        <button
+            id="cancelNursingButton"
             class="secondary">
             Cancel
         </button>
@@ -1391,6 +1409,38 @@ document.getElementById("amountDateTime")
 
 
 
+const nursingModal =
+document.getElementById("nursingModal")
+
+const nursingModalTitle =
+document.getElementById("nursingModalTitle")
+
+const nursingTotalTime =
+document.getElementById("nursingTotalTime")
+
+const leftNursingTime =
+document.getElementById("leftNursingTime")
+
+const rightNursingTime =
+document.getElementById("rightNursingTime")
+
+const leftNursingButton =
+document.getElementById("leftNursingButton")
+
+const rightNursingButton =
+document.getElementById("rightNursingButton")
+
+const leftMinutesInput =
+document.getElementById("leftMinutesInput")
+
+const rightMinutesInput =
+document.getElementById("rightMinutesInput")
+
+const nursingDateTime =
+document.getElementById("nursingDateTime")
+
+
+
 const editSimpleModal =
 document.getElementById("editSimpleModal")
 
@@ -1413,6 +1463,18 @@ let editingAmountId = null
 let editingAmountType = null
 
 let editingSimpleId = null
+
+let editingNursingId = null
+
+let nursingLeftMs = 0
+
+let nursingRightMs = 0
+
+let nursingActiveSide = null
+
+let nursingSideStartedAt = null
+
+let nursingTimerInterval = null
 
 
 
@@ -1513,12 +1575,10 @@ async () => {
             password
         )
 
-
         document
         .getElementById("password")
         .value =
         ""
-
 
     } catch(error) {
 
@@ -1614,12 +1674,10 @@ async () => {
             password
         )
 
-
         document
         .getElementById("password")
         .value =
         ""
-
 
     } catch(error) {
 
@@ -1682,6 +1740,9 @@ user => {
     }
 
 
+    stopNursingTicker()
+
+
     if(!user) {
 
         currentUid = null
@@ -1707,21 +1768,17 @@ user => {
     currentUid =
     user.uid
 
-
     loginCard
     .classList
     .add("hidden")
-
 
     tracker
     .classList
     .remove("hidden")
 
-
     cloudStatus.textContent =
     "Connected as " +
     user.email
-
 
     watchEvents()
 
@@ -1781,7 +1838,6 @@ function makeCloudId() {
 
     }
 
-
     return (
         "web_" +
         Date.now() +
@@ -1801,11 +1857,9 @@ function dateToInputValue(timestamp) {
     const date =
     new Date(timestamp)
 
-
     const offset =
     date.getTimezoneOffset() *
     60000
-
 
     return new Date(
         timestamp - offset
@@ -1830,7 +1884,6 @@ function dateKey(timestamp) {
 
     const d =
     new Date(timestamp)
-
 
     return (
         d.getFullYear() +
@@ -1885,14 +1938,11 @@ async function addSimple(type) {
     if(!currentUid)
         return
 
-
     const cloudId =
     makeCloudId()
 
-
     const now =
     Date.now()
-
 
     await set(
 
@@ -1964,35 +2014,38 @@ document
 
 
 
+document
+.getElementById("nurseButton")
+.addEventListener(
+"click",
+openNewNursing
+)
+
+
+
 function openNewAmountEvent(type) {
 
     editingAmountId =
     null
 
-
     editingAmountType =
     type
-
 
     amountModalTitle.textContent =
     type === "pump"
     ? "Log Pump"
     : "Log Feeding"
 
-
     amountInput.value =
     ""
 
-
     amountUnit.value =
     "oz"
-
 
     amountDateTime.value =
     dateToInputValue(
         Date.now()
     )
-
 
     amountModal
     .classList
@@ -2012,10 +2065,8 @@ document
     .classList
     .add("hidden")
 
-
     editingAmountId =
     null
-
 
     editingAmountType =
     null
@@ -2035,10 +2086,8 @@ async () => {
         amountInput.value
     )
 
-
     const unit =
     amountUnit.value
-
 
     const timestamp =
     inputValueToTimestamp(
@@ -2104,7 +2153,6 @@ async () => {
         const cloudId =
         makeCloudId()
 
-
         await set(
 
             ref(
@@ -2149,10 +2197,8 @@ async () => {
     editingAmountId =
     null
 
-
     editingAmountType =
     null
-
 
     amountModal
     .classList
@@ -2167,14 +2213,12 @@ function openAmountEdit(cloudId) {
     const event =
     currentEvents[cloudId]
 
-
     if(!event)
         return
 
 
     editingAmountId =
     cloudId
-
 
     editingAmountType =
     event.type
@@ -2211,11 +2255,701 @@ function openAmountEdit(cloudId) {
 
 
 
-function openSimpleEdit(cloudId) {
+/* NURSING */
+
+function nursingMsForSide(side) {
+
+    let value =
+    side === "left"
+    ? nursingLeftMs
+    : nursingRightMs
+
+
+    if(
+        nursingActiveSide === side
+        &&
+        nursingSideStartedAt
+    ) {
+
+        value +=
+        Date.now() -
+        nursingSideStartedAt
+
+    }
+
+
+    return value
+
+}
+
+
+
+function formatTimer(ms) {
+
+    const totalSeconds =
+    Math.max(
+        0,
+        Math.floor(
+            ms / 1000
+        )
+    )
+
+
+    const hours =
+    Math.floor(
+        totalSeconds /
+        3600
+    )
+
+
+    const minutes =
+    Math.floor(
+        (
+            totalSeconds %
+            3600
+        ) /
+        60
+    )
+
+
+    const seconds =
+    totalSeconds %
+    60
+
+
+    if(hours > 0) {
+
+        return (
+            String(hours)
+            .padStart(2,"0")
+            +
+            ":" +
+            String(minutes)
+            .padStart(2,"0")
+            +
+            ":" +
+            String(seconds)
+            .padStart(2,"0")
+        )
+
+    }
+
+
+    return (
+        String(minutes)
+        .padStart(2,"0")
+        +
+        ":" +
+        String(seconds)
+        .padStart(2,"0")
+    )
+
+}
+
+
+
+function formatNursingMinutes(seconds) {
+
+    const mins =
+    Number(seconds || 0) /
+    60
+
+
+    if(mins <= 0)
+        return "0 min"
+
+
+    if(
+        Math.abs(
+            mins -
+            Math.round(mins)
+        ) < .05
+    ) {
+
+        return (
+            Math.round(mins) +
+            " min"
+        )
+
+    }
+
+
+    return (
+        mins.toFixed(1) +
+        " min"
+    )
+
+}
+
+
+
+function refreshNursingTimer() {
+
+    const left =
+    nursingMsForSide("left")
+
+
+    const right =
+    nursingMsForSide("right")
+
+
+    leftNursingTime.textContent =
+    formatTimer(left)
+
+
+    rightNursingTime.textContent =
+    formatTimer(right)
+
+
+    nursingTotalTime.textContent =
+    formatTimer(
+        left + right
+    )
+
+
+    leftNursingButton.textContent =
+    nursingActiveSide === "left"
+    ? "Pause Left"
+    : "Start Left"
+
+
+    rightNursingButton.textContent =
+    nursingActiveSide === "right"
+    ? "Pause Right"
+    : "Start Right"
+
+}
+
+
+
+function syncNursingInputsFromMs() {
+
+    leftMinutesInput.value =
+    nursingLeftMs > 0
+    ? (
+        nursingLeftMs /
+        60000
+    ).toFixed(1)
+    .replace(/\.0$/, "")
+    : ""
+
+
+    rightMinutesInput.value =
+    nursingRightMs > 0
+    ? (
+        nursingRightMs /
+        60000
+    ).toFixed(1)
+    .replace(/\.0$/, "")
+    : ""
+
+}
+
+
+
+function syncNursingMsFromInputs() {
+
+    const left =
+    Number(
+        leftMinutesInput.value
+    )
+
+
+    const right =
+    Number(
+        rightMinutesInput.value
+    )
+
+
+    nursingLeftMs =
+    Number.isFinite(left)
+    && left >= 0
+    ? left * 60000
+    : 0
+
+
+    nursingRightMs =
+    Number.isFinite(right)
+    && right >= 0
+    ? right * 60000
+    : 0
+
+}
+
+
+
+function stopNursingTicker() {
+
+    if(nursingTimerInterval) {
+
+        clearInterval(
+            nursingTimerInterval
+        )
+
+        nursingTimerInterval =
+        null
+
+    }
+
+}
+
+
+
+function startNursingTicker() {
+
+    stopNursingTicker()
+
+
+    nursingTimerInterval =
+    setInterval(
+        refreshNursingTimer,
+        250
+    )
+
+}
+
+
+
+function pauseActiveNursingSide() {
+
+    if(
+        !nursingActiveSide
+        ||
+        !nursingSideStartedAt
+    )
+        return
+
+
+    const elapsed =
+    Date.now() -
+    nursingSideStartedAt
+
+
+    if(
+        nursingActiveSide ===
+        "left"
+    ) {
+
+        nursingLeftMs +=
+        elapsed
+
+    } else {
+
+        nursingRightMs +=
+        elapsed
+
+    }
+
+
+    nursingActiveSide =
+    null
+
+
+    nursingSideStartedAt =
+    null
+
+
+    syncNursingInputsFromMs()
+
+
+    refreshNursingTimer()
+
+}
+
+
+
+function toggleNursingSide(side) {
+
+    if(
+        nursingActiveSide ===
+        side
+    ) {
+
+        pauseActiveNursingSide()
+
+        return
+
+    }
+
+
+    if(nursingActiveSide) {
+
+        pauseActiveNursingSide()
+
+    } else {
+
+        syncNursingMsFromInputs()
+
+    }
+
+
+    nursingActiveSide =
+    side
+
+
+    nursingSideStartedAt =
+    Date.now()
+
+
+    startNursingTicker()
+
+
+    refreshNursingTimer()
+
+}
+
+
+
+leftNursingButton
+.addEventListener(
+"click",
+() => toggleNursingSide("left")
+)
+
+
+
+rightNursingButton
+.addEventListener(
+"click",
+() => toggleNursingSide("right")
+)
+
+
+
+leftMinutesInput
+.addEventListener(
+"input",
+() => {
+
+    if(nursingActiveSide)
+        return
+
+    syncNursingMsFromInputs()
+
+    refreshNursingTimer()
+
+})
+
+
+
+rightMinutesInput
+.addEventListener(
+"input",
+() => {
+
+    if(nursingActiveSide)
+        return
+
+    syncNursingMsFromInputs()
+
+    refreshNursingTimer()
+
+})
+
+
+
+function resetNursingState() {
+
+    stopNursingTicker()
+
+    editingNursingId =
+    null
+
+    nursingLeftMs =
+    0
+
+    nursingRightMs =
+    0
+
+    nursingActiveSide =
+    null
+
+    nursingSideStartedAt =
+    null
+
+    leftMinutesInput.value =
+    ""
+
+    rightMinutesInput.value =
+    ""
+
+    refreshNursingTimer()
+
+}
+
+
+
+function openNewNursing() {
+
+    resetNursingState()
+
+
+    nursingModalTitle.textContent =
+    "Log Nursing"
+
+
+    nursingDateTime.value =
+    dateToInputValue(
+        Date.now()
+    )
+
+
+    nursingModal
+    .classList
+    .remove("hidden")
+
+}
+
+
+
+function openNursingEdit(cloudId) {
 
     const event =
     currentEvents[cloudId]
 
+
+    if(!event)
+        return
+
+
+    resetNursingState()
+
+
+    editingNursingId =
+    cloudId
+
+
+    nursingModalTitle.textContent =
+    "Edit Nursing"
+
+
+    nursingLeftMs =
+    Number(
+        event.leftSeconds ||
+        0
+    ) *
+    1000
+
+
+    nursingRightMs =
+    Number(
+        event.rightSeconds ||
+        0
+    ) *
+    1000
+
+
+    if(
+        nursingLeftMs === 0
+        &&
+        nursingRightMs === 0
+        &&
+        Number(
+            event.durationSeconds ||
+            0
+        ) > 0
+    ) {
+
+        nursingLeftMs =
+        Number(
+            event.durationSeconds
+        ) *
+        1000
+
+    }
+
+
+    syncNursingInputsFromMs()
+
+
+    nursingDateTime.value =
+    dateToInputValue(
+        event.timestamp
+    )
+
+
+    refreshNursingTimer()
+
+
+    nursingModal
+    .classList
+    .remove("hidden")
+
+}
+
+
+
+document
+.getElementById("cancelNursingButton")
+.addEventListener(
+"click",
+() => {
+
+    pauseActiveNursingSide()
+
+    stopNursingTicker()
+
+    resetNursingState()
+
+    nursingModal
+    .classList
+    .add("hidden")
+
+})
+
+
+
+document
+.getElementById("saveNursingButton")
+.addEventListener(
+"click",
+async () => {
+
+    pauseActiveNursingSide()
+
+    stopNursingTicker()
+
+    syncNursingMsFromInputs()
+
+
+    const timestamp =
+    inputValueToTimestamp(
+        nursingDateTime.value
+    )
+
+
+    if(
+        !Number.isFinite(timestamp)
+    ) {
+
+        alert(
+            "Choose a valid date and time."
+        )
+
+        return
+
+    }
+
+
+    const leftSeconds =
+    Math.max(
+        0,
+        Math.round(
+            nursingLeftMs /
+            1000
+        )
+    )
+
+
+    const rightSeconds =
+    Math.max(
+        0,
+        Math.round(
+            nursingRightMs /
+            1000
+        )
+    )
+
+
+    const durationSeconds =
+    leftSeconds +
+    rightSeconds
+
+
+    if(durationSeconds <= 0) {
+
+        alert(
+            "Start a nursing timer or enter the nursing minutes."
+        )
+
+        return
+
+    }
+
+
+    const values = {
+
+        type:
+        "nursing",
+
+        leftSeconds,
+
+        rightSeconds,
+
+        durationSeconds,
+
+        timestamp,
+
+        deleted:
+        false,
+
+        updatedAt:
+        Date.now()
+
+    }
+
+
+    if(editingNursingId) {
+
+        await update(
+
+            ref(
+                db,
+                "users/" +
+                currentUid +
+                "/events/" +
+                editingNursingId
+            ),
+
+            values
+
+        )
+
+    } else {
+
+        const cloudId =
+        makeCloudId()
+
+
+        await set(
+
+            ref(
+                db,
+                "users/" +
+                currentUid +
+                "/events/" +
+                cloudId
+            ),
+
+            {
+                cloudId,
+
+                ...values,
+
+                source:
+                "web"
+            }
+
+        )
+
+    }
+
+
+    nursingModal
+    .classList
+    .add("hidden")
+
+
+    resetNursingState()
+
+})
+
+
+
+function openSimpleEdit(cloudId) {
+
+    const event =
+    currentEvents[cloudId]
 
     if(!event)
         return
@@ -2232,10 +2966,8 @@ function openSimpleEdit(cloudId) {
     if(event.type === "pee")
         name = "Pee"
 
-
     if(event.type === "poop")
         name = "Poop"
-
 
     if(event.type === "mixed")
         name = "Mixed"
@@ -2269,7 +3001,6 @@ document
     editingSimpleId =
     null
 
-
     editSimpleModal
     .classList
     .add("hidden")
@@ -2287,12 +3018,10 @@ async () => {
     if(!editingSimpleId)
         return
 
-
     const timestamp =
     inputValueToTimestamp(
         simpleDateTime.value
     )
-
 
     await update(
 
@@ -2313,10 +3042,8 @@ async () => {
 
     )
 
-
     editingSimpleId =
     null
-
 
     editSimpleModal
     .classList
@@ -2334,7 +3061,6 @@ async function deleteEvent(cloudId) {
         )
     )
         return
-
 
     await update(
 
@@ -2371,7 +3097,6 @@ document
     importFile.value =
     ""
 
-
     importFile.click()
 
 })
@@ -2386,7 +3111,6 @@ async event => {
     const file =
     event.target.files[0]
 
-
     if(!file)
         return
 
@@ -2399,7 +3123,6 @@ async event => {
 
         const text =
         await file.text()
-
 
         const data =
         JSON.parse(text)
@@ -2430,21 +3153,19 @@ async event => {
             "poop",
             "mixed",
             "feed",
-            "pump"
+            "pump",
+            "nursing"
         ])
 
 
         let newCount =
         0
 
-
         let duplicateCount =
         0
 
-
         let invalidCount =
         0
-
 
         const updates =
         {}
@@ -2605,10 +3326,8 @@ function isToday(timestamp) {
     const d =
     new Date(timestamp)
 
-
     const today =
     new Date()
-
 
     return (
         d.getFullYear() ===
@@ -2640,8 +3359,13 @@ function updateFeedingStatus() {
         event =>
         event &&
         !event.deleted &&
-        event.type ===
-        "feed"
+        (
+            event.type ===
+            "feed"
+            ||
+            event.type ===
+            "nursing"
+        )
     )
 
     .sort(
@@ -2661,13 +3385,11 @@ function updateFeedingStatus() {
         "lastFeedTime"
     )
 
-
     const nextFeedTime =
     document
     .getElementById(
         "nextFeedTime"
     )
-
 
     const countdown =
     document
@@ -2683,14 +3405,11 @@ function updateFeedingStatus() {
         lastFeedTime.textContent =
         "--"
 
-
         nextFeedTime.textContent =
         "--"
 
-
         countdown.textContent =
         "--"
-
 
         return
 
@@ -2721,7 +3440,6 @@ function updateFeedingStatus() {
     lastFeedTime.textContent =
     timeOnly(latest)
 
-
     nextFeedTime.textContent =
     timeOnly(next)
 
@@ -2739,17 +3457,14 @@ function updateFeedingStatus() {
             60000
         )
 
-
         const h =
         Math.floor(
             mins /
             60
         )
 
-
         const m =
         mins % 60
-
 
         countdown.textContent =
         h > 0
@@ -2773,22 +3488,20 @@ function eventIconClass(type) {
     if(type === "pee")
         return "icon-pee"
 
-
     if(type === "poop")
         return "icon-poop"
-
 
     if(type === "mixed")
         return "icon-pee"
 
-
     if(type === "feed")
         return "icon-feed"
-
 
     if(type === "pump")
         return "icon-feed"
 
+    if(type === "nursing")
+        return "icon-nurse"
 
     return ""
 
@@ -2801,22 +3514,20 @@ function eventIcon(type) {
     if(type === "pee")
         return "💧"
 
-
     if(type === "poop")
         return "💩"
-
 
     if(type === "mixed")
         return "💧💩"
 
-
     if(type === "feed")
         return "🍼"
-
 
     if(type === "pump")
         return "🍼"
 
+    if(type === "nursing")
+        return "🤱"
 
     return "•"
 
@@ -2833,21 +3544,40 @@ function eventName(event) {
     if(event.type === "pee")
         name = "Pee"
 
-
     if(event.type === "poop")
         name = "Poop"
-
 
     if(event.type === "mixed")
         name = "Mixed"
 
-
     if(event.type === "feed")
         name = "Feed"
 
-
     if(event.type === "pump")
         name = "Pump"
+
+    if(event.type === "nursing") {
+
+        name =
+        "Nursing • " +
+        formatNursingMinutes(
+            event.durationSeconds ||
+            (
+                Number(
+                    event.leftSeconds ||
+                    0
+                )
+                +
+                Number(
+                    event.rightSeconds ||
+                    0
+                )
+            )
+        )
+
+        return name
+
+    }
 
 
     if(
@@ -2873,8 +3603,50 @@ function eventName(event) {
 
     }
 
-
     return name
+
+}
+
+
+
+function eventSubText(event) {
+
+    if(
+        event.type !==
+        "nursing"
+    ) {
+
+        return timeOnly(
+            event.timestamp
+        )
+
+    }
+
+
+    const left =
+    formatNursingMinutes(
+        event.leftSeconds ||
+        0
+    )
+
+
+    const right =
+    formatNursingMinutes(
+        event.rightSeconds ||
+        0
+    )
+
+
+    return (
+        "Left " +
+        left +
+        " • Right " +
+        right +
+        " • " +
+        timeOnly(
+            event.timestamp
+        )
+    )
 
 }
 
@@ -2907,14 +3679,11 @@ function render() {
     let pee =
     0
 
-
     let poop =
     0
 
-
     let feed =
     0
-
 
     let totalMl =
     0
@@ -2936,10 +3705,8 @@ function render() {
         if(event.type === "pee")
             pee++
 
-
         if(event.type === "poop")
             poop++
-
 
         if(event.type === "mixed") {
 
@@ -2948,7 +3715,6 @@ function render() {
             poop++
 
         }
-
 
         if(event.type === "feed") {
 
@@ -2959,6 +3725,16 @@ function render() {
                 event.amountMl ||
                 0
             )
+
+        }
+
+
+        if(
+            event.type ===
+            "nursing"
+        ) {
+
+            feed++
 
         }
 
@@ -3017,19 +3793,15 @@ function render() {
             "div"
         )
 
-
         empty.className =
         "card empty-history"
-
 
         empty.textContent =
         "No entries yet."
 
-
         history.appendChild(
             empty
         )
-
 
         return
 
@@ -3050,10 +3822,8 @@ function render() {
             item[1].timestamp
         )
 
-
         if(!days[day])
             days[day] = []
-
 
         days[day].push(item)
 
@@ -3074,7 +3844,6 @@ function render() {
             "div"
         )
 
-
         dayCard.className =
         "day-card"
 
@@ -3084,7 +3853,6 @@ function render() {
             "div"
         )
 
-
         header.className =
         "day-header"
 
@@ -3093,7 +3861,6 @@ function render() {
         document.createElement(
             "span"
         )
-
 
         headerDate.textContent =
         dateHeaderText(
@@ -3107,10 +3874,8 @@ function render() {
             "span"
         )
 
-
         count.className =
         "day-count"
-
 
         count.textContent =
         dayItems.length +
@@ -3125,11 +3890,9 @@ function render() {
             headerDate
         )
 
-
         header.appendChild(
             count
         )
-
 
         dayCard.appendChild(
             header
@@ -3149,7 +3912,6 @@ function render() {
                 "div"
             )
 
-
             card.className =
             "event"
 
@@ -3159,13 +3921,11 @@ function render() {
                 "div"
             )
 
-
             icon.className =
             "event-icon " +
             eventIconClass(
                 event.type
             )
-
 
             icon.textContent =
             eventIcon(
@@ -3178,7 +3938,6 @@ function render() {
                 "div"
             )
 
-
             main.className =
             "event-main"
 
@@ -3188,10 +3947,8 @@ function render() {
                 "div"
             )
 
-
             title.className =
             "event-name"
-
 
             title.textContent =
             eventName(event)
@@ -3202,21 +3959,16 @@ function render() {
                 "div"
             )
 
-
             time.className =
             "event-time"
 
-
             time.textContent =
-            timeOnly(
-                event.timestamp
-            )
+            eventSubText(event)
 
 
             main.appendChild(
                 title
             )
-
 
             main.appendChild(
                 time
@@ -3228,7 +3980,6 @@ function render() {
                 "div"
             )
 
-
             buttons.className =
             "event-buttons"
 
@@ -3238,19 +3989,25 @@ function render() {
                 "button"
             )
 
-
             edit.className =
             "secondary"
 
-
             edit.textContent =
             "Edit"
-
 
             edit.onclick =
             () => {
 
                 if(
+                    event.type ===
+                    "nursing"
+                ) {
+
+                    openNursingEdit(
+                        cloudId
+                    )
+
+                } else if(
                     event.type ===
                     "feed"
 
@@ -3280,14 +4037,11 @@ function render() {
                 "button"
             )
 
-
             remove.className =
             "danger"
 
-
             remove.textContent =
             "Delete"
-
 
             remove.onclick =
             () =>
@@ -3300,7 +4054,6 @@ function render() {
                 edit
             )
 
-
             buttons.appendChild(
                 remove
             )
@@ -3310,16 +4063,13 @@ function render() {
                 icon
             )
 
-
             card.appendChild(
                 main
             )
 
-
             card.appendChild(
                 buttons
             )
-
 
             dayCard.appendChild(
                 card
@@ -3351,4 +4101,5 @@ setInterval(
 </script>
 
 </body>
-    </html>
+
+</html>
