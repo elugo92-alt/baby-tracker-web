@@ -796,42 +796,71 @@ button:active {
 
 .report-timeline-body {
     position: relative;
-    height: 1536px;
-    min-height: 1536px;
+    height: 1296px;
+    min-height: 1296px;
 }
 
 .timeline-hour {
     position: absolute;
     left: 0;
     right: 0;
-    height: 1px;
+    height: 54px;
     border-top: 1px solid rgba(117,111,105,.15);
 }
 
 .timeline-hour-label {
     position: absolute;
-    left: 12px;
-    top: -10px;
-    width: 45px;
+    left: 10px;
+    top: -8px;
+    width: 46px;
     color: #8b857f;
     font-size: 12px;
-    background: rgba(255,255,255,.72);
+    background: rgba(255,255,255,.82);
+    z-index: 2;
+}
+
+.timeline-hour-events {
+    position: absolute;
+    left: 58px;
+    right: 8px;
+    top: 7px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 4px 0 0;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+}
+
+.timeline-hour-events::-webkit-scrollbar {
+    display: none;
 }
 
 .timeline-event {
-    position: absolute;
-    left: 66px;
-    right: 10px;
-    min-height: 28px;
-    border-radius: 9px;
-    padding: 5px 9px;
+    position: relative;
+    flex: 0 0 auto;
+    min-width: max-content;
+    max-width: 270px;
+    height: 30px;
+    border-radius: 10px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 12px;
     font-weight: 750;
+    line-height: 1;
     box-shadow:
         0 3px 8px
         rgba(58,45,34,.08);
-    overflow: hidden;
-    line-height: 1.25;
+    scroll-snap-align: start;
 }
 
 .timeline-event.feed {
@@ -860,7 +889,15 @@ button:active {
 
 .timeline-event-time {
     opacity: .72;
-    font-weight: 600;
+    font-weight: 650;
+    flex: 0 0 auto;
+}
+
+.timeline-swipe-hint {
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+    padding: 10px 12px 14px;
 }
 
 .report-empty {
@@ -4079,7 +4116,34 @@ function renderReport() {
 
 
     const hourHeight =
-    64
+    54
+
+
+    const eventsByHour =
+    Array.from(
+        { length: 24 },
+        () => []
+    )
+
+
+    for(
+        const event
+        of entries
+    ) {
+
+        const eventDate =
+        new Date(
+            Number(
+                event.timestamp
+            )
+        )
+
+
+        eventsByHour[
+            eventDate.getHours()
+        ].push(event)
+
+    }
 
 
     for(
@@ -4140,6 +4204,102 @@ function renderReport() {
         )
 
 
+        const eventStrip =
+        document.createElement(
+            "div"
+        )
+
+        eventStrip.className =
+        "timeline-hour-events"
+
+
+        const hourEvents =
+        eventsByHour[hour]
+
+        .sort(
+            (a,b) =>
+            Number(a.timestamp) -
+            Number(b.timestamp)
+        )
+
+
+        for(
+            const event
+            of hourEvents
+        ) {
+
+            const block =
+            document.createElement(
+                "div"
+            )
+
+            block.className =
+            "timeline-event " +
+            event.type
+
+
+            const icon =
+            document.createElement(
+                "span"
+            )
+
+            icon.textContent =
+            eventIcon(
+                event.type
+            )
+
+
+            const title =
+            document.createElement(
+                "span"
+            )
+
+            title.textContent =
+            reportTimelineLabel(
+                event
+            )
+
+
+            const time =
+            document.createElement(
+                "span"
+            )
+
+            time.className =
+            "timeline-event-time"
+
+            time.textContent =
+            "· " +
+            timeOnly(
+                event.timestamp
+            )
+
+
+            block.appendChild(
+                icon
+            )
+
+            block.appendChild(
+                title
+            )
+
+            block.appendChild(
+                time
+            )
+
+
+            eventStrip.appendChild(
+                block
+            )
+
+        }
+
+
+        line.appendChild(
+            eventStrip
+        )
+
+
         reportTimeline.appendChild(
             line
         )
@@ -4177,189 +4337,8 @@ function renderReport() {
             empty
         )
 
-        return
-
     }
 
-
-    const laneTops = [
-        -100,
-        -100,
-        -100
-    ]
-
-
-    for(
-        const event
-        of entries
-    ) {
-
-        const d =
-        new Date(
-            Number(
-                event.timestamp
-            )
-        )
-
-
-        const minutes =
-        d.getHours() *
-        60 +
-        d.getMinutes() +
-        d.getSeconds() /
-        60
-
-
-        const top =
-        minutes *
-        (
-            hourHeight /
-            60
-        )
-
-
-        let durationMinutes =
-        0
-
-
-        if(
-            event.type ===
-            "nursing"
-        ) {
-
-            durationMinutes =
-            Number(
-                event.durationSeconds ||
-                0
-            ) /
-            60
-
-        }
-
-
-        const height =
-        Math.max(
-            28,
-            Math.min(
-                120,
-                durationMinutes *
-                (
-                    hourHeight /
-                    60
-                )
-            )
-        )
-
-
-        let lane =
-        0
-
-
-        for(
-            let i = 0;
-            i < laneTops.length;
-            i++
-        ) {
-
-            if(
-                top -
-                laneTops[i] >
-                32
-            ) {
-
-                lane =
-                i
-
-                break
-
-            }
-        }
-
-
-        laneTops[lane] =
-        top
-
-
-        const block =
-        document.createElement(
-            "div"
-        )
-
-        block.className =
-        "timeline-event " +
-        event.type
-
-
-        block.style.top =
-        top +
-        "px"
-
-
-        block.style.height =
-        height +
-        "px"
-
-
-        block.style.left =
-        (
-            66 +
-            lane *
-            13
-        ) +
-        "px"
-
-
-        block.style.right =
-        (
-            10 +
-            (
-                2 -
-                lane
-            ) *
-            5
-        ) +
-        "px"
-
-
-        const title =
-        document.createElement(
-            "div"
-        )
-
-        title.textContent =
-        reportTimelineLabel(
-            event
-        )
-
-
-        const time =
-        document.createElement(
-            "div"
-        )
-
-        time.className =
-        "timeline-event-time"
-
-        time.textContent =
-        timeOnly(
-            event.timestamp
-        )
-
-
-        block.appendChild(
-            title
-        )
-
-        block.appendChild(
-            time
-        )
-
-
-        reportTimeline.appendChild(
-            block
-        )
-
-    }
 
 }
 
