@@ -2,555 +2,473 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <meta
-        name="theme-color"
-        content="#ffffff">
+<meta name="theme-color" content="#ffffff">
 
-    <title>Baby Tracker</title>
+<title>Baby Tracker</title>
 
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-512.png">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-512.png">
 
-    <meta
-        name="apple-mobile-web-app-capable"
-        content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Baby Tracker">
 
-    <meta
-        name="apple-mobile-web-app-status-bar-style"
-        content="default">
+<style>
 
-    <meta
-        name="apple-mobile-web-app-title"
-        content="Baby Tracker">
+* {
+    box-sizing: border-box;
+}
 
-    <style>
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f6f6f6;
+    color: #111;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+.app {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+}
 
-        body {
-            margin: 0;
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-            background: #f6f6f6;
-            color: #111;
-        }
+h1 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 34px;
+}
 
-        .app {
-            max-width: 600px;
-            margin: 0 auto;
+.subtitle {
+    color: #666;
+    margin-bottom: 20px;
+}
 
-            padding-top:
-                max(20px, env(safe-area-inset-top));
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 16px;
+}
 
-            padding-right:
-                max(20px, env(safe-area-inset-right));
+input,
+select,
+button {
+    width: 100%;
+    min-height: 50px;
+    font-size: 17px;
+    border-radius: 10px;
+    font-family: inherit;
+}
 
-            padding-bottom:
-                max(20px, env(safe-area-inset-bottom));
+input,
+select {
+    border: 1px solid #ccc;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    background: white;
+}
 
-            padding-left:
-                max(20px, env(safe-area-inset-left));
-        }
+button {
+    border: 0;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
 
-        h1 {
-            margin-top: 10px;
-            margin-bottom: 5px;
-            font-size: 34px;
-        }
+.primary {
+    background: #111;
+    color: white;
+}
 
-        .subtitle {
-            color: #666;
-            margin-bottom: 20px;
-        }
+.secondary {
+    background: #e8e8e8;
+    color: #111;
+}
 
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 16px;
-        }
+.danger {
+    background: #f4dddd;
+    color: #7a0000;
+}
 
-        input,
-        select,
-        button {
-            width: 100%;
-            min-height: 50px;
-            font-size: 17px;
-            border-radius: 10px;
-            font-family: inherit;
-        }
+.hidden {
+    display: none !important;
+}
 
-        input,
-        select {
-            border: 1px solid #ccc;
-            padding: 10px 12px;
-            margin-bottom: 10px;
-            background: white;
-        }
+.counts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
 
-        button {
-            border: 0;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-weight: 600;
-            cursor: pointer;
-        }
+.count {
+    text-align: center;
+    background: white;
+    border-radius: 14px;
+    padding: 15px 5px;
+}
 
-        button:active {
-            transform: scale(0.98);
-        }
+.emoji {
+    font-size: 24px;
+}
 
-        .primary {
-            background: #111;
-            color: white;
-        }
+.number {
+    font-size: 26px;
+    font-weight: 700;
+}
 
-        .secondary {
-            background: #e8e8e8;
-            color: #111;
-        }
+.actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+}
 
-        .danger {
-            background: #f4dddd;
-            color: #7a0000;
-        }
+.actions button {
+    min-height: 68px;
+    margin: 0;
+}
 
-        .hidden {
-            display: none;
-        }
+.feeding-status {
+    margin-top: 10px;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+}
 
-        .counts {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
+.history-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 24px 0 12px;
+}
 
-        .count {
-            text-align: center;
-            background: white;
-            border-radius: 14px;
-            padding: 15px 5px;
-        }
+.day-header {
+    background: #ededed;
+    color: #444;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 12px 14px;
+    margin: 20px 0 10px;
+    border-radius: 10px;
+}
 
-        .count .emoji {
-            font-size: 24px;
-        }
+.event {
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 10px;
+}
 
-        .count .number {
-            font-size: 26px;
-            font-weight: 700;
-        }
+.event-name {
+    font-size: 19px;
+    font-weight: 700;
+}
 
-        .actions {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 16px;
-            margin-bottom: 16px;
-        }
+.event-time {
+    color: #666;
+    font-size: 14px;
+    margin-top: 4px;
+}
 
-        .actions button {
-            min-height: 68px;
-            margin-bottom: 0;
-        }
+.event-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
 
-        .feeding-status {
-            margin-top: 10px;
-            color: #555;
-            font-size: 15px;
-            line-height: 1.5;
-        }
+.event-buttons button {
+    width: 50%;
+    min-height: 42px;
+    margin: 0;
+}
 
-        .history-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 24px 0 12px;
-        }
+.status {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+}
 
-        .day-header {
-            background: #ededed;
-            color: #444;
-            font-size: 17px;
-            font-weight: 700;
-            padding: 12px 14px;
-            margin: 20px 0 10px;
-            border-radius: 10px;
-        }
+.feed-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 8px;
+}
 
-        .event {
-            background: white;
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 10px;
-        }
+.field-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    margin: 4px 0 6px;
+}
 
-        .event-name {
-            font-size: 19px;
-            font-weight: 700;
-        }
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
 
-        .event-time {
-            color: #666;
-            font-size: 14px;
-            margin-top: 4px;
-        }
+.modal-card {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 16px;
+    padding: 18px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
 
-        .event-buttons {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-        }
+.modal-card h2 {
+    margin-top: 0;
+}
 
-        .event-buttons button {
-            width: 50%;
-            min-height: 42px;
-            margin: 0;
-        }
+#importFile {
+    display: none;
+}
 
-        .status {
-            font-size: 14px;
-            color: #666;
-            margin-top: 8px;
-        }
-
-        .feed-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 8px;
-        }
-
-        .field-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #555;
-            margin: 4px 0 6px;
-        }
-
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.45);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 1000;
-        }
-
-        .modal.hidden {
-            display: none;
-        }
-
-        .modal-card {
-            background: white;
-            width: 100%;
-            max-width: 420px;
-            border-radius: 16px;
-            padding: 18px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-card h2 {
-            margin-top: 0;
-        }
-
-    </style>
+</style>
 </head>
+
 
 <body>
 
 <div class="app">
 
-    <h1>Baby Tracker</h1>
+<h1>Baby Tracker</h1>
 
-    <div class="subtitle">
-        Shared baby log
-    </div>
-
-    <div id="loginCard" class="card">
-
-        <h2>Sign In</h2>
-
-        <input
-            id="email"
-            type="email"
-            placeholder="Email"
-            autocomplete="email">
-
-        <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password">
-
-        <button
-            id="signInButton"
-            class="primary">
-            Sign In
-        </button>
-
-        <div
-            id="loginStatus"
-            class="status">
-        </div>
-
-    </div>
+<div class="subtitle">
+Shared baby log
+</div>
 
 
-    <div
-        id="tracker"
-        class="hidden">
+<div id="loginCard" class="card">
 
-        <div class="counts">
+<h2>Sign In</h2>
 
-            <div class="count">
+<input
+    id="email"
+    type="email"
+    placeholder="Email">
 
-                <div class="emoji">
-                    💧
-                </div>
+<input
+    id="password"
+    type="password"
+    placeholder="Password">
 
-                <div
-                    id="peeCount"
-                    class="number">
-                    0
-                </div>
+<button
+    id="signInButton"
+    class="primary">
+Sign In
+</button>
 
-                <div>
-                    Pee
-                </div>
-
-            </div>
-
-
-            <div class="count">
-
-                <div class="emoji">
-                    💩
-                </div>
-
-                <div
-                    id="poopCount"
-                    class="number">
-                    0
-                </div>
-
-                <div>
-                    Poop
-                </div>
-
-            </div>
-
-
-            <div class="count">
-
-                <div class="emoji">
-                    🍼
-                </div>
-
-                <div
-                    id="feedCount"
-                    class="number">
-                    0
-                </div>
-
-                <div>
-                    Feed
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="actions">
-
-            <button
-                id="peeButton"
-                class="secondary">
-                💧 Pee
-            </button>
-
-            <button
-                id="poopButton"
-                class="secondary">
-                💩 Poop
-            </button>
-
-            <button
-                id="feedButton"
-                class="secondary">
-                🍼 Feed
-            </button>
-
-            <button
-                id="mixedButton"
-                class="secondary">
-                💧💩 Mixed
-            </button>
-
-            <button
-                id="pumpButton"
-                class="secondary">
-                🍼 Pump
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div id="todayFeedTotal">
-                Today feed total: 0 mL
-            </div>
-
-            <div
-                id="feedingStatus"
-                class="feeding-status">
-                🍼 Last feed: --<br>
-                Next feed: --
-            </div>
-
-            <div
-                id="cloudStatus"
-                class="status">
-                Connected
-            </div>
-
-            <button
-                id="signOutButton"
-                class="secondary"
-                style="margin-top:14px">
-                Sign Out
-            </button>
-
-        </div>
-
-
-        <div class="history-title">
-            History
-        </div>
-
-        <div id="history"></div>
-
-    </div>
+<div id="loginStatus" class="status"></div>
 
 </div>
 
 
-<!-- AMOUNT MODAL FOR FEED OR PUMP -->
-
-<div
-    id="amountModal"
-    class="modal hidden">
-
-    <div class="modal-card">
-
-        <h2 id="amountModalTitle">
-            Log Feeding
-        </h2>
-
-        <div class="feed-row">
-
-            <input
-                id="amountInput"
-                type="number"
-                step="0.1"
-                inputmode="decimal"
-                placeholder="Amount">
-
-            <select id="amountUnit">
-
-                <option value="oz">
-                    oz
-                </option>
-
-                <option value="ml">
-                    mL
-                </option>
-
-            </select>
-
-        </div>
+<div id="tracker" class="hidden">
 
 
-        <label
-            class="field-label"
-            for="amountDateTime">
-            Date and time
-        </label>
+<div class="counts">
 
-        <input
-            id="amountDateTime"
-            type="datetime-local">
+<div class="count">
+<div class="emoji">💧</div>
+<div id="peeCount" class="number">0</div>
+<div>Pee</div>
+</div>
 
+<div class="count">
+<div class="emoji">💩</div>
+<div id="poopCount" class="number">0</div>
+<div>Poop</div>
+</div>
 
-        <button
-            id="saveAmountButton"
-            class="primary">
-            Save
-        </button>
-
-        <button
-            id="cancelAmountButton"
-            class="secondary">
-            Cancel
-        </button>
-
-    </div>
+<div class="count">
+<div class="emoji">🍼</div>
+<div id="feedCount" class="number">0</div>
+<div>Feed</div>
+</div>
 
 </div>
 
 
-<!-- SIMPLE EDIT MODAL -->
+<div class="actions">
+
+<button id="peeButton" class="secondary">
+💧 Pee
+</button>
+
+<button id="poopButton" class="secondary">
+💩 Poop
+</button>
+
+<button id="feedButton" class="secondary">
+🍼 Feed
+</button>
+
+<button id="mixedButton" class="secondary">
+💧💩 Mixed
+</button>
+
+<button id="pumpButton" class="secondary">
+🍼 Pump
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div id="todayFeedTotal">
+Today feed total: 0 mL
+</div>
 
 <div
-    id="editSimpleModal"
-    class="modal hidden">
+    id="feedingStatus"
+    class="feeding-status">
+🍼 Last feed: --<br>
+Next feed: --
+</div>
 
-    <div class="modal-card">
+<div id="cloudStatus" class="status">
+Connected
+</div>
 
-        <h2 id="editSimpleTitle">
-            Edit
-        </h2>
+<button
+    id="importButton"
+    class="secondary"
+    style="margin-top:14px">
+📥 Import History
+</button>
+
+<input
+    id="importFile"
+    type="file"
+    accept=".json,application/json">
+
+<div
+    id="importStatus"
+    class="status">
+</div>
+
+<button
+    id="signOutButton"
+    class="secondary"
+    style="margin-top:10px">
+Sign Out
+</button>
+
+</div>
 
 
-        <label
-            class="field-label"
-            for="simpleDateTime">
-            Date and time
-        </label>
+<div class="history-title">
+History
+</div>
 
-        <input
-            id="simpleDateTime"
-            type="datetime-local">
+<div id="history"></div>
+
+</div>
+
+</div>
 
 
-        <button
-            id="saveSimpleButton"
-            class="primary">
-            Save Changes
-        </button>
+<div id="amountModal" class="modal hidden">
 
-        <button
-            id="cancelSimpleButton"
-            class="secondary">
-            Cancel
-        </button>
+<div class="modal-card">
 
-    </div>
+<h2 id="amountModalTitle">
+Log Feeding
+</h2>
+
+<div class="feed-row">
+
+<input
+    id="amountInput"
+    type="number"
+    step="0.1"
+    inputmode="decimal"
+    placeholder="Amount">
+
+<select id="amountUnit">
+
+<option value="oz">
+oz
+</option>
+
+<option value="ml">
+mL
+</option>
+
+</select>
+
+</div>
+
+<label class="field-label">
+Date and time
+</label>
+
+<input
+    id="amountDateTime"
+    type="datetime-local">
+
+<button
+    id="saveAmountButton"
+    class="primary">
+Save
+</button>
+
+<button
+    id="cancelAmountButton"
+    class="secondary">
+Cancel
+</button>
+
+</div>
+
+</div>
+
+
+<div id="editSimpleModal" class="modal hidden">
+
+<div class="modal-card">
+
+<h2 id="editSimpleTitle">
+Edit
+</h2>
+
+<label class="field-label">
+Date and time
+</label>
+
+<input
+    id="simpleDateTime"
+    type="datetime-local">
+
+<button
+    id="saveSimpleButton"
+    class="primary">
+Save Changes
+</button>
+
+<button
+    id="cancelSimpleButton"
+    class="secondary">
+Cancel
+</button>
+
+</div>
 
 </div>
 
@@ -559,16 +477,14 @@
 
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
 
 import {
     getAuth,
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
 
 import {
     getDatabase,
@@ -576,210 +492,189 @@ import {
     set,
     update,
     onValue
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js"
 
 
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyC2Bx2QOJMk8Q28LSJmBDGjyLZHztDWA20",
+    "AIzaSyC2Bx2QOJMk8Q28LSJmBDGjyLZHztDWA20",
 
     authDomain:
-        "lugo-baby-tracker.firebaseapp.com",
+    "lugo-baby-tracker.firebaseapp.com",
 
     databaseURL:
-        "https://lugo-baby-tracker-default-rtdb.firebaseio.com",
+    "https://lugo-baby-tracker-default-rtdb.firebaseio.com",
 
     projectId:
-        "lugo-baby-tracker",
+    "lugo-baby-tracker",
 
     storageBucket:
-        "lugo-baby-tracker.firebasestorage.app",
+    "lugo-baby-tracker.firebasestorage.app",
 
     messagingSenderId:
-        "440667557935",
+    "440667557935",
 
     appId:
-        "1:440667557935:web:d5e096f71fa5f200d576da"
+    "1:440667557935:web:d5e096f71fa5f200d576da"
+}
 
-};
 
+const app = initializeApp(firebaseConfig)
 
-const app =
-    initializeApp(firebaseConfig);
+const auth = getAuth(app)
 
-const auth =
-    getAuth(app);
-
-const db =
-    getDatabase(app);
+const db = getDatabase(app)
 
 
 const loginCard =
-    document.getElementById("loginCard");
+document.getElementById("loginCard")
 
 const tracker =
-    document.getElementById("tracker");
-
-const emailInput =
-    document.getElementById("email");
-
-const passwordInput =
-    document.getElementById("password");
+document.getElementById("tracker")
 
 const loginStatus =
-    document.getElementById("loginStatus");
+document.getElementById("loginStatus")
 
 const cloudStatus =
-    document.getElementById("cloudStatus");
+document.getElementById("cloudStatus")
 
 const history =
-    document.getElementById("history");
+document.getElementById("history")
 
 const feedingStatus =
-    document.getElementById("feedingStatus");
+document.getElementById("feedingStatus")
+
+const importFile =
+document.getElementById("importFile")
+
+const importStatus =
+document.getElementById("importStatus")
 
 
 const amountModal =
-    document.getElementById("amountModal");
+document.getElementById("amountModal")
 
 const amountModalTitle =
-    document.getElementById("amountModalTitle");
+document.getElementById("amountModalTitle")
 
 const amountInput =
-    document.getElementById("amountInput");
+document.getElementById("amountInput")
 
 const amountUnit =
-    document.getElementById("amountUnit");
+document.getElementById("amountUnit")
 
 const amountDateTime =
-    document.getElementById("amountDateTime");
+document.getElementById("amountDateTime")
 
 
 const editSimpleModal =
-    document.getElementById("editSimpleModal");
+document.getElementById("editSimpleModal")
 
 const editSimpleTitle =
-    document.getElementById("editSimpleTitle");
+document.getElementById("editSimpleTitle")
 
 const simpleDateTime =
-    document.getElementById("simpleDateTime");
+document.getElementById("simpleDateTime")
 
 
-let currentUid = null;
+let currentUid = null
 
-let currentEvents = {};
+let currentEvents = {}
 
-let unsubscribeEvents = null;
+let unsubscribeEvents = null
 
-let editingAmountId = null;
+let editingAmountId = null
 
-let editingAmountType = null;
+let editingAmountType = null
 
-let editingSimpleId = null;
+let editingSimpleId = null
 
 
-
-/* SIGN IN */
 
 document
-    .getElementById("signInButton")
-    .addEventListener(
-        "click",
-        async () => {
+.getElementById("signInButton")
+.addEventListener(
+"click",
+async () => {
 
-            loginStatus.textContent =
-                "Signing in...";
+    loginStatus.textContent =
+    "Signing in..."
 
-            try {
+    try {
 
-                await signInWithEmailAndPassword(
-                    auth,
-                    emailInput.value.trim(),
-                    passwordInput.value
-                );
+        await signInWithEmailAndPassword(
+            auth,
+            document
+            .getElementById("email")
+            .value
+            .trim(),
 
-                passwordInput.value = "";
+            document
+            .getElementById("password")
+            .value
+        )
 
-            } catch (error) {
+    } catch(error) {
 
-                loginStatus.textContent =
-                    error.message;
-
-            }
-
-        }
-    );
-
-
-
-/* SIGN OUT */
-
-document
-    .getElementById("signOutButton")
-    .addEventListener(
-        "click",
-        async () => {
-
-            await signOut(auth);
-
-        }
-    );
-
-
-
-/* AUTH STATE */
-
-onAuthStateChanged(
-    auth,
-    user => {
-
-        if (unsubscribeEvents) {
-
-            unsubscribeEvents();
-
-            unsubscribeEvents = null;
-
-        }
-
-        if (!user) {
-
-            currentUid = null;
-
-            currentEvents = {};
-
-            loginCard.classList.remove(
-                "hidden"
-            );
-
-            tracker.classList.add(
-                "hidden"
-            );
-
-            loginStatus.textContent = "";
-
-            return;
-
-        }
-
-        currentUid = user.uid;
-
-        loginCard.classList.add(
-            "hidden"
-        );
-
-        tracker.classList.remove(
-            "hidden"
-        );
-
-        cloudStatus.textContent =
-            "Connected as " +
-            user.email;
-
-        watchEvents();
+        loginStatus.textContent =
+        error.message
 
     }
-);
+
+})
+
+
+
+document
+.getElementById("signOutButton")
+.addEventListener(
+"click",
+() => signOut(auth)
+)
+
+
+
+onAuthStateChanged(
+auth,
+user => {
+
+    if(unsubscribeEvents) {
+
+        unsubscribeEvents()
+
+        unsubscribeEvents = null
+
+    }
+
+
+    if(!user) {
+
+        currentUid = null
+
+        currentEvents = {}
+
+        loginCard.classList.remove("hidden")
+
+        tracker.classList.add("hidden")
+
+        return
+
+    }
+
+
+    currentUid = user.uid
+
+    loginCard.classList.add("hidden")
+
+    tracker.classList.remove("hidden")
+
+    cloudStatus.textContent =
+    "Connected as " + user.email
+
+    watchEvents()
+
+})
 
 
 
@@ -790,7 +685,7 @@ function eventsRef() {
         "users/" +
         currentUid +
         "/events"
-    );
+    )
 
 }
 
@@ -799,17 +694,17 @@ function eventsRef() {
 function watchEvents() {
 
     unsubscribeEvents =
-        onValue(
-            eventsRef(),
-            snapshot => {
+    onValue(
+        eventsRef(),
+        snapshot => {
 
-                currentEvents =
-                    snapshot.val() || {};
+            currentEvents =
+            snapshot.val() || {}
 
-                render();
+            render()
 
-            }
-        );
+        }
+    )
 
 }
 
@@ -817,49 +712,42 @@ function watchEvents() {
 
 function makeCloudId() {
 
-    if (
+    if(
         typeof crypto !== "undefined" &&
         crypto.randomUUID
     ) {
 
-        return (
-            "web_" +
-            crypto
-                .randomUUID()
-                .replaceAll("-", "")
-        );
+        return "web_" +
+        crypto.randomUUID()
+        .replaceAll("-","")
 
     }
 
-    return (
-        "web_" +
-        Date.now() +
-        "_" +
-        Math.floor(
-            Math.random() * 1000000
-        )
-    );
+    return "web_" +
+    Date.now() +
+    "_" +
+    Math.floor(
+        Math.random() * 1000000
+    )
 
 }
 
 
 
-/* DATE HELPERS */
-
 function dateToInputValue(timestamp) {
 
     const date =
-        new Date(timestamp);
+    new Date(timestamp)
 
     const offset =
-        date.getTimezoneOffset() *
-        60000;
+    date.getTimezoneOffset() *
+    60000
 
     return new Date(
         timestamp - offset
     )
-        .toISOString()
-        .slice(0, 16);
+    .toISOString()
+    .slice(0,16)
 
 }
 
@@ -867,11 +755,7 @@ function dateToInputValue(timestamp) {
 
 function inputValueToTimestamp(value) {
 
-    if (!value) {
-        return NaN;
-    }
-
-    return new Date(value).getTime();
+    return new Date(value).getTime()
 
 }
 
@@ -880,19 +764,19 @@ function inputValueToTimestamp(value) {
 function dateKey(timestamp) {
 
     const d =
-        new Date(timestamp);
+    new Date(timestamp)
 
     return (
         d.getFullYear() +
         "-" +
         String(
-            d.getMonth() + 1
-        ).padStart(2, "0") +
+            d.getMonth()+1
+        ).padStart(2,"0") +
         "-" +
         String(
             d.getDate()
-        ).padStart(2, "0")
-    );
+        ).padStart(2,"0")
+    )
 
 }
 
@@ -900,17 +784,16 @@ function dateKey(timestamp) {
 
 function dateHeaderText(timestamp) {
 
-    return new Date(
-        timestamp
-    ).toLocaleDateString(
+    return new Date(timestamp)
+    .toLocaleDateString(
         undefined,
         {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-            year: "numeric"
+            weekday:"long",
+            month:"long",
+            day:"numeric",
+            year:"numeric"
         }
-    );
+    )
 
 }
 
@@ -918,33 +801,27 @@ function dateHeaderText(timestamp) {
 
 function timeOnly(timestamp) {
 
-    return new Date(
-        timestamp
-    ).toLocaleTimeString(
+    return new Date(timestamp)
+    .toLocaleTimeString(
         undefined,
         {
-            hour: "numeric",
-            minute: "2-digit"
+            hour:"numeric",
+            minute:"2-digit"
         }
-    );
+    )
 
 }
 
 
 
-/* SIMPLE EVENTS */
-
 async function addSimple(type) {
 
-    if (!currentUid) {
-        return;
-    }
-
     const cloudId =
-        makeCloudId();
+    makeCloudId()
 
     const now =
-        Date.now();
+    Date.now()
+
 
     await set(
 
@@ -957,514 +834,349 @@ async function addSimple(type) {
         ),
 
         {
-            cloudId: cloudId,
-            type: type,
-            timestamp: now,
-            source: "web",
-            deleted: false,
-            updatedAt: now
+            cloudId,
+            type,
+            timestamp:now,
+            source:"web",
+            deleted:false,
+            updatedAt:now
         }
 
-    );
+    )
 
 }
 
 
 
 document
-    .getElementById("peeButton")
-    .addEventListener(
-        "click",
-        () => addSimple("pee")
-    );
+.getElementById("peeButton")
+.addEventListener(
+"click",
+() => addSimple("pee")
+)
 
 
 document
-    .getElementById("poopButton")
-    .addEventListener(
-        "click",
-        () => addSimple("poop")
-    );
+.getElementById("poopButton")
+.addEventListener(
+"click",
+() => addSimple("poop")
+)
 
 
 document
-    .getElementById("mixedButton")
-    .addEventListener(
-        "click",
-        () => addSimple("mixed")
-    );
+.getElementById("mixedButton")
+.addEventListener(
+"click",
+() => addSimple("mixed")
+)
 
 
-
-/* OPEN FEED */
 
 document
-    .getElementById("feedButton")
-    .addEventListener(
-        "click",
-        () => {
-
-            openNewAmountEvent(
-                "feed"
-            );
-
-        }
-    );
+.getElementById("feedButton")
+.addEventListener(
+"click",
+() => openNewAmountEvent("feed")
+)
 
 
-
-/* OPEN PUMP */
 
 document
-    .getElementById("pumpButton")
-    .addEventListener(
-        "click",
-        () => {
-
-            openNewAmountEvent(
-                "pump"
-            );
-
-        }
-    );
+.getElementById("pumpButton")
+.addEventListener(
+"click",
+() => openNewAmountEvent("pump")
+)
 
 
 
 function openNewAmountEvent(type) {
 
-    editingAmountId =
-        null;
+    editingAmountId = null
 
-    editingAmountType =
-        type;
+    editingAmountType = type
+
 
     amountModalTitle.textContent =
-        type === "pump"
-            ? "Log Pump"
-            : "Log Feeding";
+    type === "pump"
+    ? "Log Pump"
+    : "Log Feeding"
 
-    amountInput.value =
-        "";
 
-    amountUnit.value =
-        "oz";
+    amountInput.value = ""
+
+    amountUnit.value = "oz"
 
     amountDateTime.value =
-        dateToInputValue(
-            Date.now()
-        );
+    dateToInputValue(Date.now())
+
 
     amountModal.classList.remove(
         "hidden"
-    );
+    )
 
 }
 
 
 
-/* CANCEL AMOUNT MODAL */
+document
+.getElementById("cancelAmountButton")
+.addEventListener(
+"click",
+() => {
+
+    amountModal.classList.add(
+        "hidden"
+    )
+
+})
+
+
 
 document
-    .getElementById("cancelAmountButton")
-    .addEventListener(
-        "click",
-        () => {
+.getElementById("saveAmountButton")
+.addEventListener(
+"click",
+async () => {
 
-            amountModal.classList.add(
-                "hidden"
-            );
+    const amount =
+    Number(amountInput.value)
 
-            editingAmountId = null;
+    const unit =
+    amountUnit.value
 
-            editingAmountType = null;
-
-        }
-    );
-
-
-
-/* SAVE FEED OR PUMP */
-
-document
-    .getElementById("saveAmountButton")
-    .addEventListener(
-        "click",
-        async () => {
-
-            const amount =
-                Number(
-                    amountInput.value
-                );
-
-            const unit =
-                amountUnit.value;
-
-            const timestamp =
-                inputValueToTimestamp(
-                    amountDateTime.value
-                );
+    const timestamp =
+    inputValueToTimestamp(
+        amountDateTime.value
+    )
 
 
-            if (
-                !Number.isFinite(amount) ||
-                amount <= 0
-            ) {
+    if(
+        !Number.isFinite(amount) ||
+        amount <= 0
+    ) {
 
-                alert(
-                    "Enter an amount greater than 0."
-                );
+        alert(
+            "Enter an amount greater than 0."
+        )
 
-                return;
+        return
 
+    }
+
+
+    const amountMl =
+    unit === "oz"
+    ? amount * 29.5735
+    : amount
+
+
+    if(editingAmountId) {
+
+        await update(
+
+            ref(
+                db,
+                "users/" +
+                currentUid +
+                "/events/" +
+                editingAmountId
+            ),
+
+            {
+                enteredAmount:amount,
+                enteredUnit:unit,
+                amountMl,
+                timestamp,
+                updatedAt:Date.now()
             }
 
+        )
 
-            if (
-                !Number.isFinite(timestamp)
-            ) {
+    } else {
 
-                alert(
-                    "Choose a valid date and time."
-                );
+        const cloudId =
+        makeCloudId()
 
-                return;
 
+        await set(
+
+            ref(
+                db,
+                "users/" +
+                currentUid +
+                "/events/" +
+                cloudId
+            ),
+
+            {
+                cloudId,
+                type:editingAmountType,
+                enteredAmount:amount,
+                enteredUnit:unit,
+                amountMl,
+                timestamp,
+                source:"web",
+                deleted:false,
+                updatedAt:Date.now()
             }
 
+        )
 
-            const amountMl =
-                unit === "oz"
-                    ? amount * 29.5735
-                    : amount;
+    }
 
 
-            const updatedAt =
-                Date.now();
+    amountModal.classList.add(
+        "hidden"
+    )
+
+})
 
 
-            if (editingAmountId) {
-
-                await update(
-
-                    ref(
-                        db,
-                        "users/" +
-                        currentUid +
-                        "/events/" +
-                        editingAmountId
-                    ),
-
-                    {
-                        enteredAmount:
-                            amount,
-
-                        enteredUnit:
-                            unit,
-
-                        amountMl:
-                            amountMl,
-
-                        timestamp:
-                            timestamp,
-
-                        deleted:
-                            false,
-
-                        updatedAt:
-                            updatedAt
-                    }
-
-                );
-
-            } else {
-
-                const cloudId =
-                    makeCloudId();
-
-
-                await set(
-
-                    ref(
-                        db,
-                        "users/" +
-                        currentUid +
-                        "/events/" +
-                        cloudId
-                    ),
-
-                    {
-                        cloudId:
-                            cloudId,
-
-                        type:
-                            editingAmountType,
-
-                        enteredAmount:
-                            amount,
-
-                        enteredUnit:
-                            unit,
-
-                        amountMl:
-                            amountMl,
-
-                        timestamp:
-                            timestamp,
-
-                        source:
-                            "web",
-
-                        deleted:
-                            false,
-
-                        updatedAt:
-                            updatedAt
-                    }
-
-                );
-
-            }
-
-
-            editingAmountId =
-                null;
-
-            editingAmountType =
-                null;
-
-            amountModal.classList.add(
-                "hidden"
-            );
-
-        }
-    );
-
-
-
-/* EDIT FEED OR PUMP */
 
 function openAmountEdit(cloudId) {
 
     const event =
-        currentEvents[cloudId];
-
-    if (!event) {
-        return;
-    }
-
+    currentEvents[cloudId]
 
     editingAmountId =
-        cloudId;
+    cloudId
 
     editingAmountType =
-        event.type;
+    event.type
 
 
     amountModalTitle.textContent =
-        event.type === "pump"
-            ? "Edit Pump"
-            : "Edit Feeding";
+    event.type === "pump"
+    ? "Edit Pump"
+    : "Edit Feeding"
 
 
     amountInput.value =
-        event.enteredAmount ??
-        (
-            event.amountMl != null
-                ? Number(
-                    event.amountMl
-                ).toFixed(0)
-                : ""
-        );
+    event.enteredAmount ??
+    event.amountMl ??
+    ""
 
 
     amountUnit.value =
-        event.enteredUnit ||
-        "ml";
+    event.enteredUnit ||
+    "ml"
 
 
     amountDateTime.value =
-        dateToInputValue(
-            event.timestamp
-        );
+    dateToInputValue(
+        event.timestamp
+    )
 
 
     amountModal.classList.remove(
         "hidden"
-    );
+    )
 
 }
 
 
-
-/* EDIT SIMPLE */
 
 function openSimpleEdit(cloudId) {
 
     const event =
-        currentEvents[cloudId];
-
-    if (!event) {
-        return;
-    }
-
+    currentEvents[cloudId]
 
     editingSimpleId =
-        cloudId;
+    cloudId
 
 
-    let typeName =
-        "Entry";
+    let name = "Entry"
 
 
-    if (
-        event.type === "pee"
-    ) {
+    if(event.type === "pee")
+        name = "Pee"
 
-        typeName =
-            "Pee";
+    if(event.type === "poop")
+        name = "Poop"
 
-    } else if (
-        event.type === "poop"
-    ) {
-
-        typeName =
-            "Poop";
-
-    } else if (
-        event.type === "mixed"
-    ) {
-
-        typeName =
-            "Mixed";
-
-    }
+    if(event.type === "mixed")
+        name = "Mixed"
 
 
     editSimpleTitle.textContent =
-        "Edit " +
-        typeName;
+    "Edit " + name
 
 
     simpleDateTime.value =
-        dateToInputValue(
-            event.timestamp
-        );
+    dateToInputValue(
+        event.timestamp
+    )
 
 
     editSimpleModal.classList.remove(
         "hidden"
-    );
+    )
 
 }
 
 
 
-/* CANCEL SIMPLE EDIT */
+document
+.getElementById("cancelSimpleButton")
+.addEventListener(
+"click",
+() => {
+
+    editSimpleModal.classList.add(
+        "hidden"
+    )
+
+})
+
+
 
 document
-    .getElementById("cancelSimpleButton")
-    .addEventListener(
-        "click",
-        () => {
+.getElementById("saveSimpleButton")
+.addEventListener(
+"click",
+async () => {
 
-            editingSimpleId =
-                null;
+    const timestamp =
+    inputValueToTimestamp(
+        simpleDateTime.value
+    )
 
-            editSimpleModal.classList.add(
-                "hidden"
-            );
 
+    await update(
+
+        ref(
+            db,
+            "users/" +
+            currentUid +
+            "/events/" +
+            editingSimpleId
+        ),
+
+        {
+            timestamp,
+            updatedAt:Date.now()
         }
-    );
+
+    )
 
 
+    editSimpleModal.classList.add(
+        "hidden"
+    )
 
-/* SAVE SIMPLE EDIT */
-
-document
-    .getElementById("saveSimpleButton")
-    .addEventListener(
-        "click",
-        async () => {
-
-            if (!editingSimpleId) {
-                return;
-            }
+})
 
 
-            const timestamp =
-                inputValueToTimestamp(
-                    simpleDateTime.value
-                );
-
-
-            if (
-                !Number.isFinite(timestamp)
-            ) {
-
-                alert(
-                    "Choose a valid date and time."
-                );
-
-                return;
-
-            }
-
-
-            await update(
-
-                ref(
-                    db,
-                    "users/" +
-                    currentUid +
-                    "/events/" +
-                    editingSimpleId
-                ),
-
-                {
-                    timestamp:
-                        timestamp,
-
-                    updatedAt:
-                        Date.now()
-                }
-
-            );
-
-
-            editingSimpleId =
-                null;
-
-            editSimpleModal.classList.add(
-                "hidden"
-            );
-
-        }
-    );
-
-
-
-/* DELETE EVENT */
 
 async function deleteEvent(cloudId) {
 
-    const event =
-        currentEvents[cloudId];
-
-    if (!event) {
-        return;
-    }
-
-
-    if (
+    if(
         !confirm(
             "Delete this entry?"
         )
-    ) {
-
-        return;
-
-    }
+    ) return
 
 
     await update(
@@ -1478,272 +1190,436 @@ async function deleteEvent(cloudId) {
         ),
 
         {
-            deleted:
-                true,
-
-            updatedAt:
-                Date.now()
+            deleted:true,
+            updatedAt:Date.now()
         }
 
-    );
+    )
 
 }
 
 
 
-/* TODAY CHECK */
+/* HISTORY IMPORT */
 
-function isToday(timestamp) {
+document
+.getElementById("importButton")
+.addEventListener(
+"click",
+() => {
 
-    const d =
-        new Date(timestamp);
+    importFile.value = ""
 
-    const today =
-        new Date();
+    importFile.click()
 
-
-    return (
-
-        d.getFullYear() ===
-        today.getFullYear()
-
-        &&
-
-        d.getMonth() ===
-        today.getMonth()
-
-        &&
-
-        d.getDate() ===
-        today.getDate()
-
-    );
-
-}
+})
 
 
 
-/* FEEDING STATUS */
+importFile.addEventListener(
+"change",
+async event => {
 
-function updateFeedingStatus() {
+    const file =
+    event.target.files[0]
 
-    const feeds =
-        Object.values(
-            currentEvents
-        )
 
-        .filter(
-            event =>
-                event &&
-                !event.deleted &&
-                event.type === "feed" &&
-                Number.isFinite(
+    if(!file)
+        return
+
+
+    importStatus.textContent =
+    "Reading import file..."
+
+
+    try {
+
+        const text =
+        await file.text()
+
+        const data =
+        JSON.parse(text)
+
+
+        if(
+            !data.events ||
+            typeof data.events !== "object"
+        ) {
+
+            throw new Error(
+                "This is not a valid Baby Tracker import file."
+            )
+
+        }
+
+
+        const importedEvents =
+        Object.entries(data.events)
+
+
+        if(
+            importedEvents.length === 0
+        ) {
+
+            throw new Error(
+                "The import file contains no events."
+            )
+
+        }
+
+
+        const allowedTypes =
+        new Set([
+            "pee",
+            "poop",
+            "mixed",
+            "feed",
+            "pump"
+        ])
+
+
+        let newCount = 0
+
+        let duplicateCount = 0
+
+        let invalidCount = 0
+
+
+        const updates = {}
+
+
+        for(
+            const [fileId,event]
+            of importedEvents
+        ) {
+
+            if(
+                !event ||
+                !allowedTypes.has(
+                    event.type
+                ) ||
+                !Number.isFinite(
                     Number(
                         event.timestamp
                     )
                 )
+            ) {
+
+                invalidCount++
+
+                continue
+
+            }
+
+
+            const cloudId =
+            event.cloudId ||
+            fileId
+
+
+            if(
+                currentEvents[cloudId]
+            ) {
+
+                duplicateCount++
+
+                continue
+
+            }
+
+
+            updates[cloudId] = {
+
+                ...event,
+
+                cloudId,
+
+                source:
+                event.source ||
+                "import",
+
+                deleted:false,
+
+                updatedAt:
+                Number(
+                    event.updatedAt
+                ) ||
+                Date.now()
+
+            }
+
+
+            newCount++
+
+        }
+
+
+        if(newCount === 0) {
+
+            importStatus.textContent =
+            "Nothing new to import. " +
+            duplicateCount +
+            " entries were already present."
+
+            return
+
+        }
+
+
+        const message =
+
+        "Import " +
+        newCount +
+        " historical entries?\n\n" +
+
+        duplicateCount +
+        " duplicates will be skipped."
+
+
+        if(!confirm(message)) {
+
+            importStatus.textContent =
+            "Import cancelled."
+
+            return
+
+        }
+
+
+        importStatus.textContent =
+        "Importing " +
+        newCount +
+        " entries..."
+
+
+        await update(
+            eventsRef(),
+            updates
         )
 
-        .sort(
-            (a, b) =>
-                Number(
-                    b.timestamp
-                ) -
-                Number(
-                    a.timestamp
-                )
-        );
+
+        importStatus.textContent =
+
+        "Import complete ✓ " +
+
+        newCount +
+        " entries added"
 
 
-    if (
-        feeds.length === 0
-    ) {
+        if(duplicateCount > 0) {
+
+            importStatus.textContent +=
+
+            " • " +
+            duplicateCount +
+            " duplicates skipped"
+
+        }
+
+
+        if(invalidCount > 0) {
+
+            importStatus.textContent +=
+
+            " • " +
+            invalidCount +
+            " unsupported entries skipped"
+
+        }
+
+
+    } catch(error) {
+
+        console.error(error)
+
+        importStatus.textContent =
+        "Import failed: " +
+        error.message
+
+    }
+
+})
+
+
+
+function isToday(timestamp) {
+
+    const d =
+    new Date(timestamp)
+
+    const today =
+    new Date()
+
+
+    return (
+        d.getFullYear() ===
+        today.getFullYear() &&
+
+        d.getMonth() ===
+        today.getMonth() &&
+
+        d.getDate() ===
+        today.getDate()
+    )
+
+}
+
+
+
+function updateFeedingStatus() {
+
+    const feeds =
+    Object.values(currentEvents)
+
+    .filter(
+        event =>
+        event &&
+        !event.deleted &&
+        event.type === "feed"
+    )
+
+    .sort(
+        (a,b) =>
+        Number(b.timestamp) -
+        Number(a.timestamp)
+    )
+
+
+    if(feeds.length === 0) {
 
         feedingStatus.innerHTML =
-            "🍼 Last feed: --<br>Next feed: --";
+        "🍼 Last feed: --<br>Next feed: --"
 
-        return;
+        return
 
     }
 
 
-    const latestFeed =
-        Number(
-            feeds[0].timestamp
-        );
+    const latest =
+    Number(feeds[0].timestamp)
 
 
-    const nextFeed =
-        latestFeed +
-        (
-            3 *
-            60 *
-            60 *
-            1000
-        );
+    const next =
+    latest +
+    3 * 60 * 60 * 1000
 
 
     const remaining =
-        nextFeed -
-        Date.now();
+    next - Date.now()
 
 
-    let countdown;
+    let countdown
 
 
-    if (
-        remaining <= 0
-    ) {
+    if(remaining <= 0) {
 
         countdown =
-            "Due now";
+        "Due now"
 
     } else {
 
-        const totalMinutes =
-            Math.floor(
-                remaining /
-                60000
-            );
-
-
-        const hours =
-            Math.floor(
-                totalMinutes /
-                60
-            );
-
-
         const minutes =
-            totalMinutes %
-            60;
+        Math.floor(
+            remaining / 60000
+        )
+
+
+        const h =
+        Math.floor(
+            minutes / 60
+        )
+
+
+        const m =
+        minutes % 60
 
 
         countdown =
-            hours > 0
-                ? hours +
-                  " hr " +
-                  minutes +
-                  " min"
-                : minutes +
-                  " min";
+        h > 0
+        ? h + " hr " + m + " min"
+        : m + " min"
 
     }
 
 
     feedingStatus.innerHTML =
 
-        "🍼 Last feed: " +
-        timeOnly(
-            latestFeed
-        ) +
+    "🍼 Last feed: " +
+    timeOnly(latest) +
 
-        "<br>Next feed: " +
-        timeOnly(
-            nextFeed
-        ) +
+    "<br>Next feed: " +
+    timeOnly(next) +
 
-        " • " +
-        countdown;
+    " • " +
+    countdown
 
 }
 
 
 
-/* RENDER APP */
-
 function render() {
 
     const entries =
-        Object.entries(
-            currentEvents
-        )
+    Object.entries(currentEvents)
 
-        .filter(
-            ([id, event]) =>
-                event &&
-                !event.deleted
-        )
+    .filter(
+        ([id,event]) =>
+        event &&
+        !event.deleted
+    )
 
-        .sort(
-            (a, b) =>
-                Number(
-                    b[1].timestamp || 0
-                ) -
-                Number(
-                    a[1].timestamp || 0
-                )
-        );
+    .sort(
+        (a,b) =>
+        Number(b[1].timestamp) -
+        Number(a[1].timestamp)
+    )
 
 
-    let peeCount =
-        0;
+    let pee = 0
 
-    let poopCount =
-        0;
+    let poop = 0
 
-    let feedCount =
-        0;
+    let feed = 0
 
-    let totalMl =
-        0;
+    let totalMl = 0
 
 
-    for (
-        const [id, event]
+    for(
+        const [id,event]
         of entries
     ) {
 
-        if (
-            !isToday(
-                event.timestamp
-            )
-        ) {
-
-            continue;
-
-        }
+        if(
+            !isToday(event.timestamp)
+        )
+            continue
 
 
-        if (
-            event.type === "pee"
-        ) {
-
-            peeCount++;
-
-        }
+        if(event.type === "pee")
+            pee++
 
 
-        if (
-            event.type === "poop"
-        ) {
+        if(event.type === "poop")
+            poop++
 
-            poopCount++;
+
+        if(event.type === "mixed") {
+
+            pee++
+
+            poop++
 
         }
 
 
-        if (
-            event.type === "mixed"
-        ) {
+        if(event.type === "feed") {
 
-            peeCount++;
-
-            poopCount++;
-
-        }
-
-
-        if (
-            event.type === "feed"
-        ) {
-
-            feedCount++;
+            feed++
 
             totalMl +=
-                Number(
-                    event.amountMl || 0
-                );
+            Number(
+                event.amountMl || 0
+            )
 
         }
 
@@ -1751,359 +1627,243 @@ function render() {
 
 
     document
-        .getElementById(
-            "peeCount"
-        )
-        .textContent =
-        peeCount;
+    .getElementById("peeCount")
+    .textContent = pee
 
 
     document
-        .getElementById(
-            "poopCount"
-        )
-        .textContent =
-        poopCount;
+    .getElementById("poopCount")
+    .textContent = poop
 
 
     document
-        .getElementById(
-            "feedCount"
-        )
-        .textContent =
-        feedCount;
+    .getElementById("feedCount")
+    .textContent = feed
 
 
     document
-        .getElementById(
-            "todayFeedTotal"
-        )
-        .textContent =
+    .getElementById("todayFeedTotal")
+    .textContent =
 
-        "Today feed total: " +
+    "Today feed total: " +
 
-        totalMl.toFixed(0) +
+    totalMl.toFixed(0) +
 
-        " mL / " +
+    " mL / " +
 
-        (
-            totalMl /
-            29.5735
-        ).toFixed(2) +
+    (
+        totalMl / 29.5735
+    ).toFixed(2) +
 
-        " oz";
+    " oz"
 
 
-    updateFeedingStatus();
+    updateFeedingStatus()
 
 
-    history.innerHTML =
-        "";
+    history.innerHTML = ""
 
 
-    if (
-        entries.length === 0
-    ) {
-
-        const empty =
-            document.createElement(
-                "div"
-            );
-
-        empty.className =
-            "card";
-
-        empty.textContent =
-            "No entries yet.";
-
-        history.appendChild(
-            empty
-        );
-
-        return;
-
-    }
+    let previousDay = null
 
 
-    let previousDateKey =
-        null;
-
-
-    for (
-        const [cloudId, event]
+    for(
+        const [cloudId,event]
         of entries
     ) {
 
-        const thisDateKey =
-            dateKey(
-                event.timestamp
-            );
+        const day =
+        dateKey(event.timestamp)
 
 
-        if (
-            thisDateKey !==
-            previousDateKey
-        ) {
+        if(day !== previousDay) {
 
             const header =
-                document.createElement(
-                    "div"
-                );
+            document.createElement(
+                "div"
+            )
 
 
             header.className =
-                "day-header";
+            "day-header"
 
 
             header.textContent =
-                dateHeaderText(
-                    event.timestamp
-                );
+            dateHeaderText(
+                event.timestamp
+            )
 
 
             history.appendChild(
                 header
-            );
+            )
 
 
-            previousDateKey =
-                thisDateKey;
+            previousDay = day
 
         }
 
 
         const card =
-            document.createElement(
-                "div"
-            );
+        document.createElement(
+            "div"
+        )
 
 
         card.className =
-            "event";
+        "event"
 
 
-        let name =
-            "Entry";
+        let name = "Entry"
 
 
-        if (
-            event.type === "pee"
-        ) {
+        if(event.type === "pee")
+            name = "💧 Pee"
 
-            name =
-                "💧 Pee";
+        if(event.type === "poop")
+            name = "💩 Poop"
 
-        } else if (
-            event.type === "poop"
-        ) {
+        if(event.type === "mixed")
+            name = "💧💩 Mixed"
 
-            name =
-                "💩 Poop";
+        if(event.type === "feed")
+            name = "🍼 Feed"
 
-        } else if (
-            event.type === "mixed"
-        ) {
+        if(event.type === "pump")
+            name = "🍼 Pump"
 
-            name =
-                "💧💩 Mixed";
 
-        } else if (
+        if(
+            event.type === "feed" ||
             event.type === "pump"
         ) {
 
-            name =
-                "🍼 Pump";
+            if(
+                event.enteredAmount != null
+            ) {
 
-        } else if (
-            event.type === "feed"
-        ) {
-
-            name =
-                "🍼 Feed";
-
-        }
-
-
-        if (
-            (
-                event.type === "feed" ||
-                event.type === "pump"
-            ) &&
-            event.enteredAmount != null
-        ) {
-
-            const displayAmount =
-                Number(
-                    event.enteredAmount
-                );
-
-
-            name +=
+                name +=
                 " • " +
-
-                displayAmount.toFixed(
-                    displayAmount % 1 === 0
-                        ? 0
-                        : 1
-                ) +
-
+                event.enteredAmount +
                 " " +
-
                 (
                     event.enteredUnit ||
                     "mL"
-                );
+                )
 
-        } else if (
-            (
-                event.type === "feed" ||
-                event.type === "pump"
-            ) &&
-            event.amountMl != null
-        ) {
-
-            name +=
-                " • " +
-
-                Number(
-                    event.amountMl
-                ).toFixed(0) +
-
-                " mL";
+            }
 
         }
 
 
         const title =
-            document.createElement(
-                "div"
-            );
+        document.createElement(
+            "div"
+        )
 
 
         title.className =
-            "event-name";
+        "event-name"
 
 
         title.textContent =
-            name;
+        name
 
 
         const time =
-            document.createElement(
-                "div"
-            );
+        document.createElement(
+            "div"
+        )
 
 
         time.className =
-            "event-time";
+        "event-time"
 
 
         time.textContent =
-            timeOnly(
-                event.timestamp
-            );
+        timeOnly(
+            event.timestamp
+        )
 
 
-        card.appendChild(
-            title
-        );
+        card.appendChild(title)
 
-
-        card.appendChild(
-            time
-        );
+        card.appendChild(time)
 
 
         const buttons =
-            document.createElement(
-                "div"
-            );
+        document.createElement(
+            "div"
+        )
 
 
         buttons.className =
-            "event-buttons";
+        "event-buttons"
 
 
         const edit =
-            document.createElement(
-                "button"
-            );
+        document.createElement(
+            "button"
+        )
 
 
         edit.className =
-            "secondary";
+        "secondary"
 
 
         edit.textContent =
-            "Edit";
+        "Edit"
 
 
-        edit.addEventListener(
-            "click",
-            () => {
+        edit.onclick = () => {
 
-                if (
-                    event.type === "feed" ||
-                    event.type === "pump"
-                ) {
+            if(
+                event.type === "feed" ||
+                event.type === "pump"
+            ) {
 
-                    openAmountEdit(
-                        cloudId
-                    );
+                openAmountEdit(
+                    cloudId
+                )
 
-                } else {
+            } else {
 
-                    openSimpleEdit(
-                        cloudId
-                    );
-
-                }
+                openSimpleEdit(
+                    cloudId
+                )
 
             }
-        );
+
+        }
 
 
         const remove =
-            document.createElement(
-                "button"
-            );
+        document.createElement(
+            "button"
+        )
 
 
         remove.className =
-            "danger";
+        "danger"
 
 
         remove.textContent =
-            "Delete";
+        "Delete"
 
 
-        remove.addEventListener(
-            "click",
-            () =>
-                deleteEvent(
-                    cloudId
-                )
-        );
+        remove.onclick =
+        () => deleteEvent(
+            cloudId
+        )
 
 
-        buttons.appendChild(
-            edit
-        );
+        buttons.appendChild(edit)
 
+        buttons.appendChild(remove)
 
-        buttons.appendChild(
-            remove
-        );
+        card.appendChild(buttons)
 
-
-        card.appendChild(
-            buttons
-        );
-
-
-        history.appendChild(
-            card
-        );
+        history.appendChild(card)
 
     }
 
@@ -2111,23 +1871,17 @@ function render() {
 
 
 
-/* KEEP COUNTDOWN CURRENT */
-
 setInterval(
-    () => {
+() => {
 
-        if (currentUid) {
+    if(currentUid)
+        updateFeedingStatus()
 
-            updateFeedingStatus();
-
-        }
-
-    },
-    60000
-);
+},
+60000
+)
 
 </script>
 
 </body>
-
-    </html>
+</html>
