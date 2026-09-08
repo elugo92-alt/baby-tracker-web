@@ -1533,6 +1533,10 @@ body.night-mode .ped-day {
         visibility: hidden !important;
     }
 
+    #pedReportOutput {
+        display: block !important;
+    }
+
     #pedReportOutput,
     #pedReportOutput * {
         visibility: visible !important;
@@ -1562,6 +1566,19 @@ body.night-mode .ped-day {
         break-inside: auto;
     }
 
+}
+
+
+.ped-print-only {
+    display: none;
+}
+
+.ped-report-note {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: center;
 }
 
 </style>
@@ -2431,7 +2448,7 @@ body.night-mode .ped-day {
 
                 <input
                     id="pedReportStart"
-                    type="datetime-local">
+                    type="date">
             </div>
 
             <div>
@@ -2441,7 +2458,7 @@ body.night-mode .ped-day {
 
                 <input
                     id="pedReportEnd"
-                    type="datetime-local">
+                    type="date">
             </div>
 
         </div>
@@ -2449,19 +2466,17 @@ body.night-mode .ped-day {
         <button
             id="generatePedReportButton"
             class="primary">
-            Generate Report
+            Create PDF
         </button>
+
+        <div class="ped-report-note">
+            Choose a date range, then tap Create PDF. Your phone will open the print screen where you can save the report as a PDF.
+        </div>
 
         <div
             id="pedReportOutput"
-            class="ped-report-output hidden">
+            class="ped-report-output ped-print-only">
         </div>
-
-        <button
-            id="printPedReportButton"
-            class="secondary ped-print-button hidden">
-            Print / Save PDF
-        </button>
 
         <button
             id="closePedReportButton"
@@ -2807,10 +2822,6 @@ document.getElementById("pedReportEnd")
 
 const pedReportOutput =
 document.getElementById("pedReportOutput")
-
-const printPedReportButton =
-document.getElementById("printPedReportButton")
-
 
 let feedIntervalHours =
 Number(
@@ -4062,25 +4073,59 @@ document
 
 
 
-function setPedReportRange(hoursBack) {
+function pedLocalDateValue(timestamp) {
+
+    const d =
+    new Date(timestamp)
+
+    const y =
+    d.getFullYear()
+
+    const m =
+    String(
+        d.getMonth() + 1
+    )
+    .padStart(2,"0")
+
+    const day =
+    String(
+        d.getDate()
+    )
+    .padStart(2,"0")
+
+    return (
+        y +
+        "-" +
+        m +
+        "-" +
+        day
+    )
+
+}
+
+
+function setPedReportRange(daysBack) {
 
     const end =
-    Date.now()
+    new Date()
 
     const start =
-    end -
-    (
-        hoursBack *
-        60 *
-        60 *
-        1000
+    new Date()
+
+    start.setDate(
+        start.getDate() -
+        (daysBack - 1)
     )
 
     pedReportStart.value =
-    dateToInputValue(start)
+    pedLocalDateValue(
+        start.getTime()
+    )
 
     pedReportEnd.value =
-    dateToInputValue(end)
+    pedLocalDateValue(
+        end.getTime()
+    )
 
 }
 
@@ -4690,15 +4735,69 @@ function pediatricianReportHtml(
 }
 
 
-function generatePediatricianReport() {
+function pedDateStartTimestamp(value) {
+
+    if(!value)
+        return NaN
+
+    const parts =
+    value
+    .split("-")
+    .map(Number)
+
+    if(parts.length !== 3)
+        return NaN
+
+    return new Date(
+        parts[0],
+        parts[1] - 1,
+        parts[2],
+        0,
+        0,
+        0,
+        0
+    )
+    .getTime()
+
+}
+
+
+function pedDateEndTimestamp(value) {
+
+    if(!value)
+        return NaN
+
+    const parts =
+    value
+    .split("-")
+    .map(Number)
+
+    if(parts.length !== 3)
+        return NaN
+
+    return new Date(
+        parts[0],
+        parts[1] - 1,
+        parts[2],
+        23,
+        59,
+        59,
+        999
+    )
+    .getTime()
+
+}
+
+
+function createPediatricianPdf() {
 
     const start =
-    inputValueToTimestamp(
+    pedDateStartTimestamp(
         pedReportStart.value
     )
 
     const end =
-    inputValueToTimestamp(
+    pedDateEndTimestamp(
         pedReportEnd.value
     )
 
@@ -4708,11 +4807,11 @@ function generatePediatricianReport() {
         ||
         !Number.isFinite(end)
         ||
-        end <= start
+        end < start
     ) {
 
         alert(
-            "Choose a valid start and end time."
+            "Choose a valid start and end date."
         )
 
         return
@@ -4735,14 +4834,12 @@ function generatePediatricianReport() {
     )
 
 
-    pedReportOutput
-    .classList
-    .remove("hidden")
-
-
-    printPedReportButton
-    .classList
-    .remove("hidden")
+    /*
+       The report stays hidden in the app.
+       Printing CSS makes only this report visible
+       when the phone's print dialog opens.
+    */
+    window.print()
 
 }
 
@@ -4755,17 +4852,7 @@ document
 "click",
 () => {
 
-    setPedReportRange(24)
-
-    pedReportOutput
-    .classList
-    .add("hidden")
-
-
-    printPedReportButton
-    .classList
-    .add("hidden")
-
+    setPedReportRange(1)
 
     pediatricianReportModal
     .classList
@@ -4782,9 +4869,7 @@ document
 "click",
 () => {
 
-    setPedReportRange(24)
-
-    generatePediatricianReport()
+    setPedReportRange(1)
 
 })
 
@@ -4797,9 +4882,7 @@ document
 "click",
 () => {
 
-    setPedReportRange(72)
-
-    generatePediatricianReport()
+    setPedReportRange(3)
 
 })
 
@@ -4812,9 +4895,7 @@ document
 "click",
 () => {
 
-    setPedReportRange(168)
-
-    generatePediatricianReport()
+    setPedReportRange(7)
 
 })
 
@@ -4825,18 +4906,8 @@ document
 )
 .addEventListener(
 "click",
-generatePediatricianReport
+createPediatricianPdf
 )
-
-
-printPedReportButton
-.addEventListener(
-"click",
-() => {
-
-    window.print()
-
-})
 
 
 document
