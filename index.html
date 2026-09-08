@@ -1366,7 +1366,7 @@ body.night-mode .timeline-event.sleep {
 /* PEDIATRICIAN REPORT */
 
 .ped-report-modal .modal-card {
-    max-width: 760px;
+    max-width: 820px;
 }
 
 .ped-report-controls {
@@ -1395,7 +1395,7 @@ body.night-mode .ped-report-output {
 }
 
 .ped-report-header {
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
 .ped-report-header h3 {
@@ -1410,40 +1410,101 @@ body.night-mode .ped-report-output {
     font-size: 13px;
 }
 
-.ped-report-grid {
+.ped-day {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(117,111,105,.16);
+}
+
+body.night-mode .ped-day {
+    border-top-color: rgba(255,255,255,.10);
+}
+
+.ped-day:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.ped-day-title {
+    margin: 0 0 10px;
+    font-family: Georgia, serif;
+    font-size: 20px;
+}
+
+.ped-day-summary {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 8px;
+    margin-bottom: 14px;
 }
 
-.ped-report-section {
-    padding: 14px;
-    border-radius: 16px;
+.ped-summary-card {
+    padding: 12px;
+    border-radius: 14px;
     background: var(--soft);
 }
 
-.ped-report-section h4 {
-    margin: 0 0 8px;
-    font-size: 15px;
-}
-
-.ped-report-big {
-    font-size: 24px;
-    font-weight: 800;
-    margin-bottom: 4px;
-}
-
-.ped-report-small {
+.ped-summary-label {
     color: var(--muted);
-    font-size: 13px;
-    line-height: 1.45;
+    font-size: 12px;
+    margin-bottom: 3px;
 }
 
-.ped-report-caregivers {
-    margin-top: 10px;
-    padding: 14px;
-    border-radius: 16px;
+.ped-summary-value {
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.ped-hour-block {
+    margin-top: 12px;
+}
+
+.ped-hour-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.ped-event-list {
+    display: grid;
+    gap: 6px;
+}
+
+.ped-event-row {
+    display: grid;
+    grid-template-columns: 82px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 14px;
     background: var(--soft);
+}
+
+.ped-event-time {
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.ped-event-main {
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.ped-event-sub {
+    display: block;
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.ped-report-empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 18px 0;
 }
 
 .ped-print-button {
@@ -1452,9 +1513,16 @@ body.night-mode .ped-report-output {
 
 @media (max-width: 560px) {
 
-    .ped-report-controls,
-    .ped-report-grid {
+    .ped-report-controls {
         grid-template-columns: 1fr;
+    }
+
+    .ped-day-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ped-event-row {
+        grid-template-columns: 72px 1fr;
     }
 
 }
@@ -1483,10 +1551,15 @@ body.night-mode .ped-report-output {
         box-shadow: none !important;
     }
 
-    #pedReportOutput .ped-report-section,
-    #pedReportOutput .ped-report-caregivers {
+    #pedReportOutput .ped-summary-card,
+    #pedReportOutput .ped-event-row {
         background: #f4f4f4 !important;
         color: black !important;
+        break-inside: avoid;
+    }
+
+    #pedReportOutput .ped-day {
+        break-inside: auto;
     }
 
 }
@@ -4012,6 +4085,23 @@ function setPedReportRange(hoursBack) {
 }
 
 
+function isBabySpecificReportEvent(event) {
+
+    return [
+        "feed",
+        "nursing",
+        "pee",
+        "poop",
+        "mixed",
+        "sleep"
+    ]
+    .includes(
+        event.type
+    )
+
+}
+
+
 function pedEventListInRange(
     start,
     end
@@ -4026,9 +4116,16 @@ function pedEventListInRange(
             &&
             !event.deleted
             &&
+            isBabySpecificReportEvent(event)
+            &&
             Number(event.timestamp) >= start
             &&
             Number(event.timestamp) <= end
+    )
+    .sort(
+        (a,b) =>
+            Number(a.timestamp) -
+            Number(b.timestamp)
     )
 
 }
@@ -4046,20 +4143,225 @@ function escapeHtml(value) {
 }
 
 
-function pediatricianReportHtml(
-    entries,
-    start,
-    end
+function pedDayKey(timestamp) {
+
+    const date =
+    new Date(
+        Number(timestamp)
+    )
+
+    return [
+        date.getFullYear(),
+        String(
+            date.getMonth() + 1
+        ).padStart(2,"0"),
+        String(
+            date.getDate()
+        ).padStart(2,"0")
+    ].join("-")
+
+}
+
+
+function pedDayTitle(timestamp) {
+
+    return new Date(
+        Number(timestamp)
+    )
+    .toLocaleDateString(
+        undefined,
+        {
+            weekday:
+            "long",
+
+            month:
+            "long",
+
+            day:
+            "numeric",
+
+            year:
+            "numeric"
+        }
+    )
+
+}
+
+
+function pedHourKey(timestamp) {
+
+    return new Date(
+        Number(timestamp)
+    )
+    .getHours()
+
+}
+
+
+function pedHourLabel(hour) {
+
+    const d =
+    new Date()
+
+    d.setHours(
+        hour,
+        0,
+        0,
+        0
+    )
+
+    return d.toLocaleTimeString(
+        undefined,
+        {
+            hour:
+            "numeric"
+        }
+    )
+
+}
+
+
+function pedEventTitle(event) {
+
+    if(event.type === "feed") {
+
+        const ml =
+        Math.round(
+            Number(
+                event.amountMl ||
+                0
+            )
+        )
+
+        const oz =
+        (
+            Number(
+                event.amountMl ||
+                0
+            ) /
+            29.5735
+        )
+        .toFixed(1)
+
+        return (
+            "🍼 Bottle Feed • " +
+            ml +
+            " mL (" +
+            oz +
+            " oz)"
+        )
+
+    }
+
+
+    if(event.type === "nursing") {
+
+        return (
+            "🤱 Nursing • " +
+            secondsToReadable(
+                Number(
+                    event.durationSeconds ||
+                    0
+                )
+            )
+        )
+
+    }
+
+
+    if(event.type === "sleep") {
+
+        return (
+            "😴 Sleep • " +
+            secondsToReadable(
+                Number(
+                    event.durationSeconds ||
+                    0
+                )
+            )
+        )
+
+    }
+
+
+    if(event.type === "pee")
+        return "💧 Wet Diaper"
+
+
+    if(event.type === "poop")
+        return "💩 Dirty Diaper"
+
+
+    if(event.type === "mixed")
+        return "💧💩 Mixed Diaper"
+
+
+    return "Event"
+
+}
+
+
+function pedEventSubtext(event) {
+
+    if(event.type === "nursing") {
+
+        const left =
+        formatNursingMinutes(
+            event.leftSeconds ||
+            0
+        )
+
+        const right =
+        formatNursingMinutes(
+            event.rightSeconds ||
+            0
+        )
+
+        return (
+            "Left " +
+            left +
+            " • Right " +
+            right
+        )
+
+    }
+
+
+    if(
+        event.type === "sleep"
+        &&
+        event.endTimestamp
+    ) {
+
+        return (
+            timeOnly(
+                event.startTimestamp ||
+                event.timestamp
+            )
+            +
+            " to " +
+            timeOnly(
+                event.endTimestamp
+            )
+        )
+
+    }
+
+
+    return ""
+
+}
+
+
+function pedDaySummaryHtml(
+    entries
 ) {
 
-    let bottleSessions = 0
-    let bottleMl = 0
+    let feedSessions = 0
+    let feedMl = 0
 
     let nursingSessions = 0
     let nursingSeconds = 0
-
-    let pumpSessions = 0
-    let pumpMl = 0
 
     let peeCount = 0
     let poopCount = 0
@@ -4068,26 +4370,14 @@ function pediatricianReportHtml(
     let sleepSessions = 0
     let sleepSeconds = 0
 
-    const caregivers = {
-        Mom: 0,
-        Dad: 0
-    }
-
 
     for(const event of entries) {
 
-        if(event.caregiver === "Mom")
-            caregivers.Mom++
-
-        if(event.caregiver === "Dad")
-            caregivers.Dad++
-
-
         if(event.type === "feed") {
 
-            bottleSessions++
+            feedSessions++
 
-            bottleMl +=
+            feedMl +=
             Number(
                 event.amountMl ||
                 0
@@ -4103,19 +4393,6 @@ function pediatricianReportHtml(
             nursingSeconds +=
             Number(
                 event.durationSeconds ||
-                0
-            )
-
-        }
-
-
-        if(event.type === "pump") {
-
-            pumpSessions++
-
-            pumpMl +=
-            Number(
-                event.amountMl ||
                 0
             )
 
@@ -4149,19 +4426,228 @@ function pediatricianReportHtml(
     }
 
 
-    const diaperTotal =
+    const diapers =
     peeCount +
     poopCount +
     mixedCount
 
 
+    return `
+        <div class="ped-day-summary">
+
+            <div class="ped-summary-card">
+                <div class="ped-summary-label">
+                    Bottle Feeding
+                </div>
+                <div class="ped-summary-value">
+                    ${feedSessions} feeds •
+                    ${Math.round(feedMl)} mL
+                    (${(feedMl / 29.5735).toFixed(1)} oz)
+                </div>
+            </div>
+
+            <div class="ped-summary-card">
+                <div class="ped-summary-label">
+                    Nursing
+                </div>
+                <div class="ped-summary-value">
+                    ${nursingSessions} sessions •
+                    ${secondsToReadable(nursingSeconds)}
+                </div>
+            </div>
+
+            <div class="ped-summary-card">
+                <div class="ped-summary-label">
+                    Diapers
+                </div>
+                <div class="ped-summary-value">
+                    ${diapers} total •
+                    Wet ${peeCount} •
+                    Dirty ${poopCount} •
+                    Mixed ${mixedCount}
+                </div>
+            </div>
+
+            <div class="ped-summary-card">
+                <div class="ped-summary-label">
+                    Sleep
+                </div>
+                <div class="ped-summary-value">
+                    ${sleepSessions} sessions •
+                    ${secondsToReadable(sleepSeconds)}
+                </div>
+            </div>
+
+        </div>
+    `
+
+}
+
+
+function pedDayEventsHtml(entries) {
+
+    const byHour = {}
+
+    for(const event of entries) {
+
+        const hour =
+        pedHourKey(
+            event.timestamp
+        )
+
+        if(!byHour[hour])
+            byHour[hour] = []
+
+        byHour[hour].push(event)
+
+    }
+
+
+    return Object.keys(byHour)
+    .map(Number)
+    .sort((a,b) => a - b)
+    .map(hour => {
+
+        const rows =
+        byHour[hour]
+        .map(event => {
+
+            const sub =
+            pedEventSubtext(event)
+
+            return `
+                <div class="ped-event-row">
+
+                    <div class="ped-event-time">
+                        ${escapeHtml(
+                            timeOnly(
+                                event.timestamp
+                            )
+                        )}
+                    </div>
+
+                    <div class="ped-event-main">
+
+                        ${escapeHtml(
+                            pedEventTitle(
+                                event
+                            )
+                        )}
+
+                        ${
+                            sub
+                            ? `
+                                <span class="ped-event-sub">
+                                    ${escapeHtml(sub)}
+                                </span>
+                              `
+                            : ""
+                        }
+
+                    </div>
+
+                </div>
+            `
+
+        })
+        .join("")
+
+
+        return `
+            <div class="ped-hour-block">
+
+                <div class="ped-hour-label">
+                    ${escapeHtml(
+                        pedHourLabel(hour)
+                    )}
+                </div>
+
+                <div class="ped-event-list">
+                    ${rows}
+                </div>
+
+            </div>
+        `
+
+    })
+    .join("")
+
+}
+
+
+function pediatricianReportHtml(
+    entries,
+    start,
+    end
+) {
+
     const name =
     babyName ||
     "Baby"
 
-
     const age =
     babyAgeText()
+
+    const days = {}
+
+    for(const event of entries) {
+
+        const key =
+        pedDayKey(
+            event.timestamp
+        )
+
+        if(!days[key]) {
+
+            days[key] = {
+                timestamp:
+                Number(
+                    event.timestamp
+                ),
+                entries:
+                []
+            }
+
+        }
+
+        days[key].entries.push(event)
+
+    }
+
+
+    const dayHtml =
+    Object.values(days)
+    .sort(
+        (a,b) =>
+            a.timestamp -
+            b.timestamp
+    )
+    .map(day => {
+
+        return `
+            <section class="ped-day">
+
+                <h4 class="ped-day-title">
+                    ${escapeHtml(
+                        pedDayTitle(
+                            day.timestamp
+                        )
+                    )}
+                </h4>
+
+                ${pedDaySummaryHtml(
+                    day.entries
+                )}
+
+                ${pedDayEventsHtml(
+                    day.entries
+                )}
+
+            </section>
+        `
+
+    })
+    .join("")
 
 
     return `
@@ -4190,126 +4676,15 @@ function pediatricianReportHtml(
 
         </div>
 
-        <div class="ped-report-grid">
-
-            <div class="ped-report-section">
-
-                <h4>🍼 Bottle Feeding</h4>
-
-                <div class="ped-report-big">
-                    ${Math.round(bottleMl)} mL
+        ${
+            dayHtml
+            ||
+            `
+                <div class="ped-report-empty">
+                    No baby activity was logged in this date range.
                 </div>
-
-                <div class="ped-report-small">
-                    ${bottleSessions} sessions
-                    •
-                    ${(
-                        bottleMl /
-                        29.5735
-                    ).toFixed(1)} oz total
-                </div>
-
-            </div>
-
-
-            <div class="ped-report-section">
-
-                <h4>🤱 Nursing</h4>
-
-                <div class="ped-report-big">
-                    ${nursingSessions}
-                </div>
-
-                <div class="ped-report-small">
-                    ${secondsToReadable(nursingSeconds)}
-                    total nursing time
-                </div>
-
-            </div>
-
-
-            <div class="ped-report-section">
-
-                <h4>🍼 Pumping</h4>
-
-                <div class="ped-report-big">
-                    ${Math.round(pumpMl)} mL
-                </div>
-
-                <div class="ped-report-small">
-                    ${pumpSessions} sessions
-                    •
-                    ${(
-                        pumpMl /
-                        29.5735
-                    ).toFixed(1)} oz total
-                </div>
-
-            </div>
-
-
-            <div class="ped-report-section">
-
-                <h4>💧 Diapers</h4>
-
-                <div class="ped-report-big">
-                    ${diaperTotal}
-                </div>
-
-                <div class="ped-report-small">
-                    Pee ${peeCount}
-                    •
-                    Poop ${poopCount}
-                    •
-                    Mixed ${mixedCount}
-                </div>
-
-            </div>
-
-
-            <div class="ped-report-section">
-
-                <h4>😴 Sleep</h4>
-
-                <div class="ped-report-big">
-                    ${secondsToReadable(sleepSeconds)}
-                </div>
-
-                <div class="ped-report-small">
-                    ${sleepSessions} sleep sessions
-                </div>
-
-            </div>
-
-
-            <div class="ped-report-section">
-
-                <h4>📋 Total Logged Events</h4>
-
-                <div class="ped-report-big">
-                    ${entries.length}
-                </div>
-
-                <div class="ped-report-small">
-                    Across the selected date range
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="ped-report-caregivers">
-
-            <h4>👥 Caregiver Logging</h4>
-
-            <div class="ped-report-small">
-                Mom: ${caregivers.Mom}
-                •
-                Dad: ${caregivers.Dad}
-            </div>
-
-        </div>
+            `
+        }
     `
 
 }
@@ -8327,215 +8702,5 @@ function render() {
                 event
             ]
             of dayItems
-        ) {
-
-            const card =
-            document.createElement(
-                "div"
-            )
-
-            card.className =
-            "event"
-
-
-            const icon =
-            document.createElement(
-                "div"
-            )
-
-            icon.className =
-            "event-icon " +
-            eventIconClass(
-                event.type
-            )
-
-            icon.textContent =
-            eventIcon(
-                event.type
-            )
-
-
-            const main =
-            document.createElement(
-                "div"
-            )
-
-            main.className =
-            "event-main"
-
-
-            const title =
-            document.createElement(
-                "div"
-            )
-
-            title.className =
-            "event-name"
-
-            title.textContent =
-            eventName(event)
-
-
-            const time =
-            document.createElement(
-                "div"
-            )
-
-            time.className =
-            "event-time"
-
-            time.textContent =
-            eventSubText(event)
-
-
-            main.appendChild(
-                title
-            )
-
-            main.appendChild(
-                time
-            )
-
-
-            const buttons =
-            document.createElement(
-                "div"
-            )
-
-            buttons.className =
-            "event-buttons"
-
-
-            const edit =
-            document.createElement(
-                "button"
-            )
-
-            edit.className =
-            "secondary"
-
-            edit.textContent =
-            "Edit"
-
-            edit.onclick =
-            () => {
-
-                if(
-                    event.type ===
-                    "sleep"
-                ) {
-
-                    alert(
-                        "To correct a sleep entry, delete it and save the corrected start and end times again."
-                    )
-
-                } else if(
-                    event.type ===
-                    "nursing"
-                ) {
-
-                    openNursingEdit(
-                        cloudId
-                    )
-
-                } else if(
-                    event.type ===
-                    "feed"
-
-                    ||
-
-                    event.type ===
-                    "pump"
-                ) {
-
-                    openAmountEdit(
-                        cloudId
-                    )
-
-                } else {
-
-                    openSimpleEdit(
-                        cloudId
-                    )
-
-                }
-
-            }
-
-
-            const remove =
-            document.createElement(
-                "button"
-            )
-
-            remove.className =
-            "danger"
-
-            remove.textContent =
-            "Delete"
-
-            remove.onclick =
-            () =>
-            deleteEvent(
-                cloudId
-            )
-
-
-            buttons.appendChild(
-                edit
-            )
-
-            buttons.appendChild(
-                remove
-            )
-
-
-            card.appendChild(
-                icon
-            )
-
-            card.appendChild(
-                main
-            )
-
-            card.appendChild(
-                buttons
-            )
-
-            dayCard.appendChild(
-                card
-            )
-
-        }
-
-
-        history.appendChild(
-            dayCard
-        )
-
-    }
-
-}
-
-
-
-setInterval(
-() => {
-
-    if(currentUid) {
-
-        updateFeedingStatus()
-
-        updatePumpStatus()
-
-    }
-
-},
-60000
-)
-
-</script>
-
-</body>
-
-</html>
+     
+Preview truncated for large file
