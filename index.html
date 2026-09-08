@@ -1252,6 +1252,115 @@ body.night-mode .report-empty {
 }
 
 
+
+
+/* BABY PROFILE + CAREGIVER + SLEEP */
+
+.profile-card {
+    margin-bottom: 18px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--lavender);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex: 0 0 auto;
+}
+
+.profile-name {
+    font-family: Georgia, serif;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.profile-age {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+#sleepButton {
+    background: #e9edf4;
+}
+
+body.night-mode #sleepButton {
+    background: #2c3746;
+}
+
+.caregiver-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.caregiver-choice {
+    min-height: 48px;
+    border-radius: 14px;
+    background: var(--soft);
+    color: var(--text);
+    font-weight: 700;
+}
+
+.caregiver-choice.selected {
+    background: #272522;
+    color: white;
+}
+
+body.night-mode .caregiver-choice.selected {
+    background: #ece3d8;
+    color: #22232b;
+}
+
+.profile-settings-box {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(117,111,105,.12);
+}
+
+body.night-mode .profile-settings-box {
+    border-top-color: rgba(255,255,255,.08);
+}
+
+.sleep-timer {
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 8px 0 14px;
+}
+
+.sleep-status-text {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.sleep-summary {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.timeline-event.sleep {
+    background: #dfe4ec;
+}
+
+body.night-mode .timeline-event.sleep {
+    background: #cbd8e7;
+    color: #202020;
+}
+
 </style>
 </head>
 
@@ -1274,6 +1383,32 @@ body.night-mode .report-empty {
         id="themeDecor"
         class="decor">
         ☾ ✦
+    </div>
+
+</div>
+
+
+<div
+    id="babyProfileCard"
+    class="card profile-card hidden">
+
+    <div class="profile-badge">
+        👶
+    </div>
+
+    <div>
+
+        <div
+            id="babyProfileName"
+            class="profile-name">
+            Baby
+        </div>
+
+        <div
+            id="babyProfileAge"
+            class="profile-age">
+        </div>
+
     </div>
 
 </div>
@@ -1616,6 +1751,19 @@ body.night-mode .report-empty {
 
 
         <button
+            id="sleepButton"
+            class="action-btn action-full">
+
+            <span class="action-icon">
+                😴
+            </span>
+
+            Sleep
+
+        </button>
+
+
+        <button
             id="moreButton"
             class="action-btn action-full">
 
@@ -1724,6 +1872,57 @@ body.night-mode .report-empty {
                         inputmode="decimal">
 
                 </div>
+
+            </div>
+
+
+            <div class="profile-settings-box">
+
+                <label class="settings-label">
+                    Caregiver on this phone
+                </label>
+
+                <div class="caregiver-toggle">
+
+                    <button
+                        id="caregiverMomButton"
+                        type="button"
+                        class="caregiver-choice">
+                        Mom
+                    </button>
+
+                    <button
+                        id="caregiverDadButton"
+                        type="button"
+                        class="caregiver-choice">
+                        Dad
+                    </button>
+
+                </div>
+
+
+                <label
+                    class="settings-label"
+                    for="babyNameInput">
+                    Baby's name
+                </label>
+
+                <input
+                    id="babyNameInput"
+                    type="text"
+                    maxlength="40"
+                    placeholder="Baby's name">
+
+
+                <label
+                    class="settings-label"
+                    for="babyBirthdayInput">
+                    Birthday
+                </label>
+
+                <input
+                    id="babyBirthdayInput"
+                    type="date">
 
             </div>
 
@@ -1983,6 +2182,71 @@ body.night-mode .report-empty {
 
 
 <div
+    id="sleepModal"
+    class="modal hidden">
+
+    <div class="modal-card">
+
+        <h2>
+            Sleep
+        </h2>
+
+        <div
+            id="sleepStatusText"
+            class="sleep-status-text">
+            Ready to start
+        </div>
+
+        <div
+            id="sleepTimer"
+            class="sleep-timer">
+            00:00:00
+        </div>
+
+        <button
+            id="sleepTimerButton"
+            class="primary">
+            Start Sleep
+        </button>
+
+        <div class="sleep-summary">
+            The start time is saved on this phone, so the timer can continue after closing the app.
+        </div>
+
+        <label class="field-label">
+            Start time
+        </label>
+
+        <input
+            id="sleepStartInput"
+            type="datetime-local">
+
+        <label class="field-label">
+            End time
+        </label>
+
+        <input
+            id="sleepEndInput"
+            type="datetime-local">
+
+        <button
+            id="saveManualSleepButton"
+            class="secondary">
+            Save Entered Times
+        </button>
+
+        <button
+            id="closeSleepButton"
+            class="secondary">
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+<div
     id="reportModal"
     class="modal report-modal hidden">
 
@@ -2200,6 +2464,45 @@ document.getElementById("pumpIntervalInput")
 const settingsStatus =
 document.getElementById("settingsStatus")
 
+const babyProfileCard =
+document.getElementById("babyProfileCard")
+
+const babyProfileName =
+document.getElementById("babyProfileName")
+
+const babyProfileAge =
+document.getElementById("babyProfileAge")
+
+const babyNameInput =
+document.getElementById("babyNameInput")
+
+const babyBirthdayInput =
+document.getElementById("babyBirthdayInput")
+
+const caregiverMomButton =
+document.getElementById("caregiverMomButton")
+
+const caregiverDadButton =
+document.getElementById("caregiverDadButton")
+
+const sleepModal =
+document.getElementById("sleepModal")
+
+const sleepStatusText =
+document.getElementById("sleepStatusText")
+
+const sleepTimer =
+document.getElementById("sleepTimer")
+
+const sleepTimerButton =
+document.getElementById("sleepTimerButton")
+
+const sleepStartInput =
+document.getElementById("sleepStartInput")
+
+const sleepEndInput =
+document.getElementById("sleepEndInput")
+
 
 let feedIntervalHours =
 Number(
@@ -2221,6 +2524,27 @@ let appearanceMode =
 localStorage.getItem(
     "babyTrackerAppearanceMode"
 ) || "auto"
+
+
+let caregiverRole =
+localStorage.getItem(
+    "babyTrackerCaregiverRole"
+) || "Dad"
+
+
+let babyName =
+localStorage.getItem(
+    "babyTrackerBabyName"
+) || ""
+
+
+let babyBirthday =
+localStorage.getItem(
+    "babyTrackerBabyBirthday"
+) || ""
+
+
+let sleepInterval = null
 
 
 const reportModal =
@@ -2886,6 +3210,549 @@ function applyAppearance() {
 
 
 
+function updateCaregiverButtons() {
+
+    caregiverMomButton.classList.toggle(
+        "selected",
+        caregiverRole === "Mom"
+    )
+
+    caregiverDadButton.classList.toggle(
+        "selected",
+        caregiverRole === "Dad"
+    )
+
+}
+
+
+function babyAgeText() {
+
+    if(!babyBirthday)
+        return ""
+
+
+    const birth =
+    new Date(
+        babyBirthday +
+        "T12:00:00"
+    )
+
+
+    if(Number.isNaN(birth.getTime()))
+        return ""
+
+
+    const now =
+    new Date()
+
+
+    const days =
+    Math.max(
+        0,
+        Math.floor(
+            (now - birth) /
+            86400000
+        )
+    )
+
+
+    if(days < 14) {
+
+        return (
+            days +
+            (
+                days === 1
+                ? " day old"
+                : " days old"
+            )
+        )
+
+    }
+
+
+    if(days < 84) {
+
+        const weeks =
+        Math.floor(days / 7)
+
+        return (
+            weeks +
+            (
+                weeks === 1
+                ? " week old"
+                : " weeks old"
+            )
+        )
+
+    }
+
+
+    const months =
+    Math.max(
+        0,
+        (
+            now.getFullYear() -
+            birth.getFullYear()
+        ) * 12 +
+        (
+            now.getMonth() -
+            birth.getMonth()
+        )
+    )
+
+
+    if(months < 24) {
+
+        return (
+            months +
+            (
+                months === 1
+                ? " month old"
+                : " months old"
+            )
+        )
+
+    }
+
+
+    const years =
+    Math.floor(months / 12)
+
+    return (
+        years +
+        (
+            years === 1
+            ? " year old"
+            : " years old"
+        )
+    )
+
+}
+
+
+function updateBabyProfileCard() {
+
+    if(!babyName) {
+
+        babyProfileCard
+        .classList
+        .add("hidden")
+
+        return
+
+    }
+
+
+    babyProfileCard
+    .classList
+    .remove("hidden")
+
+
+    babyProfileName.textContent =
+    babyName
+
+
+    babyProfileAge.textContent =
+    babyAgeText()
+
+}
+
+
+caregiverMomButton
+.addEventListener(
+"click",
+() => {
+
+    caregiverRole = "Mom"
+
+    updateCaregiverButtons()
+
+})
+
+
+caregiverDadButton
+.addEventListener(
+"click",
+() => {
+
+    caregiverRole = "Dad"
+
+    updateCaregiverButtons()
+
+})
+
+
+function activeSleepKey() {
+
+    return (
+        "babyTrackerActiveSleep_" +
+        (
+            currentUid ||
+            "local"
+        )
+    )
+
+}
+
+
+function activeSleepStart() {
+
+    const value =
+    Number(
+        localStorage.getItem(
+            activeSleepKey()
+        )
+    )
+
+    return (
+        Number.isFinite(value)
+        &&
+        value > 0
+    )
+    ? value
+    : null
+
+}
+
+
+function formatSleepTimer(ms) {
+
+    const totalSeconds =
+    Math.max(
+        0,
+        Math.floor(ms / 1000)
+    )
+
+
+    const hours =
+    Math.floor(
+        totalSeconds / 3600
+    )
+
+
+    const minutes =
+    Math.floor(
+        (
+            totalSeconds % 3600
+        ) / 60
+    )
+
+
+    const seconds =
+    totalSeconds % 60
+
+
+    return (
+        String(hours).padStart(2,"0")
+        +
+        ":" +
+        String(minutes).padStart(2,"0")
+        +
+        ":" +
+        String(seconds).padStart(2,"0")
+    )
+
+}
+
+
+function refreshSleepTimer() {
+
+    const start =
+    activeSleepStart()
+
+
+    if(start) {
+
+        sleepStatusText.textContent =
+        "Sleep timer is running"
+
+
+        sleepTimer.textContent =
+        formatSleepTimer(
+            Date.now() -
+            start
+        )
+
+
+        sleepTimerButton.textContent =
+        "End & Save Sleep"
+
+
+        sleepStartInput.value =
+        dateToInputValue(start)
+
+
+        sleepEndInput.value =
+        dateToInputValue(Date.now())
+
+
+        if(!sleepInterval) {
+
+            sleepInterval =
+            setInterval(
+                refreshSleepTimer,
+                1000
+            )
+
+        }
+
+    } else {
+
+        if(sleepInterval) {
+
+            clearInterval(
+                sleepInterval
+            )
+
+            sleepInterval = null
+
+        }
+
+
+        sleepStatusText.textContent =
+        "Ready to start"
+
+
+        sleepTimer.textContent =
+        "00:00:00"
+
+
+        sleepTimerButton.textContent =
+        "Start Sleep"
+
+    }
+
+}
+
+
+async function saveSleep(
+    start,
+    end
+) {
+
+    if(
+        !Number.isFinite(start)
+        ||
+        !Number.isFinite(end)
+        ||
+        end <= start
+    ) {
+
+        alert(
+            "Sleep end time must be after the start time."
+        )
+
+        return false
+
+    }
+
+
+    const cloudId =
+    makeCloudId()
+
+
+    await set(
+
+        ref(
+            db,
+            "users/" +
+            currentUid +
+            "/events/" +
+            cloudId
+        ),
+
+        {
+            cloudId,
+
+            type:
+            "sleep",
+
+            timestamp:
+            start,
+
+            startTimestamp:
+            start,
+
+            endTimestamp:
+            end,
+
+            durationSeconds:
+            Math.round(
+                (end - start) /
+                1000
+            ),
+
+            caregiver:
+            caregiverRole,
+
+            source:
+            "web",
+
+            deleted:
+            false,
+
+            updatedAt:
+            Date.now()
+        }
+
+    )
+
+
+    return true
+
+}
+
+
+document
+.getElementById("sleepButton")
+.addEventListener(
+"click",
+() => {
+
+    const start =
+    activeSleepStart()
+
+
+    if(!start) {
+
+        sleepStartInput.value =
+        dateToInputValue(
+            Date.now()
+        )
+
+        sleepEndInput.value =
+        dateToInputValue(
+            Date.now()
+        )
+
+    }
+
+
+    refreshSleepTimer()
+
+
+    sleepModal
+    .classList
+    .remove("hidden")
+
+})
+
+
+sleepTimerButton
+.addEventListener(
+"click",
+async () => {
+
+    const start =
+    activeSleepStart()
+
+
+    if(!start) {
+
+        const now =
+        Date.now()
+
+
+        localStorage.setItem(
+            activeSleepKey(),
+            String(now)
+        )
+
+
+        refreshSleepTimer()
+
+        return
+
+    }
+
+
+    const end =
+    Date.now()
+
+
+    const saved =
+    await saveSleep(
+        start,
+        end
+    )
+
+
+    if(saved) {
+
+        localStorage.removeItem(
+            activeSleepKey()
+        )
+
+
+        refreshSleepTimer()
+
+
+        sleepModal
+        .classList
+        .add("hidden")
+
+    }
+
+})
+
+
+document
+.getElementById("saveManualSleepButton")
+.addEventListener(
+"click",
+async () => {
+
+    const start =
+    inputValueToTimestamp(
+        sleepStartInput.value
+    )
+
+
+    const end =
+    inputValueToTimestamp(
+        sleepEndInput.value
+    )
+
+
+    const saved =
+    await saveSleep(
+        start,
+        end
+    )
+
+
+    if(saved) {
+
+        localStorage.removeItem(
+            activeSleepKey()
+        )
+
+
+        refreshSleepTimer()
+
+
+        sleepModal
+        .classList
+        .add("hidden")
+
+    }
+
+})
+
+
+document
+.getElementById("closeSleepButton")
+.addEventListener(
+"click",
+() => {
+
+    sleepModal
+    .classList
+    .add("hidden")
+
+})
+
+
 function loadSettingsControls() {
 
     themeMode.value =
@@ -2898,6 +3765,20 @@ function loadSettingsControls() {
 
     pumpIntervalInput.value =
     pumpIntervalHours
+
+
+    babyNameInput.value =
+    babyName
+
+
+    babyBirthdayInput.value =
+    babyBirthday
+
+
+    updateCaregiverButtons()
+
+
+    updateBabyProfileCard()
 
 
     applyAppearance()
@@ -2995,6 +3876,15 @@ document
     themeMode.value
 
 
+    babyName =
+    babyNameInput.value
+    .trim()
+
+
+    babyBirthday =
+    babyBirthdayInput.value
+
+
     localStorage.setItem(
         "babyTrackerFeedIntervalHours",
         String(
@@ -3015,6 +3905,30 @@ document
         "babyTrackerAppearanceMode",
         appearanceMode
     )
+
+
+    localStorage.setItem(
+        "babyTrackerCaregiverRole",
+        caregiverRole
+    )
+
+
+    localStorage.setItem(
+        "babyTrackerBabyName",
+        babyName
+    )
+
+
+    localStorage.setItem(
+        "babyTrackerBabyBirthday",
+        babyBirthday
+    )
+
+
+    updateCaregiverButtons()
+
+
+    updateBabyProfileCard()
 
 
     applyAppearance()
@@ -3388,6 +4302,10 @@ user => {
 
         currentEvents = {}
 
+        babyProfileCard
+        .classList
+        .add("hidden")
+
         loginCard
         .classList
         .remove("hidden")
@@ -3418,6 +4336,10 @@ user => {
     cloudStatus.textContent =
     "Connected as " +
     user.email
+
+    updateBabyProfileCard()
+
+    refreshSleepTimer()
 
     watchEvents()
 
@@ -3608,6 +4530,7 @@ async function addSimple(type) {
             type,
             timestamp: now,
             source: "web",
+            caregiver: caregiverRole,
             deleted: false,
             updatedAt: now
         }
@@ -3788,6 +4711,9 @@ async () => {
 
                 timestamp,
 
+                caregiver:
+                caregiverRole,
+
                 deleted:
                 false,
 
@@ -3830,6 +4756,9 @@ async () => {
 
                 source:
                 "web",
+
+                caregiver:
+                caregiverRole,
 
                 deleted:
                 false,
@@ -4529,6 +5458,9 @@ async () => {
 
         timestamp,
 
+        caregiver:
+        caregiverRole,
+
         deleted:
         false,
 
@@ -4576,7 +5508,10 @@ async () => {
                 ...values,
 
                 source:
-                "web"
+                "web",
+
+                caregiver:
+                caregiverRole
             }
 
         )
@@ -4684,6 +5619,9 @@ async () => {
 
         {
             timestamp,
+
+            caregiver:
+            caregiverRole,
 
             updatedAt:
             Date.now()
@@ -4984,6 +5922,19 @@ function reportTimelineLabel(event) {
     }
 
 
+    if(event.type === "sleep") {
+
+        return (
+            "Sleep • " +
+            secondsToReadable(
+                event.durationSeconds ||
+                0
+            )
+        )
+
+    }
+
+
     if(event.type === "pee")
         return "Pee"
 
@@ -5097,6 +6048,12 @@ function renderReport() {
     let mixedCount =
     0
 
+    let sleepSessions =
+    0
+
+    let sleepSeconds =
+    0
+
 
     for(const event of entries) {
 
@@ -5160,6 +6117,19 @@ function renderReport() {
         if(event.type === "mixed") {
 
             mixedCount++
+
+        }
+
+
+        if(event.type === "sleep") {
+
+            sleepSessions++
+
+            sleepSeconds +=
+            Number(
+                event.durationSeconds ||
+                0
+            )
 
         }
 
@@ -5273,6 +6243,20 @@ function renderReport() {
                   mixedCount
                 : ""
             )
+        },
+
+        {
+            label:
+            "Sleep",
+
+            value:
+            sleepSessions,
+
+            sub:
+            secondsToReadable(
+                sleepSeconds
+            ) +
+            " total"
         }
     ]
 
@@ -5648,7 +6632,8 @@ async event => {
             "mixed",
             "feed",
             "pump",
-            "nursing"
+            "nursing",
+            "sleep"
         ])
 
 
@@ -6135,6 +7120,9 @@ function eventIconClass(type) {
     if(type === "nursing")
         return "icon-nurse"
 
+    if(type === "sleep")
+        return "icon-nurse"
+
     return ""
 
 }
@@ -6160,6 +7148,9 @@ function eventIcon(type) {
 
     if(type === "nursing")
         return "🤱"
+
+    if(type === "sleep")
+        return "😴"
 
     return "•"
 
@@ -6187,6 +7178,18 @@ function eventName(event) {
 
     if(event.type === "pump")
         name = "Pump"
+
+    if(event.type === "sleep") {
+
+        return (
+            "Sleep • " +
+            secondsToReadable(
+                event.durationSeconds ||
+                0
+            )
+        )
+
+    }
 
     if(event.type === "nursing") {
 
@@ -6243,33 +7246,29 @@ function eventName(event) {
 
 function eventSubText(event) {
 
-    if(
-        event.type !==
-        "nursing"
-    ) {
+    let text =
+    timeOnly(
+        event.timestamp
+    )
 
-        return timeOnly(
-            event.timestamp
+
+    if(event.type === "nursing") {
+
+        const left =
+        formatNursingMinutes(
+            event.leftSeconds ||
+            0
         )
 
-    }
+
+        const right =
+        formatNursingMinutes(
+            event.rightSeconds ||
+            0
+        )
 
 
-    const left =
-    formatNursingMinutes(
-        event.leftSeconds ||
-        0
-    )
-
-
-    const right =
-    formatNursingMinutes(
-        event.rightSeconds ||
-        0
-    )
-
-
-    return (
+        text =
         "Left " +
         left +
         " • Right " +
@@ -6278,10 +7277,41 @@ function eventSubText(event) {
         timeOnly(
             event.timestamp
         )
-    )
+
+    }
+
+
+    if(
+        event.type === "sleep"
+        &&
+        event.endTimestamp
+    ) {
+
+        text =
+        timeOnly(
+            event.startTimestamp ||
+            event.timestamp
+        ) +
+        " – " +
+        timeOnly(
+            event.endTimestamp
+        )
+
+    }
+
+
+    if(event.caregiver) {
+
+        text +=
+        " • " +
+        event.caregiver
+
+    }
+
+
+    return text
 
 }
-
 
 
 function render() {
@@ -6665,6 +7695,15 @@ function render() {
             () => {
 
                 if(
+                    event.type ===
+                    "sleep"
+                ) {
+
+                    alert(
+                        "To correct a sleep entry, delete it and save the corrected start and end times again."
+                    )
+
+                } else if(
                     event.type ===
                     "nursing"
                 ) {
