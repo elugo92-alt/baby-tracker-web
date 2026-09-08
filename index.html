@@ -8702,5 +8702,215 @@ function render() {
                 event
             ]
             of dayItems
-     
-Preview truncated for large file
+        ) {
+
+            const card =
+            document.createElement(
+                "div"
+            )
+
+            card.className =
+            "event"
+
+
+            const icon =
+            document.createElement(
+                "div"
+            )
+
+            icon.className =
+            "event-icon " +
+            eventIconClass(
+                event.type
+            )
+
+            icon.textContent =
+            eventIcon(
+                event.type
+            )
+
+
+            const main =
+            document.createElement(
+                "div"
+            )
+
+            main.className =
+            "event-main"
+
+
+            const title =
+            document.createElement(
+                "div"
+            )
+
+            title.className =
+            "event-name"
+
+            title.textContent =
+            eventName(event)
+
+
+            const time =
+            document.createElement(
+                "div"
+            )
+
+            time.className =
+            "event-time"
+
+            time.textContent =
+            eventSubText(event)
+
+
+            main.appendChild(
+                title
+            )
+
+            main.appendChild(
+                time
+            )
+
+
+            const buttons =
+            document.createElement(
+                "div"
+            )
+
+            buttons.className =
+            "event-buttons"
+
+
+            const edit =
+            document.createElement(
+                "button"
+            )
+
+            edit.className =
+            "secondary"
+
+            edit.textContent =
+            "Edit"
+
+            edit.onclick =
+            () => {
+
+                if(
+                    event.type ===
+                    "sleep"
+                ) {
+
+                    alert(
+                        "To correct a sleep entry, delete it and save the corrected start and end times again."
+                    )
+
+                } else if(
+                    event.type ===
+                    "nursing"
+                ) {
+
+                    openNursingEdit(
+                        cloudId
+                    )
+
+                } else if(
+                    event.type ===
+                    "feed"
+
+                    ||
+
+                    event.type ===
+                    "pump"
+                ) {
+
+                    openAmountEdit(
+                        cloudId
+                    )
+
+                } else {
+
+                    openSimpleEdit(
+                        cloudId
+                    )
+
+                }
+
+            }
+
+
+            const remove =
+            document.createElement(
+                "button"
+            )
+
+            remove.className =
+            "danger"
+
+            remove.textContent =
+            "Delete"
+
+            remove.onclick =
+            () =>
+            deleteEvent(
+                cloudId
+            )
+
+
+            buttons.appendChild(
+                edit
+            )
+
+            buttons.appendChild(
+                remove
+            )
+
+
+            card.appendChild(
+                icon
+            )
+
+            card.appendChild(
+                main
+            )
+
+            card.appendChild(
+                buttons
+            )
+
+            dayCard.appendChild(
+                card
+            )
+
+        }
+
+
+        history.appendChild(
+            dayCard
+        )
+
+    }
+
+}
+
+
+
+setInterval(
+() => {
+
+    if(currentUid) {
+
+        updateFeedingStatus()
+
+        updatePumpStatus()
+
+    }
+
+},
+60000
+)
+
+</script>
+
+</body>
+
+    </html>
