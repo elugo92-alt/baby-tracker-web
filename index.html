@@ -1361,6 +1361,136 @@ body.night-mode .timeline-event.sleep {
     color: #202020;
 }
 
+
+
+/* PEDIATRICIAN REPORT */
+
+.ped-report-modal .modal-card {
+    max-width: 760px;
+}
+
+.ped-report-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.ped-report-quick {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 10px 0 14px;
+}
+
+.ped-report-output {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    background: var(--card);
+    border: 1px solid rgba(117,111,105,.12);
+}
+
+body.night-mode .ped-report-output {
+    border-color: rgba(255,255,255,.08);
+}
+
+.ped-report-header {
+    margin-bottom: 16px;
+}
+
+.ped-report-header h3 {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: 24px;
+}
+
+.ped-report-header p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.ped-report-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.ped-report-section {
+    padding: 14px;
+    border-radius: 16px;
+    background: var(--soft);
+}
+
+.ped-report-section h4 {
+    margin: 0 0 8px;
+    font-size: 15px;
+}
+
+.ped-report-big {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.ped-report-small {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.ped-report-caregivers {
+    margin-top: 10px;
+    padding: 14px;
+    border-radius: 16px;
+    background: var(--soft);
+}
+
+.ped-print-button {
+    margin-top: 14px;
+}
+
+@media (max-width: 560px) {
+
+    .ped-report-controls,
+    .ped-report-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media print {
+
+    body * {
+        visibility: hidden !important;
+    }
+
+    #pedReportOutput,
+    #pedReportOutput * {
+        visibility: visible !important;
+    }
+
+    #pedReportOutput {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        background: white !important;
+        color: black !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    #pedReportOutput .ped-report-section,
+    #pedReportOutput .ped-report-caregivers {
+        background: #f4f4f4 !important;
+        color: black !important;
+    }
+
+}
+
 </style>
 </head>
 
@@ -1948,6 +2078,12 @@ body.night-mode .timeline-event.sleep {
         </button>
 
         <button
+            id="pediatricianReportButton"
+            class="secondary">
+            🩺 Pediatrician Report
+        </button>
+
+        <button
             id="importButton"
             class="secondary">
             📥 Import History
@@ -2179,6 +2315,90 @@ body.night-mode .timeline-event.sleep {
 </div>
 
 
+
+
+<div
+    id="pediatricianReportModal"
+    class="modal ped-report-modal hidden">
+
+    <div class="modal-card">
+
+        <h2>
+            Pediatrician Report
+        </h2>
+
+        <div class="ped-report-quick">
+
+            <button
+                id="pedLast24Button"
+                class="secondary">
+                Last 24 Hours
+            </button>
+
+            <button
+                id="pedLast3DaysButton"
+                class="secondary">
+                Last 3 Days
+            </button>
+
+            <button
+                id="pedLast7DaysButton"
+                class="secondary">
+                Last 7 Days
+            </button>
+
+        </div>
+
+        <div class="ped-report-controls">
+
+            <div>
+                <label class="field-label">
+                    Start
+                </label>
+
+                <input
+                    id="pedReportStart"
+                    type="datetime-local">
+            </div>
+
+            <div>
+                <label class="field-label">
+                    End
+                </label>
+
+                <input
+                    id="pedReportEnd"
+                    type="datetime-local">
+            </div>
+
+        </div>
+
+        <button
+            id="generatePedReportButton"
+            class="primary">
+            Generate Report
+        </button>
+
+        <div
+            id="pedReportOutput"
+            class="ped-report-output hidden">
+        </div>
+
+        <button
+            id="printPedReportButton"
+            class="secondary ped-print-button hidden">
+            Print / Save PDF
+        </button>
+
+        <button
+            id="closePedReportButton"
+            class="secondary">
+            Close
+        </button>
+
+    </div>
+
+</div>
 
 
 <div
@@ -2502,6 +2722,21 @@ document.getElementById("sleepStartInput")
 
 const sleepEndInput =
 document.getElementById("sleepEndInput")
+
+const pediatricianReportModal =
+document.getElementById("pediatricianReportModal")
+
+const pedReportStart =
+document.getElementById("pedReportStart")
+
+const pedReportEnd =
+document.getElementById("pedReportEnd")
+
+const pedReportOutput =
+document.getElementById("pedReportOutput")
+
+const printPedReportButton =
+document.getElementById("printPedReportButton")
 
 
 let feedIntervalHours =
@@ -3747,6 +3982,497 @@ document
 () => {
 
     sleepModal
+    .classList
+    .add("hidden")
+
+})
+
+
+
+function setPedReportRange(hoursBack) {
+
+    const end =
+    Date.now()
+
+    const start =
+    end -
+    (
+        hoursBack *
+        60 *
+        60 *
+        1000
+    )
+
+    pedReportStart.value =
+    dateToInputValue(start)
+
+    pedReportEnd.value =
+    dateToInputValue(end)
+
+}
+
+
+function pedEventListInRange(
+    start,
+    end
+) {
+
+    return Object.values(
+        currentEvents
+    )
+    .filter(
+        event =>
+            event
+            &&
+            !event.deleted
+            &&
+            Number(event.timestamp) >= start
+            &&
+            Number(event.timestamp) <= end
+    )
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;")
+
+}
+
+
+function pediatricianReportHtml(
+    entries,
+    start,
+    end
+) {
+
+    let bottleSessions = 0
+    let bottleMl = 0
+
+    let nursingSessions = 0
+    let nursingSeconds = 0
+
+    let pumpSessions = 0
+    let pumpMl = 0
+
+    let peeCount = 0
+    let poopCount = 0
+    let mixedCount = 0
+
+    let sleepSessions = 0
+    let sleepSeconds = 0
+
+    const caregivers = {
+        Mom: 0,
+        Dad: 0
+    }
+
+
+    for(const event of entries) {
+
+        if(event.caregiver === "Mom")
+            caregivers.Mom++
+
+        if(event.caregiver === "Dad")
+            caregivers.Dad++
+
+
+        if(event.type === "feed") {
+
+            bottleSessions++
+
+            bottleMl +=
+            Number(
+                event.amountMl ||
+                0
+            )
+
+        }
+
+
+        if(event.type === "nursing") {
+
+            nursingSessions++
+
+            nursingSeconds +=
+            Number(
+                event.durationSeconds ||
+                0
+            )
+
+        }
+
+
+        if(event.type === "pump") {
+
+            pumpSessions++
+
+            pumpMl +=
+            Number(
+                event.amountMl ||
+                0
+            )
+
+        }
+
+
+        if(event.type === "pee")
+            peeCount++
+
+
+        if(event.type === "poop")
+            poopCount++
+
+
+        if(event.type === "mixed")
+            mixedCount++
+
+
+        if(event.type === "sleep") {
+
+            sleepSessions++
+
+            sleepSeconds +=
+            Number(
+                event.durationSeconds ||
+                0
+            )
+
+        }
+
+    }
+
+
+    const diaperTotal =
+    peeCount +
+    poopCount +
+    mixedCount
+
+
+    const name =
+    babyName ||
+    "Baby"
+
+
+    const age =
+    babyAgeText()
+
+
+    return `
+        <div class="ped-report-header">
+
+            <h3>
+                ${escapeHtml(name)} Pediatrician Report
+            </h3>
+
+            <p>
+                ${
+                    age
+                    ? escapeHtml(age) + " • "
+                    : ""
+                }
+                ${escapeHtml(
+                    new Date(start)
+                    .toLocaleString()
+                )}
+                to
+                ${escapeHtml(
+                    new Date(end)
+                    .toLocaleString()
+                )}
+            </p>
+
+        </div>
+
+        <div class="ped-report-grid">
+
+            <div class="ped-report-section">
+
+                <h4>🍼 Bottle Feeding</h4>
+
+                <div class="ped-report-big">
+                    ${Math.round(bottleMl)} mL
+                </div>
+
+                <div class="ped-report-small">
+                    ${bottleSessions} sessions
+                    •
+                    ${(
+                        bottleMl /
+                        29.5735
+                    ).toFixed(1)} oz total
+                </div>
+
+            </div>
+
+
+            <div class="ped-report-section">
+
+                <h4>🤱 Nursing</h4>
+
+                <div class="ped-report-big">
+                    ${nursingSessions}
+                </div>
+
+                <div class="ped-report-small">
+                    ${secondsToReadable(nursingSeconds)}
+                    total nursing time
+                </div>
+
+            </div>
+
+
+            <div class="ped-report-section">
+
+                <h4>🍼 Pumping</h4>
+
+                <div class="ped-report-big">
+                    ${Math.round(pumpMl)} mL
+                </div>
+
+                <div class="ped-report-small">
+                    ${pumpSessions} sessions
+                    •
+                    ${(
+                        pumpMl /
+                        29.5735
+                    ).toFixed(1)} oz total
+                </div>
+
+            </div>
+
+
+            <div class="ped-report-section">
+
+                <h4>💧 Diapers</h4>
+
+                <div class="ped-report-big">
+                    ${diaperTotal}
+                </div>
+
+                <div class="ped-report-small">
+                    Pee ${peeCount}
+                    •
+                    Poop ${poopCount}
+                    •
+                    Mixed ${mixedCount}
+                </div>
+
+            </div>
+
+
+            <div class="ped-report-section">
+
+                <h4>😴 Sleep</h4>
+
+                <div class="ped-report-big">
+                    ${secondsToReadable(sleepSeconds)}
+                </div>
+
+                <div class="ped-report-small">
+                    ${sleepSessions} sleep sessions
+                </div>
+
+            </div>
+
+
+            <div class="ped-report-section">
+
+                <h4>📋 Total Logged Events</h4>
+
+                <div class="ped-report-big">
+                    ${entries.length}
+                </div>
+
+                <div class="ped-report-small">
+                    Across the selected date range
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="ped-report-caregivers">
+
+            <h4>👥 Caregiver Logging</h4>
+
+            <div class="ped-report-small">
+                Mom: ${caregivers.Mom}
+                •
+                Dad: ${caregivers.Dad}
+            </div>
+
+        </div>
+    `
+
+}
+
+
+function generatePediatricianReport() {
+
+    const start =
+    inputValueToTimestamp(
+        pedReportStart.value
+    )
+
+    const end =
+    inputValueToTimestamp(
+        pedReportEnd.value
+    )
+
+
+    if(
+        !Number.isFinite(start)
+        ||
+        !Number.isFinite(end)
+        ||
+        end <= start
+    ) {
+
+        alert(
+            "Choose a valid start and end time."
+        )
+
+        return
+
+    }
+
+
+    const entries =
+    pedEventListInRange(
+        start,
+        end
+    )
+
+
+    pedReportOutput.innerHTML =
+    pediatricianReportHtml(
+        entries,
+        start,
+        end
+    )
+
+
+    pedReportOutput
+    .classList
+    .remove("hidden")
+
+
+    printPedReportButton
+    .classList
+    .remove("hidden")
+
+}
+
+
+document
+.getElementById(
+    "pediatricianReportButton"
+)
+.addEventListener(
+"click",
+() => {
+
+    setPedReportRange(24)
+
+    pedReportOutput
+    .classList
+    .add("hidden")
+
+
+    printPedReportButton
+    .classList
+    .add("hidden")
+
+
+    pediatricianReportModal
+    .classList
+    .remove("hidden")
+
+})
+
+
+document
+.getElementById(
+    "pedLast24Button"
+)
+.addEventListener(
+"click",
+() => {
+
+    setPedReportRange(24)
+
+    generatePediatricianReport()
+
+})
+
+
+document
+.getElementById(
+    "pedLast3DaysButton"
+)
+.addEventListener(
+"click",
+() => {
+
+    setPedReportRange(72)
+
+    generatePediatricianReport()
+
+})
+
+
+document
+.getElementById(
+    "pedLast7DaysButton"
+)
+.addEventListener(
+"click",
+() => {
+
+    setPedReportRange(168)
+
+    generatePediatricianReport()
+
+})
+
+
+document
+.getElementById(
+    "generatePedReportButton"
+)
+.addEventListener(
+"click",
+generatePediatricianReport
+)
+
+
+printPedReportButton
+.addEventListener(
+"click",
+() => {
+
+    window.print()
+
+})
+
+
+document
+.getElementById(
+    "closePedReportButton"
+)
+.addEventListener(
+"click",
+() => {
+
+    pediatricianReportModal
     .classList
     .add("hidden")
 
