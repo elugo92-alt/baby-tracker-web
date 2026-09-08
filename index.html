@@ -408,7 +408,7 @@ button:active {
 }
 
 .action-third {
-    grid-column: span 3;
+    grid-column: span 2;
 }
 
 .action-full {
@@ -1146,43 +1146,6 @@ body.night-mode .settings-box {
 }
 
 
-
-/* EXTRA FAMILY FEATURES */
-.profile-summary{display:flex;align-items:center;gap:12px;margin-top:14px;padding:11px 13px;border-radius:20px;background:rgba(255,255,255,.54);border:1px solid rgba(255,255,255,.72)}
-body.night-mode .profile-summary{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.07)}
-.profile-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:25px;overflow:hidden;flex:0 0 auto}
-.profile-avatar img,.profile-photo-preview img{width:100%;height:100%;object-fit:cover}
-.profile-summary-name{font-family:Georgia,serif;font-weight:700;font-size:19px}
-.profile-summary-sub{color:var(--muted);font-size:13px;margin-top:2px}
-#sleepButton{background:#e8edf4} body.night-mode #sleepButton{background:#293644}
-.feature-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.feature-menu-grid button{margin-top:0;min-height:54px}
-.modal-card.feature-modal-card{max-width:470px;max-height:min(88vh,760px);overflow-y:auto}
-.profile-photo-preview{width:92px;height:92px;border-radius:50%;overflow:hidden;background:var(--soft);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:42px}
-.three-column-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.sleep-timer-display{text-align:center;font-family:Georgia,serif;font-size:42px;font-weight:700;margin:8px 0 16px}
-.sleep-state{text-align:center;color:var(--muted);font-size:14px;margin-bottom:10px}
-.milestone-quote{padding:18px;border-radius:20px;background:linear-gradient(135deg,rgba(246,233,227,.92),rgba(238,234,244,.92));font-family:Georgia,serif;font-style:italic;font-size:18px;line-height:1.4;margin-bottom:14px}
-body.night-mode .milestone-quote{background:linear-gradient(135deg,rgba(76,54,68,.75),rgba(59,54,82,.75))}
-.milestone-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.milestone-card{min-height:128px;padding:15px;border-radius:20px;background:rgba(255,255,255,.66);border:1px solid rgba(117,111,105,.08)}
-body.night-mode .milestone-card{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.07)}
-.milestone-card.locked{opacity:.45;filter:grayscale(.4)}
-.milestone-emoji{font-size:27px}.milestone-name{font-weight:800;margin-top:7px}.milestone-description{color:var(--muted);font-size:12px;margin-top:5px;line-height:1.35}
-.celebration-card{text-align:center;overflow:hidden;position:relative}.celebration-emoji{font-size:66px;margin:4px 0 8px;animation:milestonePop .7s cubic-bezier(.2,1.4,.4,1)}
-@keyframes milestonePop{0%{transform:scale(.25) rotate(-12deg);opacity:0}70%{transform:scale(1.14) rotate(4deg);opacity:1}100%{transform:scale(1) rotate(0)}}
-.confetti-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:300}.confetti-piece{position:absolute;top:-18px;width:9px;height:15px;border-radius:2px;animation:confettiFall 2.8s linear forwards}
-@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(760deg);opacity:.1}}
-.report-range{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.doctor-report-output{margin-top:14px;padding:18px;border-radius:20px;background:rgba(255,255,255,.62);border:1px solid rgba(117,111,105,.08);line-height:1.45}
-body.night-mode .doctor-report-output{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.07)}
-.doctor-report-output h3{font-family:Georgia,serif;margin:0 0 10px;font-size:22px}.doctor-report-output h4{margin:15px 0 6px;font-size:15px}.doctor-report-output p{margin:5px 0;color:var(--text)}.doctor-report-output .muted{color:var(--muted)}
-.feature-note{color:var(--muted);font-size:12px;line-height:1.4;margin:8px 0 12px}
-.timeline-event.sleep{background:#e8edf4}.timeline-event.growth{background:#edf0dc}body.night-mode .timeline-event.sleep{background:#2a3948}body.night-mode .timeline-event.growth{background:#39402f}
-.icon-sleep{background:#e8edf4}.icon-growth{background:#edf0dc}body.night-mode .icon-sleep{background:#293644}body.night-mode .icon-growth{background:#39402f}
-@media(max-width:430px){.three-column-fields{grid-template-columns:1fr}.milestone-grid{grid-template-columns:1fr}}
-@media print{body *{visibility:hidden!important}#doctorReportModal,#doctorReportModal *{visibility:visible!important}#doctorReportModal{position:absolute!important;inset:0!important;display:block!important;background:white!important;padding:0!important}#doctorReportModal .modal-card{box-shadow:none!important;border-radius:0!important;max-width:none!important;max-height:none!important;overflow:visible!important;background:white!important;color:black!important}#doctorReportModal .no-print{display:none!important}#doctorReportModal .doctor-report-output{border:0!important;background:white!important;color:black!important}#doctorReportModal .doctor-report-output *{color:black!important}}
-
 </style>
 </head>
 
@@ -1205,14 +1168,6 @@ body.night-mode .doctor-report-output{background:rgba(255,255,255,.045);border-c
         id="themeDecor"
         class="decor">
         ☾ ✦
-    </div>
-
-    <div id="profileSummary" class="profile-summary hidden">
-        <div id="profileSummaryAvatar" class="profile-avatar">👶</div>
-        <div>
-            <div id="profileSummaryName" class="profile-summary-name">Baby</div>
-            <div id="profileSummarySub" class="profile-summary-sub"></div>
-        </div>
     </div>
 
 </div>
@@ -1555,13 +1510,6 @@ body.night-mode .doctor-report-output{background:rgba(255,255,255,.045);border-c
 
 
         <button
-            id="sleepButton"
-            class="action-btn action-third">
-            <span class="action-icon">😴</span>
-            Sleep
-        </button>
-
-        <button
             id="moreButton"
             class="action-btn action-full">
 
@@ -1674,11 +1622,6 @@ body.night-mode .doctor-report-output{background:rgba(255,255,255,.045);border-c
             </div>
 
 
-            <label class="settings-label" for="caregiverNameInput">
-                Your caregiver name on this device
-            </label>
-            <input id="caregiverNameInput" type="text" maxlength="40" placeholder="Example: Dad, Mom, Grandma">
-
             <button
                 id="saveSettingsButton"
                 class="secondary">
@@ -1692,13 +1635,6 @@ body.night-mode .doctor-report-output{background:rgba(255,255,255,.045);border-c
 
         </div>
 
-
-        <div class="feature-menu-grid">
-            <button id="profileButton" class="secondary">👶 Baby Profile</button>
-            <button id="growthButton" class="secondary">📏 Growth</button>
-            <button id="milestonesButton" class="secondary">✨ Milestones</button>
-            <button id="doctorReportButton" class="secondary">🩺 Pediatrician Report</button>
-        </div>
 
         <button
             id="calendarButton"
@@ -2049,55 +1985,6 @@ body.night-mode .doctor-report-output{background:rgba(255,255,255,.045);border-c
 </div>
 
 
-
-
-<div id="profileModal" class="modal hidden"><div class="modal-card feature-modal-card">
-<h2>Baby Profile</h2>
-<div id="profilePhotoPreview" class="profile-photo-preview">👶</div>
-<label class="field-label">Baby photo</label><input id="profilePhotoInput" type="file" accept="image/*">
-<label class="field-label">Baby's name</label><input id="profileNameInput" type="text" maxlength="50" placeholder="Baby's name">
-<label class="field-label">Birthday</label><input id="profileBirthdayInput" type="date">
-<button id="saveProfileButton" class="primary">Save Profile</button><button id="cancelProfileButton" class="secondary">Cancel</button>
-</div></div>
-
-<div id="growthModal" class="modal hidden"><div class="modal-card feature-modal-card">
-<h2>Log Growth</h2>
-<div class="three-column-fields">
-<div><label class="field-label">Weight (lb)</label><input id="growthWeightInput" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Weight"></div>
-<div><label class="field-label">Length (in)</label><input id="growthLengthInput" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Length"></div>
-<div><label class="field-label">Head (in)</label><input id="growthHeadInput" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Head"></div>
-</div>
-<label class="field-label">Date and time</label><input id="growthDateTime" type="datetime-local">
-<button id="saveGrowthButton" class="primary">Save Growth</button><button id="cancelGrowthButton" class="secondary">Cancel</button>
-</div></div>
-
-<div id="sleepModal" class="modal hidden"><div class="modal-card feature-modal-card">
-<h2>Sleep</h2><div id="sleepState" class="sleep-state">Ready to start</div><div id="sleepTimerDisplay" class="sleep-timer-display">00:00:00</div>
-<button id="sleepTimerButton" class="primary">Start Sleep</button>
-<div class="feature-note">The timer keeps its start time even if you close the web app.</div>
-<label class="field-label">Start</label><input id="sleepStartInput" type="datetime-local">
-<label class="field-label">End</label><input id="sleepEndInput" type="datetime-local">
-<button id="saveManualSleepButton" class="secondary">Save Entered Times</button><button id="cancelSleepButton" class="secondary">Close</button>
-</div></div>
-
-<div id="milestonesModal" class="modal hidden"><div class="modal-card feature-modal-card">
-<h2>Milestones</h2><div id="milestoneQuote" class="milestone-quote"></div><div id="milestoneGrid" class="milestone-grid"></div>
-<button id="closeMilestonesButton" class="secondary">Close</button>
-</div></div>
-
-<div id="milestoneCelebrationModal" class="modal hidden"><div class="modal-card celebration-card">
-<div id="celebrationEmoji" class="celebration-emoji">✨</div><h2 id="celebrationTitle">Milestone Reached!</h2><div id="celebrationText" class="status"></div>
-<button id="closeCelebrationButton" class="primary">Celebrate ♡</button>
-</div></div>
-<div id="confettiLayer" class="confetti-layer"></div>
-
-<div id="doctorReportModal" class="modal hidden"><div class="modal-card feature-modal-card">
-<div class="no-print"><h2>Pediatrician Report</h2><div class="feature-note">Choose a date range to create a concise summary of feeding, pumping, nursing, diapers, sleep and growth records.</div>
-<div class="report-range"><div><label class="field-label">From</label><input id="doctorReportStart" type="date"></div><div><label class="field-label">To</label><input id="doctorReportEnd" type="date"></div></div>
-<button id="generateDoctorReportButton" class="primary">Generate Report</button></div>
-<div id="doctorReportOutput" class="doctor-report-output"></div>
-<div class="no-print"><button id="copyDoctorReportButton" class="secondary">Copy Summary</button><button id="printDoctorReportButton" class="secondary">Print / Save PDF</button><button id="closeDoctorReportButton" class="secondary">Close</button></div>
-</div></div>
 
 <script type="module">
 
@@ -3615,7 +3502,6 @@ async function addSimple(type) {
             type,
             timestamp: now,
             source: "web",
-            caregiver: getCaregiverName(),
             deleted: false,
             updatedAt: now
         }
@@ -3838,9 +3724,6 @@ async () => {
 
                 source:
                 "web",
-
-                caregiver:
-                getCaregiverName(),
 
                 deleted:
                 false,
@@ -4587,10 +4470,7 @@ async () => {
                 ...values,
 
                 source:
-                "web",
-
-                caregiver:
-                getCaregiverName()
+                "web"
             }
 
         )
@@ -5662,9 +5542,7 @@ async event => {
             "mixed",
             "feed",
             "pump",
-            "nursing",
-            "sleep",
-            "growth"
+            "nursing"
         ])
 
 
@@ -6785,369 +6663,8 @@ setInterval(
 60000
 )
 
+</script>
 
+</body>
 
-/* ---------- FAMILY FEATURES ---------- */
-
-let featureProfile = {}
-let featureProfileUnsubscribe = null
-let featureSleepTicker = null
-
-const caregiverNameInputFeature = document.getElementById("caregiverNameInput")
-caregiverNameInputFeature.value = localStorage.getItem("babyTrackerCaregiverName") || ""
-
-function getCaregiverName(){
-    return (localStorage.getItem("babyTrackerCaregiverName") || "").trim()
-}
-
-/* add caregiver persistence to the existing Settings save button */
-document.getElementById("saveSettingsButton").addEventListener("click",()=>{
-    localStorage.setItem("babyTrackerCaregiverName",caregiverNameInputFeature.value.trim())
-})
-
-/* BABY PROFILE */
-const profileSummaryFeature=document.getElementById("profileSummary")
-const profileSummaryAvatarFeature=document.getElementById("profileSummaryAvatar")
-const profileSummaryNameFeature=document.getElementById("profileSummaryName")
-const profileSummarySubFeature=document.getElementById("profileSummarySub")
-const profileModalFeature=document.getElementById("profileModal")
-const profilePhotoPreviewFeature=document.getElementById("profilePhotoPreview")
-const profilePhotoInputFeature=document.getElementById("profilePhotoInput")
-const profileNameInputFeature=document.getElementById("profileNameInput")
-const profileBirthdayInputFeature=document.getElementById("profileBirthdayInput")
-
-function featureProfileRef(){
-    return ref(db,"users/"+currentUid+"/profile")
-}
-
-function featureAgeText(value){
-    if(!value) return ""
-    const birthday=new Date(value+"T12:00:00")
-    if(Number.isNaN(birthday.getTime())) return ""
-    const now=new Date()
-    const days=Math.max(0,Math.floor((now-birthday)/86400000))
-    if(days<14) return days+(days===1?" day old":" days old")
-    if(days<84){const weeks=Math.floor(days/7);return weeks+(weeks===1?" week old":" weeks old")}
-    const months=Math.max(0,(now.getFullYear()-birthday.getFullYear())*12+(now.getMonth()-birthday.getMonth()))
-    if(months<24) return months+(months===1?" month old":" months old")
-    const years=Math.floor(months/12)
-    return years+(years===1?" year old":" years old")
-}
-
-function featureUpdateProfileSummary(){
-    const name=featureProfile.name||""
-    if(!name){profileSummaryFeature.classList.add("hidden");return}
-    profileSummaryFeature.classList.remove("hidden")
-    profileSummaryNameFeature.textContent=name
-    profileSummarySubFeature.textContent=featureAgeText(featureProfile.birthday)
-    profileSummaryAvatarFeature.innerHTML=""
-    if(featureProfile.photoDataUrl){
-        const img=document.createElement("img");img.src=featureProfile.photoDataUrl;img.alt=name;profileSummaryAvatarFeature.appendChild(img)
-    }else profileSummaryAvatarFeature.textContent="👶"
-}
-
-function featureSetPhotoPreview(dataUrl){
-    profilePhotoPreviewFeature.innerHTML=""
-    if(dataUrl){const img=document.createElement("img");img.src=dataUrl;img.alt="Baby";profilePhotoPreviewFeature.appendChild(img)}
-    else profilePhotoPreviewFeature.textContent="👶"
-}
-
-async function featureSmallPhoto(file){
-    const raw=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})
-    const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=raw})
-    const max=320,scale=Math.min(1,max/Math.max(img.width,img.height))
-    const canvas=document.createElement("canvas");canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale))
-    canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height)
-    return canvas.toDataURL("image/jpeg",.72)
-}
-
-onAuthStateChanged(auth,user=>{
-    if(featureProfileUnsubscribe){featureProfileUnsubscribe();featureProfileUnsubscribe=null}
-    featureProfile={}
-    featureUpdateProfileSummary()
-    if(!user) return
-    featureProfileUnsubscribe=onValue(ref(db,"users/"+user.uid+"/profile"),snap=>{
-        featureProfile=snap.val()||{}
-        featureUpdateProfileSummary()
-    })
-    featureRefreshSleepUI()
-})
-
-document.getElementById("profileButton").addEventListener("click",()=>{
-    profileNameInputFeature.value=featureProfile.name||""
-    profileBirthdayInputFeature.value=featureProfile.birthday||""
-    profilePhotoInputFeature.value=""
-    delete profilePhotoPreviewFeature.dataset.pendingPhoto
-    featureSetPhotoPreview(featureProfile.photoDataUrl||null)
-    profileModalFeature.classList.remove("hidden")
-})
-
-profilePhotoInputFeature.addEventListener("change",async e=>{
-    const file=e.target.files[0];if(!file)return
-    try{
-        const data=await featureSmallPhoto(file)
-        profilePhotoPreviewFeature.dataset.pendingPhoto=data
-        featureSetPhotoPreview(data)
-    }catch(err){alert("Could not read that photo.")}
-})
-
-document.getElementById("cancelProfileButton").addEventListener("click",()=>profileModalFeature.classList.add("hidden"))
-
-document.getElementById("saveProfileButton").addEventListener("click",async()=>{
-    if(!currentUid)return
-    const name=profileNameInputFeature.value.trim()
-    if(!name){alert("Enter the baby's name.");return}
-    const values={name,birthday:profileBirthdayInputFeature.value||"",photoDataUrl:profilePhotoPreviewFeature.dataset.pendingPhoto||featureProfile.photoDataUrl||"",updatedAt:Date.now()}
-    await set(featureProfileRef(),values)
-    delete profilePhotoPreviewFeature.dataset.pendingPhoto
-    profileModalFeature.classList.add("hidden")
-})
-
-/* GROWTH */
-const growthModalFeature=document.getElementById("growthModal")
-const growthWeightFeature=document.getElementById("growthWeightInput")
-const growthLengthFeature=document.getElementById("growthLengthInput")
-const growthHeadFeature=document.getElementById("growthHeadInput")
-const growthDateFeature=document.getElementById("growthDateTime")
-
-document.getElementById("growthButton").addEventListener("click",()=>{
-    growthWeightFeature.value="";growthLengthFeature.value="";growthHeadFeature.value=""
-    growthDateFeature.value=dateToInputValue(Date.now())
-    growthModalFeature.classList.remove("hidden")
-})
-document.getElementById("cancelGrowthButton").addEventListener("click",()=>growthModalFeature.classList.add("hidden"))
-document.getElementById("saveGrowthButton").addEventListener("click",async()=>{
-    const weight=parseFloat(growthWeightFeature.value),length=parseFloat(growthLengthFeature.value),head=parseFloat(growthHeadFeature.value)
-    const timestamp=inputValueToTimestamp(growthDateFeature.value)
-    const hasWeight=Number.isFinite(weight),hasLength=Number.isFinite(length),hasHead=Number.isFinite(head)
-    if(!Number.isFinite(timestamp)){alert("Choose a valid date and time.");return}
-    if(!hasWeight&&!hasLength&&!hasHead){alert("Enter at least one growth measurement.");return}
-    const cloudId=makeCloudId()
-    await set(ref(db,"users/"+currentUid+"/events/"+cloudId),{
-        cloudId,type:"growth",timestamp,weightLb:hasWeight?weight:null,lengthIn:hasLength?length:null,headIn:hasHead?head:null,
-        caregiver:getCaregiverName(),source:"web",deleted:false,updatedAt:Date.now()
-    })
-    growthModalFeature.classList.add("hidden")
-})
-
-/* SLEEP */
-const sleepModalFeature=document.getElementById("sleepModal")
-const sleepStateFeature=document.getElementById("sleepState")
-const sleepDisplayFeature=document.getElementById("sleepTimerDisplay")
-const sleepTimerButtonFeature=document.getElementById("sleepTimerButton")
-const sleepStartFeature=document.getElementById("sleepStartInput")
-const sleepEndFeature=document.getElementById("sleepEndInput")
-
-function featureSleepKey(){return "babyTrackerActiveSleepStart_"+(currentUid||"signedout")}
-function featureActiveSleep(){const v=Number(localStorage.getItem(featureSleepKey()));return Number.isFinite(v)&&v>0?v:null}
-function featureClock(ms){
-    const sec=Math.max(0,Math.floor(ms/1000)),h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60
-    return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")
-}
-function featureStopSleepTicker(){if(featureSleepTicker){clearInterval(featureSleepTicker);featureSleepTicker=null}}
-function featureRefreshSleepUI(){
-    const start=featureActiveSleep()
-    if(start){
-        sleepStateFeature.textContent="Sleep timer is running"
-        sleepDisplayFeature.textContent=featureClock(Date.now()-start)
-        sleepTimerButtonFeature.textContent="End & Save Sleep"
-        sleepStartFeature.value=dateToInputValue(start);sleepEndFeature.value=dateToInputValue(Date.now())
-        if(!featureSleepTicker)featureSleepTicker=setInterval(featureRefreshSleepUI,1000)
-    }else{
-        featureStopSleepTicker();sleepStateFeature.textContent="Ready to start";sleepDisplayFeature.textContent="00:00:00";sleepTimerButtonFeature.textContent="Start Sleep"
-    }
-}
-async function featureSaveSleep(start,end){
-    if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start){alert("Sleep end time must be after the start time.");return false}
-    const cloudId=makeCloudId()
-    await set(ref(db,"users/"+currentUid+"/events/"+cloudId),{
-        cloudId,type:"sleep",timestamp:start,startTimestamp:start,endTimestamp:end,durationSeconds:Math.round((end-start)/1000),
-        caregiver:getCaregiverName(),source:"web",deleted:false,updatedAt:Date.now()
-    })
-    return true
-}
-function featureOpenSleep(){
-    const active=featureActiveSleep()
-    if(!active){sleepStartFeature.value=dateToInputValue(Date.now());sleepEndFeature.value=dateToInputValue(Date.now())}
-    featureRefreshSleepUI();sleepModalFeature.classList.remove("hidden")
-}
-document.getElementById("sleepButton").addEventListener("click",featureOpenSleep)
-sleepTimerButtonFeature.addEventListener("click",async()=>{
-    const active=featureActiveSleep()
-    if(!active){const now=Date.now();localStorage.setItem(featureSleepKey(),String(now));featureRefreshSleepUI();return}
-    if(await featureSaveSleep(active,Date.now())){localStorage.removeItem(featureSleepKey());featureRefreshSleepUI();sleepModalFeature.classList.add("hidden")}
-})
-document.getElementById("saveManualSleepButton").addEventListener("click",async()=>{
-    const start=inputValueToTimestamp(sleepStartFeature.value),end=inputValueToTimestamp(sleepEndFeature.value)
-    if(await featureSaveSleep(start,end)){localStorage.removeItem(featureSleepKey());featureRefreshSleepUI();sleepModalFeature.classList.add("hidden")}
-})
-document.getElementById("cancelSleepButton").addEventListener("click",()=>sleepModalFeature.classList.add("hidden"))
-
-/* EVENT PRESENTATION WRAPPERS */
-const baseEventIconClass=eventIconClass
-eventIconClass=function(type){
-    if(type==="sleep")return "icon-sleep"
-    if(type==="growth")return "icon-growth"
-    return baseEventIconClass(type)
-}
-const baseEventIcon=eventIcon
-eventIcon=function(type){
-    if(type==="sleep")return "😴"
-    if(type==="growth")return "📏"
-    return baseEventIcon(type)
-}
-const baseEventName=eventName
-eventName=function(event){
-    if(event.type==="sleep")return "Sleep • "+secondsToReadable(Number(event.durationSeconds||0))
-    if(event.type==="growth"){
-        const parts=[]
-        if(event.weightLb!=null)parts.push(event.weightLb+" lb")
-        if(event.lengthIn!=null)parts.push(event.lengthIn+" in")
-        if(event.headIn!=null)parts.push(event.headIn+" in head")
-        return "Growth"+(parts.length?" • "+parts.join(" • "):"")
-    }
-    return baseEventName(event)
-}
-const baseEventSubText=eventSubText
-eventSubText=function(event){
-    let text
-    if(event.type==="sleep"&&event.endTimestamp)text=timeOnly(event.startTimestamp||event.timestamp)+" – "+timeOnly(event.endTimestamp)
-    else text=baseEventSubText(event)
-    if(event.caregiver&&!text.includes(" • "+event.caregiver))text+=" • "+event.caregiver
-    return text
-}
-const baseReportTimelineLabel=reportTimelineLabel
-reportTimelineLabel=function(event){
-    if(event.type==="sleep")return "Sleep • "+secondsToReadable(Number(event.durationSeconds||0))
-    if(event.type==="growth"){
-        const parts=[]
-        if(event.weightLb!=null)parts.push(event.weightLb+" lb")
-        if(event.lengthIn!=null)parts.push(event.lengthIn+" in")
-        return "Growth"+(parts.length?" • "+parts.join(" • "):"")
-    }
-    return baseReportTimelineLabel(event)
-}
-
-/* Extend Calendar summary with sleep and growth */
-const baseRenderReport=renderReport
-renderReport=function(){
-    baseRenderReport()
-    if(!reportDate.value)return
-    const selected=selectedReportDate(),start=selected.getTime(),end=new Date(selected.getFullYear(),selected.getMonth(),selected.getDate()+1).getTime()
-    const entries=Object.values(currentEvents).filter(e=>e&&!e.deleted&&Number(e.timestamp)>=start&&Number(e.timestamp)<end)
-    const sleeps=entries.filter(e=>e.type==="sleep"),growth=entries.filter(e=>e.type==="growth")
-    const sleepSeconds=sleeps.reduce((s,e)=>s+Number(e.durationSeconds||0),0)
-    const extras=[
-        {label:"Sleep",value:sleeps.length,sub:secondsToReadable(sleepSeconds)+" total"},
-        {label:"Growth",value:growth.length,sub:growth.length===1?"measurement":"measurements"}
-    ]
-    for(const stat of extras){
-        const card=document.createElement("div");card.className="report-stat"
-        card.innerHTML='<div class="report-stat-label">'+stat.label+'</div><div class="report-stat-value">'+stat.value+'</div><div class="report-stat-sub">'+stat.sub+'</div>'
-        reportSummary.appendChild(card)
-    }
-}
-
-/* MILESTONES */
-const milestonesModalFeature=document.getElementById("milestonesModal")
-const milestoneQuoteFeature=document.getElementById("milestoneQuote")
-const milestoneGridFeature=document.getElementById("milestoneGrid")
-const celebrationModalFeature=document.getElementById("milestoneCelebrationModal")
-const celebrationEmojiFeature=document.getElementById("celebrationEmoji")
-const celebrationTitleFeature=document.getElementById("celebrationTitle")
-const celebrationTextFeature=document.getElementById("celebrationText")
-const confettiFeature=document.getElementById("confettiLayer")
-
-function featureMilestones(){
-    const entries=Object.values(currentEvents).filter(e=>e&&!e.deleted)
-    const feeds=entries.filter(e=>e.type==="feed"||e.type==="nursing").length
-    const pumps=entries.filter(e=>e.type==="pump").length
-    const diapers=entries.filter(e=>["pee","poop","mixed"].includes(e.type)).length
-    const nursing=entries.filter(e=>e.type==="nursing").length
-    const sleeps=entries.filter(e=>e.type==="sleep").length
-    const days=new Set(entries.map(e=>dateKey(e.timestamp))).size
-    return [
-        {id:"first_log",emoji:"🌱",title:"The Beginning",description:"Your first Baby Tracker memory.",unlocked:entries.length>=1},
-        {id:"feed_50",emoji:"🍼",title:"50 Feedings",description:"Fifty feeding moments recorded.",unlocked:feeds>=50},
-        {id:"feed_100",emoji:"💯",title:"100 Feedings",description:"One hundred feedings tracked.",unlocked:feeds>=100},
-        {id:"pump_50",emoji:"🍼",title:"50 Pumps",description:"Fifty pumping sessions recorded.",unlocked:pumps>=50},
-        {id:"diaper_100",emoji:"🧷",title:"100 Diapers",description:"One hundred diaper changes tracked.",unlocked:diapers>=100},
-        {id:"nursing_25",emoji:"🤱",title:"25 Nursing Sessions",description:"Twenty five nursing sessions remembered.",unlocked:nursing>=25},
-        {id:"sleep_10",emoji:"🌙",title:"10 Sleeps",description:"Ten sleep sessions recorded.",unlocked:sleeps>=10},
-        {id:"tracking_30",emoji:"📅",title:"30 Days Together",description:"Baby Tracker has memories from thirty different days.",unlocked:days>=30},
-        {id:"entry_500",emoji:"✨",title:"500 Moments",description:"Five hundred little moments saved.",unlocked:entries.length>=500},
-        {id:"entry_1000",emoji:"🏆",title:"1,000 Moments",description:"One thousand moments in your baby's story.",unlocked:entries.length>=1000}
-    ]
-}
-function featureRenderMilestones(){
-    const quotes=["The days are long, but the years are short.","Little moments become the memories you keep forever.","There is no ordinary day when you are watching someone grow.","Small progress is still a beautiful kind of progress.","You will never have this exact day with your baby again. Hold onto the little things.","A thousand tiny moments become a childhood."]
-    milestoneQuoteFeature.textContent="“"+quotes[Math.floor(Date.now()/86400000)%quotes.length]+"”"
-    milestoneGridFeature.innerHTML=""
-    for(const m of featureMilestones()){
-        const card=document.createElement("div");card.className="milestone-card"+(m.unlocked?"":" locked")
-        card.innerHTML='<div class="milestone-emoji">'+(m.unlocked?m.emoji:"🔒")+'</div><div class="milestone-name">'+m.title+'</div><div class="milestone-description">'+m.description+'</div>'
-        milestoneGridFeature.appendChild(card)
-    }
-}
-function featureSeenKey(){return "babyTrackerSeenMilestones_"+(currentUid||"unknown")}
-function featureConfetti(){
-    confettiFeature.innerHTML=""
-    const colors=["#f5b7c5","#b8d7ef","#d9c7ef","#f1d49b","#b8d9bc"]
-    for(let i=0;i<34;i++){
-        const p=document.createElement("div");p.className="confetti-piece";p.style.left=(Math.random()*100)+"vw";p.style.background=colors[i%colors.length];p.style.animationDelay=(Math.random()*.8)+"s";p.style.animationDuration=(2.1+Math.random()*1.4)+"s";confettiFeature.appendChild(p)
-    }
-    setTimeout(()=>confettiFeature.innerHTML="",4300)
-}
-function featureCheckMilestones(){
-    if(!currentUid)return
-    const unlocked=featureMilestones().filter(m=>m.unlocked),key=featureSeenKey(),raw=localStorage.getItem(key)
-    if(raw==null){localStorage.setItem(key,JSON.stringify(unlocked.map(m=>m.id)));return}
-    let seen=[];try{seen=JSON.parse(raw)||[]}catch(e){}
-    const fresh=unlocked.find(m=>!seen.includes(m.id));if(!fresh)return
-    seen.push(fresh.id);localStorage.setItem(key,JSON.stringify(seen))
-    celebrationEmojiFeature.textContent=fresh.emoji;celebrationTitleFeature.textContent=fresh.title;celebrationTextFeature.textContent=fresh.description
-    celebrationModalFeature.classList.remove("hidden");featureConfetti()
-}
-document.getElementById("milestonesButton").addEventListener("click",()=>{featureRenderMilestones();milestonesModalFeature.classList.remove("hidden")})
-document.getElementById("closeMilestonesButton").addEventListener("click",()=>milestonesModalFeature.classList.add("hidden"))
-document.getElementById("closeCelebrationButton").addEventListener("click",()=>celebrationModalFeature.classList.add("hidden"))
-
-/* Make milestone detection run after normal history renders */
-const baseRenderFeature=render
-render=function(){baseRenderFeature();featureCheckMilestones()}
-
-/* PEDIATRICIAN REPORT */
-const doctorModalFeature=document.getElementById("doctorReportModal")
-const doctorStartFeature=document.getElementById("doctorReportStart")
-const doctorEndFeature=document.getElementById("doctorReportEnd")
-const doctorOutputFeature=document.getElementById("doctorReportOutput")
-
-function featureDateValue(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
-function featureGenerateDoctorReport(){
-    if(!doctorStartFeature.value||!doctorEndFeature.value){doctorOutputFeature.textContent="Choose a start and end date.";return}
-    const start=new Date(doctorStartFeature.value+"T00:00:00"),endDate=new Date(doctorEndFeature.value+"T00:00:00");endDate.setDate(endDate.getDate()+1)
-    const startMs=start.getTime(),endMs=endDate.getTime()
-    if(!Number.isFinite(startMs)||!Number.isFinite(endMs)||endMs<=startMs){doctorOutputFeature.textContent="Choose a valid date range.";return}
-    const entries=Object.values(currentEvents).filter(e=>e&&!e.deleted&&Number(e.timestamp)>=startMs&&Number(e.timestamp)<endMs)
-    const feeds=entries.filter(e=>e.type==="feed"),nursing=entries.filter(e=>e.type==="nursing"),pumps=entries.filter(e=>e.type==="pump")
-    const diapers=entries.filter(e=>["pee","poop","mixed"].includes(e.type)),sleeps=entries.filter(e=>e.type==="sleep"),growth=entries.filter(e=>e.type==="growth").sort((a,b)=>a.timestamp-b.timestamp)
-    const bottleMl=feeds.reduce((s,e)=>s+Number(e.amountMl||0),0),pumpedMl=pumps.reduce((s,e)=>s+Number(e.amountMl||0),0)
-    const nursingSeconds=nursing.reduce((s,e)=>s+Number(e.durationSeconds||0),0),sleepSeconds=sleeps.reduce((s,e)=>s+Number(e.durationSeconds||0),0)
-    const pee=diapers.filter(e=>e.type==="pee").length,poop=diapers.filter(e=>e.type==="poop").length,mixed=diapers.filter(e=>e.type==="mixed").length
-    const caregivers={}
-    for(const e of entries){const n=e.caregiver||"Unspecified";caregivers[n]=(caregivers[n]||0)+1}
-    const caregiverText=Object.entries(caregivers).sort((a,b)=>b[1]-a[1]).map(([n,c])=>n+": "+c).join(" • ")
-    const latest=growth.length?growth[growth.length-1]:null
-    let growthText="No growth measurements in this range."
-    if(latest){
-        const parts=[];if(latest.weightLb!=null)parts.push(latest.weightLb+" lb");if(latest.lengthIn!=null)parts.push(latest.lengthIn+" in length");if(latest.headIn!=null)parts.push(latest.headIn+" in head circumference")
-        growthText=(parts.join(", ")||"Measurement recorded")+" on "+new Date(latest.timestamp).toLocaleDateString()
-    }
-    const baby=featureProfile.name||"Baby",period=start.toLocaleDateString()+" – "+new Date(endMs-1).toLocaleDateString()
-    doctorOutputFeature.innerHTML=
-        '<h3>'+baby+' • Baby Tracker Summary</h3><p class="muted">'+period+'</p>'+
-        '<h4>Feeding</h4><p>Bottle feeds: '+feeds.length+' • '+Math.round(bottleMl)+' mL ('+(bottleMl/29.5735).toFixed(1)+' oz) total</p><p>Nursing sessions: '+nursing.length+' • '+secondsToReadable(nursingSeconds)+' total</p>'+
-        '<h4>Pumping</h4><p>Pump sessions: '+pumps.length+' • '+Math.round(pumpedMl)+' mL ('+(pumpedMl/29.5735).toFixed(1)+' oz) total</p>'+
-        '<h4>Diapers</h4><p>Total: '+diapers.length+' • Pee '+pee+' • Poop '+poop+' • Mixed '+mixed+'</p>'+
-        '<h4>Sleep</h4><p>Sessions: '+sleeps.le
-Preview truncated for large file
+</html>
