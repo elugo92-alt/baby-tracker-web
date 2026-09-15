@@ -1581,6 +1581,50 @@ body.night-mode .ped-day {
     text-align: center;
 }
 
+
+
+/* GROWTH & TRENDS */
+.trends-modal{align-items:stretch;padding:0}
+.trends-card{width:100%;max-width:620px;height:100%;overflow-y:auto;border-radius:0;padding:max(20px,env(safe-area-inset-top)) 18px max(28px,env(safe-area-inset-bottom))}
+.trends-topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.trends-topbar h2{margin:0;font-family:Georgia,serif;font-size:30px}
+.trends-range-tabs,.trends-view-tabs,.trends-unit-tabs{display:flex;gap:6px;background:var(--soft);padding:5px;border-radius:15px}
+.trends-range-tabs{margin-bottom:14px}
+.trends-range-tabs button,.trends-view-tabs button,.trends-unit-tabs button{flex:1;min-height:40px;border-radius:11px;background:transparent;color:var(--text);font-weight:700}
+.trends-range-tabs button.selected,.trends-view-tabs button.selected,.trends-unit-tabs button.selected{background:#272522;color:#fff}
+body.night-mode .trends-range-tabs button.selected,body.night-mode .trends-view-tabs button.selected,body.night-mode .trends-unit-tabs button.selected{background:#ece3d8;color:#22232b}
+.trends-dates{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.trends-dates input{margin:0}
+.trends-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.trends-stat{padding:14px;border-radius:20px;background:rgba(255,255,255,.75);box-shadow:0 6px 18px rgba(74,56,42,.05)}
+body.night-mode .trends-stat{background:#2b2f3d}
+.trends-stat-label{font-size:12px;color:var(--muted);font-weight:700}
+.trends-stat-value{font-family:Georgia,serif;font-size:23px;font-weight:700;margin-top:4px}
+.trends-stat-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.trends-chart-card{padding:16px;border-radius:24px;background:rgba(255,255,255,.68);box-shadow:var(--shadow);margin-bottom:16px}
+body.night-mode .trends-chart-card{background:#202431}
+.trends-chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.trends-chart-title{font-family:Georgia,serif;font-size:25px;font-weight:700}
+.trends-chart-sub{font-size:12px;color:var(--muted);margin-top:3px}
+.trends-canvas-wrap{position:relative;width:100%;height:330px}
+#trendsCanvas{width:100%;height:100%;display:block}
+.trends-legend{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:12px;font-size:12px;color:var(--muted)}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.trends-settings{padding:16px;margin-bottom:14px}
+.trends-settings-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.trends-settings-title{font-family:Georgia,serif;font-size:23px;font-weight:700}
+.trends-toggles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.trends-toggle{min-height:48px;border-radius:14px;background:var(--soft);color:var(--text);font-weight:700}
+.trends-toggle.selected{outline:2px solid rgba(60,130,240,.5)}
+.trends-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.trends-actions button{min-height:48px;border-radius:14px;font-weight:700}
+@media(max-width:430px){
+ .trends-chart-head{display:block}
+ .trends-view-tabs{margin-top:10px}
+ .trends-canvas-wrap{height:300px}
+ .trends-actions{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 
@@ -2168,6 +2212,12 @@ body.night-mode .ped-day {
         </button>
 
         <button
+            id="trendsButton"
+            class="secondary">
+            📈 Growth &amp; Trends
+        </button>
+
+        <button
             id="pediatricianReportButton"
             class="secondary">
             🩺 Pediatrician Report
@@ -2218,6 +2268,68 @@ body.night-mode .ped-day {
 
 </div>
 
+
+
+<div id="trendsModal" class="modal trends-modal hidden">
+  <div class="modal-card trends-card">
+    <div class="trends-topbar">
+      <h2>Growth &amp; Trends</h2>
+      <button id="closeTrendsButton" class="report-close" type="button">✕</button>
+    </div>
+
+    <div class="trends-range-tabs">
+      <button type="button" data-range="7">7D</button>
+      <button type="button" data-range="14">14D</button>
+      <button type="button" data-range="30">30D</button>
+      <button type="button" data-range="custom">Custom</button>
+    </div>
+
+    <div class="trends-dates">
+      <div><label class="field-label">Start Date</label><input id="trendsStartDate" type="date"></div>
+      <div><label class="field-label">End Date</label><input id="trendsEndDate" type="date"></div>
+    </div>
+
+    <div id="trendsStats" class="trends-stats"></div>
+
+    <div class="trends-chart-card">
+      <div class="trends-chart-head">
+        <div>
+          <div class="trends-chart-title">Trends Over Time</div>
+          <div id="trendsChartSub" class="trends-chart-sub"></div>
+        </div>
+        <div class="trends-view-tabs">
+          <button type="button" data-view="daily">Daily</button>
+          <button type="button" data-view="weekly">Weekly</button>
+          <button type="button" data-view="monthly">Monthly</button>
+        </div>
+      </div>
+      <div class="trends-canvas-wrap"><canvas id="trendsCanvas"></canvas></div>
+      <div id="trendsLegend" class="trends-legend"></div>
+    </div>
+
+    <div class="card trends-settings">
+      <div class="trends-settings-top">
+        <div class="trends-settings-title">Graph Settings</div>
+        <div class="trends-unit-tabs">
+          <button type="button" data-unit="ml">mL</button>
+          <button type="button" data-unit="oz">oz</button>
+        </div>
+      </div>
+
+      <div class="trends-toggles">
+        <button id="toggleTrendFeed" class="trends-toggle" type="button">🍼 Feed Volume</button>
+        <button id="toggleTrendPump" class="trends-toggle" type="button">🍼 Pumped Volume</button>
+        <button id="toggleTrendPee" class="trends-toggle" type="button">💧 Pees</button>
+        <button id="toggleTrendPoop" class="trends-toggle" type="button">💩 Poops</button>
+      </div>
+
+      <div class="trends-actions">
+        <button id="resetTrendsButton" class="secondary" type="button">↶ Reset to Default</button>
+        <button id="printTrendsButton" class="primary" type="button">Print / Save Graph PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <div
@@ -5371,6 +5483,222 @@ document
 loadSettingsControls()
 
 
+
+
+/* GROWTH & TRENDS */
+const trendsModal = document.getElementById("trendsModal")
+const trendsStartDate = document.getElementById("trendsStartDate")
+const trendsEndDate = document.getElementById("trendsEndDate")
+const trendsStats = document.getElementById("trendsStats")
+const trendsCanvas = document.getElementById("trendsCanvas")
+const trendsLegend = document.getElementById("trendsLegend")
+const trendsChartSub = document.getElementById("trendsChartSub")
+
+let trendsRange = 7
+let trendsView = "daily"
+let trendsUnit = "ml"
+let trendVisible = {feed:true,pump:true,pee:true,poop:true}
+
+function trendDateValue(d){
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")
+}
+function trendParseDate(v,end=false){
+    const p=v.split("-").map(Number)
+    return new Date(p[0],p[1]-1,p[2],end?23:0,end?59:0,end?59:0,end?999:0)
+}
+function setTrendRange(days){
+    const end=new Date()
+    end.setHours(0,0,0,0)
+    const start=new Date(end)
+    start.setDate(start.getDate()-(days-1))
+    trendsStartDate.value=trendDateValue(start)
+    trendsEndDate.value=trendDateValue(end)
+}
+function trendVolume(ml){return trendsUnit==="oz"?ml/29.5735:ml}
+function trendVolumeText(ml){
+    return trendsUnit==="oz" ? (ml/29.5735).toFixed(1)+" oz" : Math.round(ml).toLocaleString()+" mL"
+}
+function trendBucketKey(date){
+    const d=new Date(date)
+    if(trendsView==="monthly") return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")
+    if(trendsView==="weekly"){
+        const x=new Date(d); x.setHours(0,0,0,0)
+        const day=(x.getDay()+6)%7
+        x.setDate(x.getDate()-day)
+        return trendDateValue(x)
+    }
+    return trendDateValue(d)
+}
+function trendBucketLabel(key){
+    if(trendsView==="monthly"){
+        const [y,m]=key.split("-").map(Number)
+        return new Date(y,m-1,1).toLocaleDateString(undefined,{month:"short",year:"2-digit"})
+    }
+    const d=trendParseDate(key)
+    if(trendsView==="weekly") return d.toLocaleDateString(undefined,{month:"numeric",day:"numeric"})
+    return d.toLocaleDateString(undefined,{month:"numeric",day:"numeric"})
+}
+function trendData(){
+    const start=trendParseDate(trendsStartDate.value).getTime()
+    const end=trendParseDate(trendsEndDate.value,true).getTime()
+    const buckets={}
+    const cursor=new Date(start)
+    while(cursor.getTime()<=end){
+        const k=trendBucketKey(cursor)
+        if(!buckets[k]) buckets[k]={key:k,feed:0,pump:0,pee:0,poop:0}
+        cursor.setDate(cursor.getDate()+1)
+    }
+    Object.values(currentEvents).forEach(e=>{
+        if(!e||e.deleted) return
+        const ts=Number(e.timestamp)
+        if(!Number.isFinite(ts)||ts<start||ts>end) return
+        const k=trendBucketKey(new Date(ts))
+        if(!buckets[k]) buckets[k]={key:k,feed:0,pump:0,pee:0,poop:0}
+        if(e.type==="feed") buckets[k].feed+=Number(e.amountMl||0)
+        if(e.type==="pump") buckets[k].pump+=Number(e.amountMl||0)
+        if(e.type==="pee") buckets[k].pee++
+        if(e.type==="poop") buckets[k].poop++
+        if(e.type==="mixed"){buckets[k].pee++;buckets[k].poop++}
+    })
+    return Object.values(buckets).sort((a,b)=>a.key.localeCompare(b.key))
+}
+function renderTrendStats(data){
+    const feed=data.reduce((s,x)=>s+x.feed,0)
+    const pump=data.reduce((s,x)=>s+x.pump,0)
+    const pee=data.reduce((s,x)=>s+x.pee,0)
+    const poop=data.reduce((s,x)=>s+x.poop,0)
+    const start=trendParseDate(trendsStartDate.value)
+    const end=trendParseDate(trendsEndDate.value)
+    const days=Math.max(1,Math.round((end-start)/86400000)+1)
+    const cards=[
+      ["Total Feed Volume",trendVolumeText(feed),"Avg "+trendVolumeText(feed/days)+"/day"],
+      ["Total Pees",pee,"Avg "+(pee/days).toFixed(1)+"/day"],
+      ["Total Poops",poop,"Avg "+(poop/days).toFixed(1)+"/day"],
+      ["Total Pumped",trendVolumeText(pump),"Avg "+trendVolumeText(pump/days)+"/day"]
+    ]
+    trendsStats.innerHTML=cards.map(x=>`<div class="trends-stat"><div class="trends-stat-label">${x[0]}</div><div class="trends-stat-value">${x[1]}</div><div class="trends-stat-sub">${x[2]}</div></div>`).join("")
+}
+function niceMax(v){
+    if(v<=0)return 10
+    const p=Math.pow(10,Math.floor(Math.log10(v)))
+    return Math.ceil(v/p)*p
+}
+function drawTrends(){
+    if(!trendsStartDate.value||!trendsEndDate.value)return
+    const data=trendData()
+    renderTrendStats(data)
+    trendsChartSub.textContent="Feed and pumped volume ("+trendsUnit+") with diaper frequency"
+    const rect=trendsCanvas.getBoundingClientRect()
+    const dpr=window.devicePixelRatio||1
+    trendsCanvas.width=Math.max(1,Math.floor(rect.width*dpr))
+    trendsCanvas.height=Math.max(1,Math.floor(rect.height*dpr))
+    const ctx=trendsCanvas.getContext("2d")
+    ctx.setTransform(dpr,0,0,dpr,0,0)
+    const W=rect.width,H=rect.height
+    ctx.clearRect(0,0,W,H)
+    const night=document.body.classList.contains("night-mode")
+    const grid=night?"rgba(255,255,255,.10)":"rgba(80,70,60,.12)"
+    const text=night?"#cbc7cf":"#756f69"
+    const left=42,right=34,top=18,bottom=50
+    const cw=W-left-right,ch=H-top-bottom
+    const volumeMax=niceMax(Math.max(1,...data.flatMap(x=>[trendVolume(x.feed),trendVolume(x.pump)])))
+    const countMax=niceMax(Math.max(1,...data.flatMap(x=>[x.pee,x.poop])))
+    ctx.font="11px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+    ctx.strokeStyle=grid;ctx.fillStyle=text;ctx.lineWidth=1
+    for(let i=0;i<=5;i++){
+        const y=top+ch*i/5
+        ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(W-right,y);ctx.stroke()
+        ctx.textAlign="right";ctx.fillText(Math.round(volumeMax*(1-i/5)),left-6,y+4)
+        ctx.textAlign="left";ctx.fillText(Math.round(countMax*(1-i/5)),W-right+5,y+4)
+    }
+    const n=Math.max(1,data.length)
+    const slot=cw/n
+    const barW=Math.min(22,slot*.28)
+    data.forEach((x,i)=>{
+        const center=left+slot*(i+.5)
+        if(trendVisible.feed){
+            const h=ch*trendVolume(x.feed)/volumeMax
+            ctx.fillStyle="#58a9f6";ctx.fillRect(center-barW-2,top+ch-h,barW,h)
+        }
+        if(trendVisible.pump){
+            const h=ch*trendVolume(x.pump)/volumeMax
+            ctx.fillStyle="#d76adf";ctx.fillRect(center+2,top+ch-h,barW,h)
+        }
+        const skip=Math.max(1,Math.ceil(n/8))
+        if(i%skip===0||i===n-1){
+            ctx.fillStyle=text;ctx.textAlign="center"
+            ctx.fillText(trendBucketLabel(x.key),center,H-22)
+        }
+    })
+    function line(field,color){
+        if(!trendVisible[field])return
+        ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2.5;ctx.beginPath()
+        data.forEach((x,i)=>{
+            const px=left+slot*(i+.5)
+            const py=top+ch-(ch*x[field]/countMax)
+            if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py)
+        });ctx.stroke()
+        data.forEach((x,i)=>{
+            const px=left+slot*(i+.5),py=top+ch-(ch*x[field]/countMax)
+            ctx.beginPath();ctx.arc(px,py,3.5,0,Math.PI*2);ctx.fill()
+        })
+    }
+    line("pee","#8ddd8b");line("poop","#f6a04d")
+    const legend=[]
+    if(trendVisible.feed)legend.push(["#58a9f6","Feed Volume"])
+    if(trendVisible.pump)legend.push(["#d76adf","Pumped Volume"])
+    if(trendVisible.pee)legend.push(["#8ddd8b","Pee Count"])
+    if(trendVisible.poop)legend.push(["#f6a04d","Poop Count"])
+    trendsLegend.innerHTML=legend.map(x=>`<span><i class="legend-dot" style="background:${x[0]}"></i>${x[1]}</span>`).join("")
+    document.querySelectorAll(".trends-toggle").forEach(b=>b.classList.remove("selected"))
+    if(trendVisible.feed)document.getElementById("toggleTrendFeed").classList.add("selected")
+    if(trendVisible.pump)document.getElementById("toggleTrendPump").classList.add("selected")
+    if(trendVisible.pee)document.getElementById("toggleTrendPee").classList.add("selected")
+    if(trendVisible.poop)document.getElementById("toggleTrendPoop").classList.add("selected")
+}
+function openTrends(){
+    if(!trendsStartDate.value)setTrendRange(7)
+    trendsModal.classList.remove("hidden")
+    requestAnimationFrame(drawTrends)
+}
+document.getElementById("trendsButton")?.addEventListener("click",openTrends)
+document.getElementById("closeTrendsButton").addEventListener("click",()=>trendsModal.classList.add("hidden"))
+document.querySelectorAll(".trends-range-tabs button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll(".trends-range-tabs button").forEach(x=>x.classList.remove("selected"));b.classList.add("selected")
+    if(b.dataset.range!=="custom"){trendsRange=Number(b.dataset.range);setTrendRange(trendsRange)}
+    drawTrends()
+}))
+document.querySelectorAll(".trends-view-tabs button").forEach(b=>b.addEventListener("click",()=>{
+    trendsView=b.dataset.view
+    document.querySelectorAll(".trends-view-tabs button").forEach(x=>x.classList.toggle("selected",x===b));drawTrends()
+}))
+document.querySelectorAll(".trends-unit-tabs button").forEach(b=>b.addEventListener("click",()=>{
+    trendsUnit=b.dataset.unit
+    document.querySelectorAll(".trends-unit-tabs button").forEach(x=>x.classList.toggle("selected",x===b));drawTrends()
+}))
+trendsStartDate.addEventListener("change",drawTrends);trendsEndDate.addEventListener("change",drawTrends)
+;[["toggleTrendFeed","feed"],["toggleTrendPump","pump"],["toggleTrendPee","pee"],["toggleTrendPoop","poop"]].forEach(([id,k])=>{
+    document.getElementById(id).addEventListener("click",()=>{trendVisible[k]=!trendVisible[k];drawTrends()})
+})
+document.getElementById("resetTrendsButton").addEventListener("click",()=>{
+    trendsRange=7;trendsView="daily";trendsUnit="ml";trendVisible={feed:true,pump:true,pee:true,poop:true};setTrendRange(7)
+    document.querySelectorAll(".trends-range-tabs button").forEach(x=>x.classList.toggle("selected",x.dataset.range==="7"))
+    document.querySelectorAll(".trends-view-tabs button").forEach(x=>x.classList.toggle("selected",x.dataset.view==="daily"))
+    document.querySelectorAll(".trends-unit-tabs button").forEach(x=>x.classList.toggle("selected",x.dataset.unit==="ml"));drawTrends()
+})
+document.getElementById("printTrendsButton").addEventListener("click",()=>{
+    const image=trendsCanvas.toDataURL("image/png")
+    const w=window.open("","_blank")
+    if(!w){alert("Allow pop-ups for this site to save the graph as a PDF.");return}
+    w.document.write(`<!doctype html><html><head><title>Growth & Trends</title><style>@page{size:landscape;margin:.5in}body{font-family:Arial;padding:10px}h1{margin:0 0 8px}p{color:#555}img{width:100%;max-width:1000px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}.s{border:1px solid #ddd;padding:10px;border-radius:8px}</style></head><body><h1>${(babyName||"Baby")} Growth & Trends</h1><p>${trendsStartDate.value} to ${trendsEndDate.value}</p><div class="stats">${trendsStats.innerHTML}</div><img src="${image}"><script>onload=()=>setTimeout(()=>print(),250)<\/script></body></html>`)
+    w.document.close()
+})
+setTrendRange(7)
+document.querySelector('.trends-range-tabs button[data-range="7"]').classList.add("selected")
+document.querySelector('.trends-view-tabs button[data-view="daily"]').classList.add("selected")
+document.querySelector('.trends-unit-tabs button[data-unit="ml"]').classList.add("selected")
+window.addEventListener("resize",()=>{if(!trendsModal.classList.contains("hidden"))drawTrends()})
+
 setInterval(
 () => {
 
@@ -5801,6 +6129,14 @@ function watchEvents() {
 
                 renderReport()
 
+            }
+
+            if(
+                typeof trendsModal !== "undefined"
+                &&
+                !trendsModal.classList.contains("hidden")
+            ) {
+                drawTrends()
             }
 
         }
